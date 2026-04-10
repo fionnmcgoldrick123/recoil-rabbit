@@ -12,7 +12,11 @@ public class GunView : MonoBehaviour
     [SerializeField] private Transform playerBody;
     [SerializeField] private Rigidbody2D playerRb;
 
+    [Header("Aiming")]
+    [SerializeField] private float horizontalDeadzone = 0.2f;
+
     private Camera mainCamera;
+    private bool lastFacingLeft = false;
 
     private void Awake()
     {
@@ -34,23 +38,25 @@ public class GunView : MonoBehaviour
         Vector2 gunPivot = transform.position;
         Vector2 dirToMouse = (mouseWorld - gunPivot).normalized;
 
-        // Rotate gun to aim at mouse in world space
         float angle = Mathf.Atan2(dirToMouse.y, dirToMouse.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0, 0, angle);
 
-        // Determine facing direction: mouse wins, velocity is fallback
-        bool facingLeft = dirToMouse.x < 0;
+        // Only flip if X direction is significant enough (deadzone prevents flipping when aiming straight up/down)
+        bool facingLeft = Mathf.Abs(dirToMouse.x) > horizontalDeadzone ? dirToMouse.x < 0 : lastFacingLeft;
+        lastFacingLeft = facingLeft;
 
-        // Flip player body using localScale so all children (except gun rotation) mirror correctly
         if (playerBody != null)
         {
-            Vector3 scale = playerBody.localScale;
-            scale.x = facingLeft ? -Mathf.Abs(scale.x) : Mathf.Abs(scale.x);
-            playerBody.localScale = scale;
+            Vector3 playerScale = playerBody.localScale;
+            playerScale.x = facingLeft ? -Mathf.Abs(playerScale.x) : Mathf.Abs(playerScale.x);
+            playerBody.localScale = playerScale;
+
+            // Counter-flip gun so it doesn't flip with player
+            Vector3 gunScale = transform.localScale;
+            gunScale.x = playerScale.x < 0 ? -1f : 1f;
+            transform.localScale = gunScale;
         }
 
-        // Flip gun sprite Y so it doesn't appear upside-down when facing left
-        // This compensates for the parent scale flip on the sprite visual only
         gunRenderer.flipY = facingLeft;
     }
 }
