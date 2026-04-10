@@ -5,10 +5,14 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Run")]
     [SerializeField] private float maxSpeed = 8f;
-    [SerializeField] private float groundAcceleration = 80f;
-    [SerializeField] private float groundDeceleration = 80f;
-    [SerializeField] private float airAcceleration = 60f;
-    [SerializeField] private float airDeceleration = 30f;
+    [SerializeField] private float groundAcceleration = 70f;
+    [SerializeField] private float groundDeceleration = 30f;
+    [SerializeField] private float airAcceleration = 55f;
+    [SerializeField] private float airDeceleration = 10f;
+
+    [Header("Momentum")]
+    [SerializeField] private float overSpeedDeceleration = 20f;
+    [SerializeField] private float maxOverSpeed = 25f;
 
     [Header("Jump")]
     [SerializeField] private float jumpForce = 14f;
@@ -72,7 +76,7 @@ public class PlayerController : MonoBehaviour
         if (isGrounded)
         {
             coyoteTimer = coyoteTime;
-            if (wasGrounded == false)
+            if (!wasGrounded)
             {
                 isJumping = false;
                 jumpCut = false;
@@ -104,19 +108,51 @@ public class PlayerController : MonoBehaviour
     private void ApplyMovement()
     {
         float moveX = Input.GetAxisRaw("Horizontal");
-        float targetSpeed = moveX * maxSpeed;
+        float inputSpeed = moveX * maxSpeed;
+        float currentX = rb.linearVelocity.x;
+        float absCurrentX = Mathf.Abs(currentX);
+        bool hasInput = Mathf.Abs(moveX) > 0.01f;
+        bool overSpeed = absCurrentX > maxSpeed;
 
-        float accel;
-        if (isGrounded)
+        float newX;
+
+        if (overSpeed)
         {
-            accel = Mathf.Abs(moveX) > 0.01f ? groundAcceleration : groundDeceleration;
+            // Player has momentum above max speed (e.g. from shotgun blast)
+            // Gently bleed off the overspeed — don't snap to max
+            float direction = Mathf.Sign(currentX);
+
+            if (hasInput && Mathf.Sign(moveX) == direction)
+            {
+                // Holding direction with momentum — slow bleed
+                newX = Mathf.MoveTowards(currentX, direction * maxSpeed, overSpeedDeceleration * Time.fixedDeltaTime);
+            }
+            else if (hasInput)
+            {
+                // Input opposite to momentum — decelerate faster but still carry speed
+                newX = Mathf.MoveTowards(currentX, inputSpeed, (overSpeedDeceleration * 2f) * Time.fixedDeltaTime);
+            }
+            else
+            {
+                // No input — bleed off naturally
+                newX = Mathf.MoveTowards(currentX, 0f, overSpeedDeceleration * Time.fixedDeltaTime);
+            }
         }
         else
         {
-            accel = Mathf.Abs(moveX) > 0.01f ? airAcceleration : airDeceleration;
+            // Normal movement — standard accel/decel
+            float accel;
+            if (isGrounded)
+                accel = hasInput ? groundAcceleration : groundDeceleration;
+            else
+                accel = hasInput ? airAcceleration : airDeceleration;
+
+            newX = Mathf.MoveTowards(currentX, inputSpeed, accel * Time.fixedDeltaTime);
         }
 
-        float newX = Mathf.MoveTowards(rb.linearVelocity.x, targetSpeed, accel * Time.fixedDeltaTime);
+        // Clamp to max overspeed ceiling to prevent infinite acceleration
+        newX = Mathf.Clamp(newX, -maxOverSpeed, maxOverSpeed);
+
         rb.linearVelocity = new Vector2(newX, rb.linearVelocity.y);
     }
 
@@ -152,8 +188,7 @@ public class PlayerController : MonoBehaviour
     {
         if (isDead) return;
 
-        Enemy enemy = other.GetComponent<Enemy>();
-        if (enemy != null)
+        if (other.GetComponent<Enemy>() != null)
         {
             Die();
         }
