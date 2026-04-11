@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Momentum")]
     [SerializeField] private float overSpeedDeceleration = 8f;
+    [SerializeField] private float overSpeedGroundedBleed = 2f;
     [SerializeField] private float maxOverSpeed = 25f;
 
     [Header("Jump")]
@@ -52,6 +53,8 @@ public class PlayerController : MonoBehaviour
     private bool jumpCut;
     private bool isJumping;
     private bool bhopProtected;
+
+    public void SetBhopProtected() { bhopProtected = true; }
 
     private void Awake()
     {
@@ -144,18 +147,24 @@ public class PlayerController : MonoBehaviour
         if (overSpeed)
         {
             float direction = Mathf.Sign(currentX);
+            bool sameDir = hasInput && Mathf.Sign(moveX) == direction;
+            bool opposite = hasInput && !sameDir;
 
-            if (hasInput && Mathf.Sign(moveX) == direction)
+            if (!isGrounded)
             {
-                newX = Mathf.MoveTowards(currentX, direction * maxSpeed, overSpeedDeceleration * Time.fixedDeltaTime);
-            }
-            else if (hasInput)
-            {
-                newX = Mathf.MoveTowards(currentX, inputSpeed, (overSpeedDeceleration * 2f) * Time.fixedDeltaTime);
+                if (opposite)
+                    newX = Mathf.MoveTowards(currentX, inputSpeed, overSpeedDeceleration * 2f * Time.fixedDeltaTime);
+                else
+                    newX = currentX;
             }
             else
             {
-                newX = Mathf.MoveTowards(currentX, 0f, overSpeedDeceleration * Time.fixedDeltaTime);
+                if (sameDir)
+                    newX = Mathf.MoveTowards(currentX, direction * maxSpeed, overSpeedGroundedBleed * Time.fixedDeltaTime);
+                else if (opposite)
+                    newX = Mathf.MoveTowards(currentX, inputSpeed, overSpeedDeceleration * 2f * Time.fixedDeltaTime);
+                else
+                    newX = Mathf.MoveTowards(currentX, 0f, overSpeedDeceleration * Time.fixedDeltaTime);
             }
         }
         else

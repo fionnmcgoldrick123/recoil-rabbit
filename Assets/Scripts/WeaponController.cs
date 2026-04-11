@@ -90,6 +90,10 @@ public class WeaponController : MonoBehaviour
         {
             Vector2 recoil = -direction.normalized * shotgunStats.playerRecoilForce;
             playerRb.AddForce(recoil, ForceMode2D.Impulse);
+
+            PlayerController pc = playerRb.GetComponent<PlayerController>();
+            if (pc != null)
+                pc.SetBhopProtected();
         }
 
         if (cameraShake != null)

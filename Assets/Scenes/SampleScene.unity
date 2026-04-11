@@ -3330,8 +3330,20 @@ PrefabInstance:
       value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 8050381305028736681, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
+      propertyPath: maxOverSpeed
+      value: 105.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8050381305028736681, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
+      propertyPath: groundDeceleration
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 8050381305028736681, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
       propertyPath: groundCheckDistance
       value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8050381305028736681, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
+      propertyPath: overSpeedDeceleration
+      value: 91
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
