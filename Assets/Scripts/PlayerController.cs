@@ -44,6 +44,7 @@ public class PlayerController : MonoBehaviour
     private bool wasGrounded;
 
     public bool IsGrounded => isGrounded;
+    public bool IsDead => isDead;
     private float coyoteTimer;
     private float jumpBufferTimer;
     private bool jumpCut;
@@ -198,6 +199,13 @@ public class PlayerController : MonoBehaviour
 
         if (other.GetComponent<Enemy>() != null || other.GetComponent<FlyingEnemy>() != null)
         {
+            isGrounded = false;
+            Die();
+        }
+
+        if (other.CompareTag("Hazard"))
+        {
+            isGrounded = false;
             Die();
         }
     }
@@ -205,12 +213,19 @@ public class PlayerController : MonoBehaviour
     private void Die()
     {
         isDead = true;
+        isJumping = false;
+        jumpCut = false;
         rb.linearVelocity = Vector2.zero;
         rb.isKinematic = true;
         if (gunObject != null)
             gunObject.SetActive(false);
         if (animator != null)
+        {
+            animator.SetBool("IsGrounded", true);
+            animator.SetFloat("Speed", 0f);
+            animator.ResetTrigger("Died");
             animator.SetTrigger("Died");
+        }
         OnPlayerDeath?.Invoke();
     }
 

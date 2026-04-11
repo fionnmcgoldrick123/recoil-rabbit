@@ -33,6 +33,9 @@ public class PlayerAnimator : MonoBehaviour
         if (animator == null || rb == null || playerController == null)
             return;
 
+        if (playerController.IsDead)
+            return;
+
         UpdateAnimationParameters();
     }
 
