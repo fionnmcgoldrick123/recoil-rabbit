@@ -53,7 +53,7 @@ public class Bullet : MonoBehaviour
             return;
         }
 
-        if (!other.CompareTag("Player"))
+        if (!other.CompareTag("Player") && other.GetComponent<Bullet>() == null)
         {
             hasHit = true;
             PlayHitAnimationAndDestroy();

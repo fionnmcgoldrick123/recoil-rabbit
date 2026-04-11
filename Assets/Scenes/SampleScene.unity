@@ -694,6 +694,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   isDead: 0
+  gunObject: {fileID: 1282669407}
   OnPlayerDeath:
     m_PersistentCalls:
       m_Calls: []
@@ -714,7 +715,7 @@ MonoBehaviour:
   firePoint: {fileID: 1514784317}
   playerRb: {fileID: 521039126}
   gunView: {fileID: 1282669410}
-  cameraShake: {fileID: 0}
+  cameraShake: {fileID: 519420035}
   revolverShakeIntensity: 0.05
   revolverShakeDuration: 0.08
   shotgunShakeIntensity: 0.5
@@ -1318,6 +1319,7 @@ GameObject:
   - component: {fileID: 1067233211}
   - component: {fileID: 1067233213}
   - component: {fileID: 1067233212}
+  - component: {fileID: 1067233214}
   m_Layer: 3
   m_Name: Sprite Renderer
   m_TagString: Untagged
@@ -1433,6 +1435,18 @@ Animation:
   m_AnimatePhysics: 0
   m_UpdateMode: 0
   m_CullingType: 0
+--- !u!114 &1067233214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1067233209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdbea3cee0938a44185f6d14c033b78e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1282669407
 GameObject:
   m_ObjectHideFlags: 0
@@ -2496,7 +2510,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1657579646}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 5b9c86b300b1b8049b976eecf6b0ca4f, type: 2}
   m_CullingMode: 0

@@ -196,7 +196,7 @@ public class PlayerController : MonoBehaviour
     {
         if (isDead) return;
 
-        if (other.GetComponent<Enemy>() != null)
+        if (other.GetComponent<Enemy>() != null || other.GetComponent<FlyingEnemy>() != null)
         {
             Die();
         }
@@ -204,11 +204,11 @@ public class PlayerController : MonoBehaviour
 
     private void Die()
     {
-        //disable gun object
-        if (gunObject != null)
-            gunObject.SetActive(false);
         isDead = true;
         rb.linearVelocity = Vector2.zero;
+        rb.isKinematic = true;
+        if (gunObject != null)
+            gunObject.SetActive(false);
         if (animator != null)
             animator.SetTrigger("Died");
         OnPlayerDeath?.Invoke();
