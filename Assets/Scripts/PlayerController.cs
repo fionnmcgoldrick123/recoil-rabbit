@@ -21,6 +21,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float coyoteTime = 0.1f;
     [SerializeField] private float jumpBufferTime = 0.12f;
 
+    [Header("Wall Jump")]
+    [SerializeField] private float wallJumpUpForce = 14f;
+    [SerializeField] private float wallJumpSideForce = 10f;
+    [SerializeField] private float wallCheckDistance = 0.3f;
+    [SerializeField] private float wallJumpLockTime = 0.15f;
+    [SerializeField] private LayerMask wallLayer;
+
     [Header("Gravity")]
     [SerializeField] private float baseGravityScale = 3f;
     [SerializeField] private float fallGravityScale = 6f;
@@ -53,6 +60,8 @@ public class PlayerController : MonoBehaviour
     private bool jumpCut;
     private bool isJumping;
     private bool bhopProtected;
+    private int wallDirection;
+    private float wallJumpLockTimer;
 
     public void SetBhopProtected() { bhopProtected = true; }
 
@@ -76,6 +85,7 @@ public class PlayerController : MonoBehaviour
 
         wasGrounded = isGrounded;
         UpdateGroundedState();
+        UpdateWallState();
         HandleJumpInput();
     }
 
@@ -83,9 +93,13 @@ public class PlayerController : MonoBehaviour
     {
         if (isDead) return;
 
+        if (wallJumpLockTimer > 0f)
+            wallJumpLockTimer -= Time.fixedDeltaTime;
+
         ApplyMovement();
         ApplyGravityScale();
         TryJump();
+        TryWallJump();
 
         float clampedY = Mathf.Max(rb.linearVelocity.y, -maxFallSpeed);
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, clampedY);
@@ -108,6 +122,27 @@ public class PlayerController : MonoBehaviour
         {
             coyoteTimer -= Time.deltaTime;
         }
+    }
+
+    private void UpdateWallState()
+    {
+        if (isGrounded)
+        {
+            wallDirection = 0;
+            return;
+        }
+
+        bool wallRight = Physics2D.Raycast(transform.position, Vector2.right, wallCheckDistance, wallLayer);
+        bool wallLeft  = Physics2D.Raycast(transform.position, Vector2.left,  wallCheckDistance, wallLayer);
+
+        float moveX = Input.GetAxisRaw("Horizontal");
+
+        if (wallRight && moveX > 0.01f)
+            wallDirection = 1;
+        else if (wallLeft && moveX < -0.01f)
+            wallDirection = -1;
+        else
+            wallDirection = 0;
     }
 
     private void HandleJumpInput()
@@ -134,6 +169,9 @@ public class PlayerController : MonoBehaviour
             bhopProtected = false;
             return;
         }
+
+        if (wallJumpLockTimer > 0f)
+            return;
 
         float moveX = Input.GetAxisRaw("Horizontal");
         float inputSpeed = moveX * maxSpeed;
@@ -213,6 +251,21 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void TryWallJump()
+    {
+        if (jumpBufferTimer <= 0 || wallDirection == 0 || isGrounded)
+            return;
+
+        isJumping = true;
+        jumpCut = false;
+        jumpBufferTimer = 0;
+        wallJumpLockTimer = wallJumpLockTime;
+        bhopProtected = true;
+
+        float sideVelocity = -wallDirection * wallJumpSideForce;
+        rb.linearVelocity = new Vector2(sideVelocity, wallJumpUpForce);
+    }
+
     public void LaunchFromSpring(float springForce)
     {
         if (isDead)
@@ -271,5 +324,8 @@ public class PlayerController : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawLine(transform.position, transform.position + Vector3.down * groundCheckDistance);
+        Gizmos.color = Color.blue;
+        Gizmos.DrawLine(transform.position, transform.position + Vector3.right * wallCheckDistance);
+        Gizmos.DrawLine(transform.position, transform.position + Vector3.left  * wallCheckDistance);
     }
 }
