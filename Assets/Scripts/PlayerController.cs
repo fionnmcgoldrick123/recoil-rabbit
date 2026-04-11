@@ -240,7 +240,7 @@ public class PlayerController : MonoBehaviour
         isJumping = false;
         jumpCut = false;
         rb.linearVelocity = Vector2.zero;
-        rb.isKinematic = true;
+        rb.bodyType = RigidbodyType2D.Kinematic;
         if (gunObject != null)
             gunObject.SetActive(false);
         if (animator != null)
