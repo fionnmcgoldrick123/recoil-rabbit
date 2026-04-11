@@ -45,8 +45,6 @@ public class PlayerAnimator : MonoBehaviour
         // IsGrounded parameter — from PlayerController's raycast check
         bool isGrounded = playerController.IsGrounded;
         animator.SetBool("IsGrounded", isGrounded);
-
-        Debug.Log($"Speed: {speed}, IsGrounded: {isGrounded}");
     }
 }
 

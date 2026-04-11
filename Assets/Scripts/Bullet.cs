@@ -8,6 +8,9 @@ public class Bullet : MonoBehaviour
     private Vector2 origin;
 
     private WeaponController owner;
+    private Animator animator;
+    private Rigidbody2D rb;
+    private bool hasHit = false;
 
     public void Init(Vector2 direction, float speed, float range, int damage, bool isRevolverBullet, WeaponController owner)
     {
@@ -17,22 +20,28 @@ public class Bullet : MonoBehaviour
         this.owner = owner;
         this.origin = transform.position;
 
-        GetComponent<Rigidbody2D>().linearVelocity = direction.normalized * speed;
+        rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+
+        rb.linearVelocity = direction.normalized * speed;
     }
 
     private void Update()
     {
         if (Vector2.Distance(origin, transform.position) >= range)
         {
-            Destroy(gameObject);
+            PlayHitAnimationAndDestroy();
         }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (hasHit) return;
+
         Enemy enemy = other.GetComponent<Enemy>();
         if (enemy != null)
         {
+            hasHit = true;
             bool killed = enemy.TakeDamage(damage);
 
             if (isRevolverBullet && killed)
@@ -40,14 +49,40 @@ public class Bullet : MonoBehaviour
                 owner?.OnRevolverKill();
             }
 
-            Destroy(gameObject);
+            PlayHitAnimationAndDestroy();
             return;
         }
 
-        // Destroy on anything tagged as ground/wall, ignore player
+        // Hit on anything tagged as ground/wall, ignore player
         if (!other.CompareTag("Player"))
+        {
+            hasHit = true;
+            PlayHitAnimationAndDestroy();
+        }
+    }
+
+    private void PlayHitAnimationAndDestroy()
+    {
+        // Stop movement
+        rb.linearVelocity = Vector2.zero;
+
+        // Disable collision so it doesn't trigger again
+        GetComponent<Collider2D>().enabled = false;
+
+        // Play hit animation if animator exists
+        if (animator != null)
+        {
+            animator.SetTrigger("Hit");
+            // Animation event at the end will call OnHitAnimationComplete()
+        }
+        else
         {
             Destroy(gameObject);
         }
+    }
+
+    public void OnHitAnimationComplete()
+    {
+        Destroy(gameObject);
     }
 }

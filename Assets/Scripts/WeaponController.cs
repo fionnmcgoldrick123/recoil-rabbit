@@ -10,6 +10,13 @@ public class WeaponController : MonoBehaviour
     [SerializeField] private Transform firePoint;
     [SerializeField] private Rigidbody2D playerRb;
     [SerializeField] private GunView gunView;
+    [SerializeField] private CameraShake cameraShake;
+
+    [Header("Camera Shake")]
+    [SerializeField] private float revolverShakeIntensity = 0.05f;
+    [SerializeField] private float revolverShakeDuration = 0.08f;
+    [SerializeField] private float shotgunShakeIntensity = 0.15f;
+    [SerializeField] private float shotgunShakeDuration = 0.12f;
 
     [Header("UI (Optional)")]
     [SerializeField] private TMPro.TextMeshProUGUI shotgunAmmoText;
@@ -31,6 +38,8 @@ public class WeaponController : MonoBehaviour
             playerRb = GetComponentInParent<Rigidbody2D>();
         if (gunView == null)
             gunView = GetComponentInChildren<GunView>();
+        if (cameraShake == null)
+            cameraShake = FindObjectOfType<CameraShake>();
     }
 
     private void Update()
@@ -59,6 +68,9 @@ public class WeaponController : MonoBehaviour
         revolverCooldown = 1f / revolverStats.fireRate;
         Vector2 direction = GetMouseDirection();
         SpawnBullets(revolverStats, direction, isRevolver: true);
+
+        if (cameraShake != null)
+            cameraShake.Shake(revolverShakeIntensity, revolverShakeDuration);
     }
 
     private void TryFireShotgun()
@@ -79,6 +91,9 @@ public class WeaponController : MonoBehaviour
             Vector2 recoil = -direction.normalized * shotgunStats.playerRecoilForce;
             playerRb.AddForce(recoil, ForceMode2D.Impulse);
         }
+
+        if (cameraShake != null)
+            cameraShake.Shake(shotgunShakeIntensity, shotgunShakeDuration);
     }
 
     private void SpawnBullets(GunStats stats, Vector2 direction, bool isRevolver)
@@ -88,8 +103,6 @@ public class WeaponController : MonoBehaviour
             Debug.LogError($"Bullet prefab not assigned for {stats.name}!");
             return;
         }
-
-        Debug.Log($"Spawning {stats.pelletsPerShot} pellets - SpreadAngle: {stats.spreadAngle}, Range: {stats.bulletRange}, Speed: {stats.bulletSpeed}");
 
         for (int i = 0; i < stats.pelletsPerShot; i++)
         {
@@ -116,8 +129,6 @@ public class WeaponController : MonoBehaviour
             bulletGo.transform.rotation = Quaternion.Euler(0, 0, rotation);
 
             bullet.Init(bulletDirection, stats.bulletSpeed, stats.bulletRange, stats.damage, isRevolver, this);
-
-            Debug.Log($"Pellet {i + 1}/{stats.pelletsPerShot} spawned - Direction: {bulletDirection}, Speed: {stats.bulletSpeed}");
         }
     }
 
