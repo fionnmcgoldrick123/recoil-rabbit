@@ -35,20 +35,17 @@ public class FlyingEnemy : MonoBehaviour
     {
         Vector3 targetPos = transform.position + moveDirection * moveSpeed * Time.deltaTime;
 
-        // Clamp position within max distance from start
         if (moveHorizontal)
         {
             float xDiff = targetPos.x - startPosition.x;
             targetPos.x = startPosition.x + Mathf.Clamp(xDiff, -maxDistance, maxDistance);
 
-            // Flip sprite when changing direction
             if (Mathf.Abs(moveDirection.x) > 0.01f)
             {
                 if (spriteRenderer != null)
                     spriteRenderer.flipX = moveDirection.x < 0;
             }
 
-            // Flip direction at boundaries
             if (Mathf.Abs(xDiff) >= maxDistance)
                 moveDirection.x *= -1f;
         }
@@ -57,7 +54,6 @@ public class FlyingEnemy : MonoBehaviour
             float yDiff = targetPos.y - startPosition.y;
             targetPos.y = startPosition.y + Mathf.Clamp(yDiff, -maxDistance, maxDistance);
 
-            // Flip direction at boundaries
             if (Mathf.Abs(yDiff) >= maxDistance)
                 moveDirection.y *= -1f;
         }

@@ -39,7 +39,7 @@ public class WeaponController : MonoBehaviour
         if (gunView == null)
             gunView = GetComponentInChildren<GunView>();
         if (cameraShake == null)
-            cameraShake = FindObjectOfType<CameraShake>();
+            cameraShake = FindFirstObjectByType<CameraShake>();
     }
 
     private void Update()
@@ -134,7 +134,6 @@ public class WeaponController : MonoBehaviour
 
     private Vector2 GetMouseDirection()
     {
-        // Direction from the firePoint (barrel tip) to the mouse cursor in world space
         Vector2 mouseWorld = mainCamera.ScreenToWorldPoint(Input.mousePosition);
         Vector2 dir = (mouseWorld - (Vector2)firePoint.position);
         return dir.sqrMagnitude > 0.001f ? dir.normalized : Vector2.right;

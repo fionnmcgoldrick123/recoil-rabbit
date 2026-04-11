@@ -31,18 +31,15 @@ public class Enemy : MonoBehaviour
 
     private void Die()
     {
-        // Disable collision immediately
         if (enemyCollider != null)
             enemyCollider.enabled = false;
 
-        // Play death animation if animator exists
         if (animator != null)
         {
             animator.SetTrigger("Hit");
         }
         else
         {
-            // No animator, hide and destroy immediately
             if (spriteRenderer != null)
                 spriteRenderer.enabled = false;
             Destroy(gameObject);
@@ -51,11 +48,8 @@ public class Enemy : MonoBehaviour
 
     public void OnDeathAnimationComplete()
     {
-        // Disable sprite renderer
         if (spriteRenderer != null)
             spriteRenderer.enabled = false;
-        
-        // Destroy the game object
         Destroy(gameObject);
     }
 }

@@ -53,7 +53,6 @@ public class Bullet : MonoBehaviour
             return;
         }
 
-        // Hit on anything tagged as ground/wall, ignore player
         if (!other.CompareTag("Player"))
         {
             hasHit = true;
@@ -63,17 +62,11 @@ public class Bullet : MonoBehaviour
 
     private void PlayHitAnimationAndDestroy()
     {
-        // Stop movement
         rb.linearVelocity = Vector2.zero;
-
-        // Disable collision so it doesn't trigger again
         GetComponent<Collider2D>().enabled = false;
-
-        // Play hit animation if animator exists
         if (animator != null)
         {
             animator.SetTrigger("Hit");
-            // Animation event at the end will call OnHitAnimationComplete()
         }
         else
         {

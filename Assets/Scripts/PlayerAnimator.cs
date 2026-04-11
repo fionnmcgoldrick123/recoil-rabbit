@@ -42,7 +42,6 @@ public class PlayerAnimator : MonoBehaviour
         float speed = Mathf.Abs(rb.linearVelocity.x);
         animator.SetFloat("Speed", speed);
 
-        // IsGrounded parameter — from PlayerController's raycast check
         bool isGrounded = playerController.IsGrounded;
         animator.SetBool("IsGrounded", isGrounded);
     }

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -32,9 +33,13 @@ public class PlayerController : MonoBehaviour
     [Header("Health")]
     [SerializeField] private bool isDead = false;
 
+    [Header("References")]
+    [SerializeField] private GameObject gunObject;
+
     public UnityEvent OnPlayerDeath = new UnityEvent();
 
     private Rigidbody2D rb;
+    private Animator animator;
     private bool isGrounded;
     private bool wasGrounded;
 
@@ -47,7 +52,15 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponentInChildren<Animator>();
         rb.gravityScale = baseGravityScale;
+
+        if (gunObject == null)
+        {
+            WeaponController weaponController = GetComponentInChildren<WeaponController>();
+            if (weaponController != null)
+                gunObject = weaponController.gameObject;
+        }
     }
 
     private void Update()
@@ -120,29 +133,23 @@ public class PlayerController : MonoBehaviour
 
         if (overSpeed)
         {
-            // Player has momentum above max speed (e.g. from shotgun blast)
-            // Gently bleed off the overspeed — don't snap to max
             float direction = Mathf.Sign(currentX);
 
             if (hasInput && Mathf.Sign(moveX) == direction)
             {
-                // Holding direction with momentum — slow bleed
                 newX = Mathf.MoveTowards(currentX, direction * maxSpeed, overSpeedDeceleration * Time.fixedDeltaTime);
             }
             else if (hasInput)
             {
-                // Input opposite to momentum — decelerate faster but still carry speed
                 newX = Mathf.MoveTowards(currentX, inputSpeed, (overSpeedDeceleration * 2f) * Time.fixedDeltaTime);
             }
             else
             {
-                // No input — bleed off naturally
                 newX = Mathf.MoveTowards(currentX, 0f, overSpeedDeceleration * Time.fixedDeltaTime);
             }
         }
         else
         {
-            // Normal movement — standard accel/decel
             float accel;
             if (isGrounded)
                 accel = hasInput ? groundAcceleration : groundDeceleration;
@@ -152,7 +159,6 @@ public class PlayerController : MonoBehaviour
             newX = Mathf.MoveTowards(currentX, inputSpeed, accel * Time.fixedDeltaTime);
         }
 
-        // Clamp to max overspeed ceiling to prevent infinite acceleration
         newX = Mathf.Clamp(newX, -maxOverSpeed, maxOverSpeed);
 
         rb.linearVelocity = new Vector2(newX, rb.linearVelocity.y);
@@ -198,10 +204,19 @@ public class PlayerController : MonoBehaviour
 
     private void Die()
     {
+        //disable gun object
+        if (gunObject != null)
+            gunObject.SetActive(false);
         isDead = true;
         rb.linearVelocity = Vector2.zero;
-        rb.isKinematic = true;
+        if (animator != null)
+            animator.SetTrigger("Died");
         OnPlayerDeath?.Invoke();
+    }
+
+    public void OnDeathAnimationComplete()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     private void OnDrawGizmos()

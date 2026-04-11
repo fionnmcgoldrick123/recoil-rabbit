@@ -1,10 +1,5 @@
 using UnityEngine;
 
-/// <summary>
-/// Attach to the gun sprite GameObject (child of player).
-/// The gun sprite should point RIGHT by default (along +X).
-/// FirePoint should be a child of the gun, offset in +X at the barrel tip.
-/// </summary>
 public class GunView : MonoBehaviour
 {
     [Header("References")]
@@ -41,7 +36,6 @@ public class GunView : MonoBehaviour
         float angle = Mathf.Atan2(dirToMouse.y, dirToMouse.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0, 0, angle);
 
-        // Only flip if X direction is significant enough (deadzone prevents flipping when aiming straight up/down)
         bool facingLeft = Mathf.Abs(dirToMouse.x) > horizontalDeadzone ? dirToMouse.x < 0 : lastFacingLeft;
         lastFacingLeft = facingLeft;
 
@@ -51,7 +45,6 @@ public class GunView : MonoBehaviour
             playerScale.x = facingLeft ? -Mathf.Abs(playerScale.x) : Mathf.Abs(playerScale.x);
             playerBody.localScale = playerScale;
 
-            // Counter-flip gun so it doesn't flip with player
             Vector3 gunScale = transform.localScale;
             gunScale.x = playerScale.x < 0 ? -1f : 1f;
             transform.localScale = gunScale;
