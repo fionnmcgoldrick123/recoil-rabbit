@@ -13,10 +13,10 @@ public class WeaponController : MonoBehaviour
     [SerializeField] private CameraShake cameraShake;
 
     [Header("Camera Shake")]
-    [SerializeField] private float revolverShakeIntensity = 0.05f;
-    [SerializeField] private float revolverShakeDuration = 0.08f;
-    [SerializeField] private float shotgunShakeIntensity = 0.15f;
-    [SerializeField] private float shotgunShakeDuration = 0.12f;
+    [SerializeField] private float revolverShakeIntensity = 0.015f;
+    [SerializeField] private float revolverShakeDuration = 0.05f;
+    [SerializeField] private float shotgunShakeIntensity = 0.03f;
+    [SerializeField] private float shotgunShakeDuration = 0.07f;
 
     [Header("UI (Optional)")]
     [SerializeField] private TMPro.TextMeshProUGUI shotgunAmmoText;
