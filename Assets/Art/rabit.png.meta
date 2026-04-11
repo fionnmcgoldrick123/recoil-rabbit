@@ -207,10 +207,10 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 16
+        width: 28
         height: 20
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.61, y: 0.55376774}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -227,12 +227,12 @@ TextureImporter:
       name: rabit_1
       rect:
         serializedVersion: 2
-        x: 16
+        x: 28
         y: 0
-        width: 16
+        width: 28
         height: 20
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.6042438, y: 0.5537677}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -249,12 +249,12 @@ TextureImporter:
       name: rabit_2
       rect:
         serializedVersion: 2
-        x: 32
+        x: 56
         y: 0
-        width: 16
+        width: 28
         height: 20
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.61, y: 0.5537677}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -271,12 +271,12 @@ TextureImporter:
       name: rabit_3
       rect:
         serializedVersion: 2
-        x: 48
+        x: 84
         y: 0
-        width: 16
+        width: 28
         height: 20
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.61, y: 0.5537677}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -293,12 +293,12 @@ TextureImporter:
       name: rabit_4
       rect:
         serializedVersion: 2
-        x: 64
+        x: 112
         y: 0
-        width: 16
+        width: 28
         height: 20
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.61, y: 0.5537677}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -315,12 +315,12 @@ TextureImporter:
       name: rabit_5
       rect:
         serializedVersion: 2
-        x: 80
+        x: 140
         y: 0
-        width: 16
+        width: 28
         height: 20
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.61, y: 0.5537677}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -337,12 +337,12 @@ TextureImporter:
       name: rabit_6
       rect:
         serializedVersion: 2
-        x: 96
+        x: 168
         y: 0
-        width: 16
+        width: 28
         height: 20
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.61, y: 0.5537677}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -359,12 +359,12 @@ TextureImporter:
       name: rabit_7
       rect:
         serializedVersion: 2
-        x: 112
+        x: 196
         y: 0
-        width: 16
+        width: 28
         height: 20
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.61, y: 0.5537677}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -381,12 +381,12 @@ TextureImporter:
       name: rabit_8
       rect:
         serializedVersion: 2
-        x: 128
+        x: 224
         y: 0
-        width: 16
+        width: 28
         height: 20
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.61, y: 0.5537677}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -403,12 +403,12 @@ TextureImporter:
       name: rabit_9
       rect:
         serializedVersion: 2
-        x: 144
+        x: 252
         y: 0
-        width: 16
+        width: 28
         height: 20
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.61, y: 0.5537677}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -425,12 +425,12 @@ TextureImporter:
       name: rabit_10
       rect:
         serializedVersion: 2
-        x: 160
+        x: 280
         y: 0
-        width: 16
+        width: 28
         height: 20
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.61, y: 0.5537677}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []

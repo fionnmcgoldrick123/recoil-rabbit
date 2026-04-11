@@ -15,8 +15,8 @@ TagManager:
   - Ground
   - Enemy
   - Hazard
-  - 
-  - 
+  - Trees
+  - TileMap
   - 
   - 
   - 
@@ -41,6 +41,9 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Trees
+    uniqueID: 2479580063
     locked: 0
   - name: Player
     uniqueID: 4110617903

@@ -225,7 +225,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -184349393
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 1
   m_Sprite: {fileID: 5851585598304553043, guid: fefa21ea39f753443b28759b0a2377f5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -300,6 +300,7 @@ GameObject:
   - component: {fileID: 7131254550150526233}
   - component: {fileID: 8050381305028736681}
   - component: {fileID: 3526585793338227938}
+  - component: {fileID: 7444892227907233762}
   - component: {fileID: 240532935157104147}
   - component: {fileID: 3102248566110250253}
   - component: {fileID: 6687175735907586506}
@@ -380,7 +381,7 @@ MonoBehaviour:
   groundCheckDistance: 0.65
   groundLayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 1088
   isDead: 0
   gunObject: {fileID: 7003045570502132115}
   OnPlayerDeath:
@@ -400,6 +401,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 6338949584525562850}
   playerController: {fileID: 8050381305028736681}
+--- !u!114 &7444892227907233762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1473489899234942715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cae6d8d1b66c2b42830da240c4ea5c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!61 &240532935157104147
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -434,7 +447,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: -0.055256873}
+  m_Offset: {x: -0.075648844, y: -0.1377827}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -444,7 +457,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1.1105137}
+  m_Size: {x: 0.5873698, y: 1.0967591}
   m_EdgeRadius: 0
 --- !u!50 &3102248566110250253
 Rigidbody2D:
@@ -507,7 +520,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.07908732, y: -0.13754356}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -517,7 +530,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.6080011, y: 1.0962803}
   m_EdgeRadius: 0
 --- !u!1 &5986547509777393741
 GameObject:
@@ -626,7 +639,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1969592219
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 1
   m_Sprite: {fileID: -5033546409207523041, guid: 36be8c84d1e06ff4e8fa43d51fefd4e0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
