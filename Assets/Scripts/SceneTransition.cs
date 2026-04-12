@@ -1,16 +1,30 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class SceneTransition : MonoBehaviour
 {
     private const string StartTrigger = "Start";
     private const string EndTrigger = "End";
 
+    [System.Serializable]
+    private class LevelLabelEntry
+    {
+        public string sceneName;
+        public string levelText;
+    }
+
     private static SceneTransition instance;
 
     [Header("References")]
     [SerializeField] private Animator animator;
+    [SerializeField] private TMP_Text levelText;
+
+    [Header("Level Labels")]
+    [SerializeField] private string labelPrefix = "WORLD";
+    [SerializeField] private List<LevelLabelEntry> levelLabels = new List<LevelLabelEntry>();
 
     private bool isTransitioning;
     private string pendingSceneName;
@@ -32,11 +46,15 @@ public class SceneTransition : MonoBehaviour
         if (animator == null)
             animator = GetComponent<Animator>();
 
+        if (levelText == null)
+            levelText = GetComponentInChildren<TMP_Text>(true);
+
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     private void Start()
     {
+        RefreshLevelText(SceneManager.GetActiveScene().name);
         BeginStartTransition();
     }
 
@@ -51,6 +69,7 @@ public class SceneTransition : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
     {
+        RefreshLevelText(scene.name);
         BeginStartTransition();
     }
 
@@ -158,6 +177,34 @@ public class SceneTransition : MonoBehaviour
         animator.SetTrigger(StartTrigger);
 
         isTransitioning = false;
+    }
+
+    private void RefreshLevelText(string sceneName)
+    {
+        if (levelText == null)
+            return;
+
+        levelText.text = GetLevelLabel(sceneName);
+    }
+
+    private string GetLevelLabel(string sceneName)
+    {
+        string levelValue = sceneName;
+
+        for (int i = 0; i < levelLabels.Count; i++)
+        {
+            LevelLabelEntry entry = levelLabels[i];
+            if (entry != null && entry.sceneName == sceneName && !string.IsNullOrWhiteSpace(entry.levelText))
+            {
+                levelValue = entry.levelText;
+                break;
+            }
+        }
+
+        if (string.IsNullOrWhiteSpace(labelPrefix))
+            return levelValue;
+
+        return $"{labelPrefix}\n{levelValue}";
     }
 
     private void ExecuteLoad()

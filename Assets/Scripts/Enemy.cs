@@ -73,6 +73,9 @@ public class Enemy : MonoBehaviour
 
     public bool TakeDamage(int amount)
     {
+        if (isDead)
+            return false;
+
         currentHealth -= amount;
 
         if (currentHealth <= 0)

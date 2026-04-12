@@ -373,7 +373,7 @@ MonoBehaviour:
   airDeceleration: 30
   overSpeedDeceleration: 91
   overSpeedGroundedBleed: 5
-  maxOverSpeed: 105.5
+  maxOverSpeed: 1000
   jumpForce: 12
   coyoteTime: 0.1
   jumpBufferTime: 0.1
@@ -394,7 +394,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1088
   isDead: 0
-  gunObject: {fileID: 0}
+  gunObject: {fileID: 7003045570502132115}
   OnPlayerDeath:
     m_PersistentCalls:
       m_Calls: []

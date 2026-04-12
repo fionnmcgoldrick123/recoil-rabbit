@@ -69,6 +69,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 76670395300839263}
+  levelText: {fileID: 8253277631020195614}
+  labelPrefix: WORLD
+  levelLabels:
+  - sceneName: 1-1
+    levelText: 1-1
 --- !u!1 &3098745511261916977
 GameObject:
   m_ObjectHideFlags: 0
