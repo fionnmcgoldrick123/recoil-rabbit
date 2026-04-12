@@ -20,6 +20,8 @@ public class WeaponController : MonoBehaviour
 
     [Header("UI (Optional)")]
     [SerializeField] private TMPro.TextMeshProUGUI shotgunAmmoText;
+    [SerializeField] private Animator shotgunAmmoAnimator;
+    
 
     private float revolverCooldown;
     private float shotgunCooldown;
@@ -91,15 +93,10 @@ public class WeaponController : MonoBehaviour
         Vector2 direction = GetMouseDirection();
         SpawnBullets(shotgunStats, direction, isRevolver: false);
 
-        // Propel player in the opposite direction of the shot.
-        // We set the velocity component along the recoil axis directly so the
-        // push is always the same magnitude regardless of current player velocity.
         if (playerRb != null && shotgunStats.playerRecoilForce > 0)
         {
             Vector2 recoilDir = -direction.normalized;
             Vector2 currentVel = playerRb.linearVelocity;
-
-            // Project current velocity onto the recoil direction.
             float currentAlongRecoil = Vector2.Dot(currentVel, recoilDir);
 
             // Only override if the player isn't already moving faster than the recoil force in that direction.
@@ -165,6 +162,10 @@ public class WeaponController : MonoBehaviour
     public void OnRevolverKill()
     {
         shotgunAmmo++;
+        if (shotgunAmmoAnimator != null)
+        {
+            shotgunAmmoAnimator.SetTrigger("Bullet");
+        }
     }
 
     private void UpdateAmmoUI()
