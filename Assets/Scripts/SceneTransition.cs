@@ -16,7 +16,7 @@ public class SceneTransition : MonoBehaviour
         public string levelText;
     }
 
-    private static SceneTransition instance;
+    public static SceneTransition Instance;
 
     [Header("References")]
     [SerializeField] private Animator animator;
@@ -34,13 +34,13 @@ public class SceneTransition : MonoBehaviour
 
     private void Awake()
     {
-        if (instance != null && instance != this)
+        if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
             return;
         }
 
-        instance = this;
+        Instance = this;
         DontDestroyOnLoad(gameObject);
 
         if (animator == null)
@@ -61,10 +61,10 @@ public class SceneTransition : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (instance == this)
+        if (Instance == this)
         {
             SceneManager.sceneLoaded -= OnSceneLoaded;
-            instance = null;
+            Instance = null;
         }
     }
 
@@ -77,24 +77,24 @@ public class SceneTransition : MonoBehaviour
 
     public static void LoadScene(string sceneName)
     {
-        if (instance == null)
+        if (Instance == null)
         {
             SceneManager.LoadScene(sceneName);
             return;
         }
 
-        instance.BeginSceneLoad(sceneName, -1);
+        Instance.BeginSceneLoad(sceneName, -1);
     }
 
     public static void LoadScene(int buildIndex)
     {
-        if (instance == null)
+        if (Instance == null)
         {
             SceneManager.LoadScene(buildIndex);
             return;
         }
 
-        instance.BeginSceneLoad(null, buildIndex);
+        Instance.BeginSceneLoad(null, buildIndex);
     }
 
     public static void ReloadActiveScene()

@@ -43,6 +43,7 @@ public class AudioManager : MonoBehaviour
 
     private int currentMusicIndex = -1;
     private bool isPlaylistPlaying;
+    private bool isMusicPausedByFocusLoss;
     private readonly List<AudioSource> musicTracks = new List<AudioSource>();
     private readonly Dictionary<AudioSource, float> musicTrackBaseVolumes = new Dictionary<AudioSource, float>();
     private AudioSource currentMusicSource;
@@ -76,7 +77,7 @@ public class AudioManager : MonoBehaviour
 
     private void Update()
     {
-        if (!isPlaylistPlaying || musicTracks.Count == 0)
+        if (!isPlaylistPlaying || isMusicPausedByFocusLoss || musicTracks.Count == 0)
             return;
 
         if (currentMusicSource == null)
@@ -155,6 +156,7 @@ public class AudioManager : MonoBehaviour
     public void PlayMusic(AudioClip clip, bool loop = true)
     {
         isPlaylistPlaying = false;
+        isMusicPausedByFocusLoss = false;
 
         StopAllMusicTracks();
 
@@ -171,6 +173,7 @@ public class AudioManager : MonoBehaviour
 
         currentMusicIndex = Mathf.Clamp(startingTrackIndex, 0, musicTracks.Count - 1);
         isPlaylistPlaying = true;
+        isMusicPausedByFocusLoss = false;
         PlayCurrentMusicTrack();
     }
 
@@ -189,9 +192,29 @@ public class AudioManager : MonoBehaviour
     public void StopMusic()
     {
         isPlaylistPlaying = false;
+        isMusicPausedByFocusLoss = false;
         currentMusicSource = null;
         musicSource.Stop();
         StopAllMusicTracks();
+    }
+
+    private void OnApplicationFocus(bool hasFocus)
+    {
+        if (hasFocus)
+        {
+            ResumeMusicAfterFocusLoss();
+            return;
+        }
+
+        PauseMusicForFocusLoss();
+    }
+
+    private void OnApplicationPause(bool paused)
+    {
+        if (paused)
+            PauseMusicForFocusLoss();
+        else
+            ResumeMusicAfterFocusLoss();
     }
 
     public void SetMasterVolume(float volume)
@@ -245,6 +268,41 @@ public class AudioManager : MonoBehaviour
         currentMusicSource.loop = false;
         currentMusicSource.volume = GetMusicBaseVolume(currentMusicSource) * musicVolume * masterVolume;
         currentMusicSource.Play();
+    }
+
+    private void PauseMusicForFocusLoss()
+    {
+        if (!isPlaylistPlaying || isMusicPausedByFocusLoss)
+            return;
+
+        isMusicPausedByFocusLoss = true;
+
+        if (currentMusicSource != null && currentMusicSource.isPlaying)
+            currentMusicSource.Pause();
+
+        if (musicSource != null && musicSource.isPlaying)
+            musicSource.Pause();
+    }
+
+    private void ResumeMusicAfterFocusLoss()
+    {
+        if (!isPlaylistPlaying || !isMusicPausedByFocusLoss)
+            return;
+
+        isMusicPausedByFocusLoss = false;
+
+        if (currentMusicSource != null)
+        {
+            currentMusicSource.volume = GetMusicBaseVolume(currentMusicSource) * musicVolume * masterVolume;
+            currentMusicSource.UnPause();
+            return;
+        }
+
+        if (musicSource != null)
+        {
+            musicSource.volume = musicBaseVolume * musicVolume * masterVolume;
+            musicSource.UnPause();
+        }
     }
 
     private void CacheMusicTracks()
