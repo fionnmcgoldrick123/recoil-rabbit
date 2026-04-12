@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: c0d070f7d946a9449b490d2333c00d80
+guid: 411160e3a3bbec94987bfb1b9682ed8b
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -98,7 +98,7 @@ ScriptedImporter:
     addSortingGroup: 1
     addShadowCasters: 0
   importFileNodeState: 1
-  platformSettingsDirtyTick: 639115178629375458
+  platformSettingsDirtyTick: 639116252719916276
   textureAssetName: 
   singleSpriteImportData:
   - name: 
@@ -123,19 +123,19 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: spring
+  - name: Icon
     originalName: 
     pivot: {x: 0.5, y: 0}
-    alignment: 7
+    alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
     rect:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 14
-      height: 3
-    spriteID: 46b67a137b56b494b9e4159247416d74
+      width: 16
+      height: 16
+    spriteID: 323d08a05b3fea3418862b718e957325
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -148,25 +148,25 @@ ScriptedImporter:
   asepriteLayers:
   - layerIndex: 0
     uuid:
-      value0: 825858065
+      value0: 446311563
       value1: 0
       value2: 0
       value3: 0
     guid: 0
-    name: spring
+    name: Icon
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: spring
+    - name: Icon
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
-        x: 1
-        y: 1
-        width: 14
-        height: 3
-      spriteId: 46b67a137b56b494b9e4159247416d74
+        x: 0
+        y: 0
+        width: 16
+        height: 16
+      spriteId: 323d08a05b3fea3418862b718e957325
     linkedCells: []
     parentIndex: -1
   platformSettings:
@@ -246,4 +246,4 @@ ScriptedImporter:
   secondarySpriteTextures: []
   spritePackingTag: 
   canvasSize: {x: 16, y: 16}
-  previousTextureSize: {x: 32, y: 16}
+  previousTextureSize: {x: 32, y: 32}

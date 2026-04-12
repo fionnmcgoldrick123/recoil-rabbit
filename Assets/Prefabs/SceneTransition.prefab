@@ -74,6 +74,7 @@ MonoBehaviour:
   levelLabels:
   - sceneName: 1-1
     levelText: 1-1
+  startTransitionDuration: 0.25
 --- !u!1 &3098745511261916977
 GameObject:
   m_ObjectHideFlags: 0
@@ -399,7 +400,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6430408356779073835}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
