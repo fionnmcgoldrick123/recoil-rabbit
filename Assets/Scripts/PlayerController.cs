@@ -261,6 +261,9 @@ public class PlayerController : MonoBehaviour
             if (Mathf.Abs(rb.linearVelocity.x) > maxSpeed)
                 bhopProtected = true;
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+
+            if (AudioManager.Instance != null)
+                AudioManager.Instance.PlayJump();
         }
     }
 
@@ -280,6 +283,9 @@ public class PlayerController : MonoBehaviour
 
         float sideVelocity = -jumpWallDirection * wallJumpSideForce;
         rb.linearVelocity = new Vector2(sideVelocity, wallJumpUpForce);
+
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlayJump();
     }
 
     private bool IsMovingIntoWall(int direction)
@@ -338,6 +344,10 @@ public class PlayerController : MonoBehaviour
             animator.ResetTrigger("Died");
             animator.SetTrigger("Died");
         }
+
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlayDeath();
+
         OnPlayerDeath?.Invoke();
     }
 

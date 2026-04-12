@@ -31,6 +31,9 @@ public class LevelGoal : MonoBehaviour
             collected = true;
             if (particles != null)
                 particles.Play();
+
+            if (AudioManager.Instance != null)
+                AudioManager.Instance.PlayLevelGoal();
                 
             if (spriteRenderer != null)
                 spriteRenderer.enabled = false;

@@ -79,6 +79,9 @@ public class WeaponController : MonoBehaviour
         Vector2 direction = GetMouseDirection();
         SpawnBullets(revolverStats, direction, isRevolver: true);
 
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlayRevolverShot();
+
         if (cameraShake != null)
             cameraShake.Shake(revolverShakeIntensity, revolverShakeDuration);
     }
@@ -94,6 +97,9 @@ public class WeaponController : MonoBehaviour
 
         Vector2 direction = GetMouseDirection();
         SpawnBullets(shotgunStats, direction, isRevolver: false);
+
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlayShotgunShot();
 
         if (playerRb != null && shotgunStats.playerRecoilForce > 0)
         {
