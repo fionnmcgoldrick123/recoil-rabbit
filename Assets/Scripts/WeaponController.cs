@@ -171,7 +171,7 @@ public class WeaponController : MonoBehaviour
     {
         if (shotgunAmmoText != null)
         {
-            shotgunAmmoText.text = $"Shells: {shotgunAmmo}";
+            shotgunAmmoText.text = shotgunAmmo.ToString();
         }
     }
 
