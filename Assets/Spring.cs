@@ -22,6 +22,9 @@ public class Spring : MonoBehaviour
                 animator.ResetTrigger("Spring");
                 animator.SetTrigger("Spring");
 
+                if (AudioManager.Instance != null)
+                    AudioManager.Instance.PlaySpringBounce();
+
                 if (resetRoutine != null)
                     StopCoroutine(resetRoutine);
 
