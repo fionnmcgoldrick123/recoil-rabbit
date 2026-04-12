@@ -368,33 +368,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSpeed: 8
   groundAcceleration: 90
-  groundDeceleration: 60
+  groundDeceleration: 100
   airAcceleration: 100
   airDeceleration: 30
-  overSpeedDeceleration: 20
-  overSpeedGroundedBleed: 2
-  maxOverSpeed: 25
+  overSpeedDeceleration: 91
+  overSpeedGroundedBleed: 5
+  maxOverSpeed: 105.5
   jumpForce: 12
   coyoteTime: 0.1
   jumpBufferTime: 0.1
   wallJumpUpForce: 14
   wallJumpSideForce: 10
-  wallCheckDistance: 0.3
+  wallCheckDistance: 0.5
   wallJumpBufferTime: 0.1
-  wallJumpLockTime: 0.15
+  wallJumpLockTime: 0.1
   wallLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1024
   baseGravityScale: 3
   fallGravityScale: 6
   jumpCutGravityScale: 12
-  maxFallSpeed: 20
-  groundCheckDistance: 0.65
+  maxFallSpeed: 13
+  groundCheckDistance: 0.8
   groundLayer:
     serializedVersion: 2
     m_Bits: 1088
   isDead: 0
-  gunObject: {fileID: 7003045570502132115}
+  gunObject: {fileID: 0}
   OnPlayerDeath:
     m_PersistentCalls:
       m_Calls: []
@@ -427,7 +427,7 @@ MonoBehaviour:
   speedThreshold: 10
   spawnInterval: 0.05
   fadeDuration: 0.2
-  afterImageColor: {r: 0.5, g: 0.75, b: 1, a: 0.4}
+  afterImageColor: {r: 0.9647059, g: 0.1882353, b: 0.5647059, a: 0.4}
 --- !u!61 &240532935157104147
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -572,7 +572,7 @@ Transform:
   m_GameObject: {fileID: 5986547509777393741}
   serializedVersion: 2
   m_LocalRotation: {x: -0.00069807534, y: -0.0040143295, z: -0.0000028023276, w: 0.9999917}
-  m_LocalPosition: {x: 0.85, y: 0.05, z: 0}
+  m_LocalPosition: {x: 0.91, y: 0.05, z: 0}
   m_LocalScale: {x: 1, y: 4.166667, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
