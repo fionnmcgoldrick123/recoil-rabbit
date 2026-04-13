@@ -22,4 +22,4 @@ MonoBehaviour:
   damage: 1
   playerRecoilForce: 20
   infiniteAmmo: 0
-  startingAmmo: 0
+  startingAmmo: 10000
