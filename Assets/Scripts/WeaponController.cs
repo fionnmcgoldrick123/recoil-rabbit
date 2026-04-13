@@ -32,6 +32,16 @@ public class WeaponController : MonoBehaviour
     private Camera mainCamera;
     private PlayerController playerController;
 
+    private void OnEnable()
+    {
+        SceneTransition.StartTransitionCompleted += HandleStartTransitionCompleted;
+    }
+
+    private void OnDisable()
+    {
+        SceneTransition.StartTransitionCompleted -= HandleStartTransitionCompleted;
+    }
+
     private void Awake()
     {
         mainCamera = Camera.main;
@@ -47,6 +57,15 @@ public class WeaponController : MonoBehaviour
             cameraShake = FindFirstObjectByType<CameraShake>();
 
         playerController = GetComponentInParent<PlayerController>();
+        SetShotgunHudVisible(false);
+    }
+
+    private void Start()
+    {
+        if (SceneTransition.Instance == null)
+            SetShotgunHudVisible(true);
+
+        UpdateAmmoUI();
     }
 
     private void Update()
@@ -198,6 +217,26 @@ public class WeaponController : MonoBehaviour
         {
             shotgunAmmoText.text = shotgunAmmo.ToString();
         }
+    }
+
+    public void HideShotgunHud()
+    {
+        SetShotgunHudVisible(false);
+    }
+
+    private void HandleStartTransitionCompleted()
+    {
+        SetShotgunHudVisible(true);
+        UpdateAmmoUI();
+    }
+
+    private void SetShotgunHudVisible(bool visible)
+    {
+        if (shotgunAmmoText != null)
+            shotgunAmmoText.gameObject.SetActive(visible);
+
+        if (shotgunAmmoAnimator != null)
+            shotgunAmmoAnimator.gameObject.SetActive(visible);
     }
 
     public int ShotgunAmmo => shotgunAmmo;
