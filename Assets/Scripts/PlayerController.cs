@@ -329,6 +329,12 @@ public class PlayerController : MonoBehaviour
         rb.linearVelocity = Vector2.zero;
         rb.bodyType = RigidbodyType2D.Kinematic;
         if (gunObject != null)
+        {
+            WeaponController weaponController = gunObject.GetComponent<WeaponController>();
+            if (weaponController != null)
+                weaponController.HideShotgunHud();
+        }
+        if (gunObject != null)
             gunObject.SetActive(false);
         if (animator != null)
         {

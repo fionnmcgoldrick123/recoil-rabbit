@@ -9,7 +9,7 @@ public class RunTimerManager : MonoBehaviour
 
     [Header("UI")]
     [SerializeField] private TMP_Text timerText;
-    [SerializeField] private bool autoCreateText = true;
+    [SerializeField] private bool autoCreateText = false;
     [SerializeField] private string labelText = "TIME";
     [SerializeField] private bool showLabel = true;
     [SerializeField] private Vector2 anchoredPosition = new Vector2(-24f, -24f);
@@ -19,8 +19,12 @@ public class RunTimerManager : MonoBehaviour
     [Header("Format")]
     [SerializeField] private string timeFormat = "{0:0.000}";
 
+    [Header("Scene Visibility")]
+    [SerializeField] private string hiddenSceneName = "MainMenu";
+
     private float elapsedTime;
     private bool isFrozen;
+    private bool isHiddenByPause;
     private Canvas timerCanvas;
 
     private void Awake()
@@ -36,7 +40,7 @@ public class RunTimerManager : MonoBehaviour
 
         SceneManager.sceneLoaded += OnSceneLoaded;
 
-        EnsureTimerText();
+        ApplySceneVisibility(SceneManager.GetActiveScene().name);
         ResetTimerInternal();
     }
 
@@ -60,6 +64,8 @@ public class RunTimerManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
     {
+        isHiddenByPause = false;
+        ApplySceneVisibility(scene.name);
         ResetTimerInternal();
     }
 
@@ -85,6 +91,14 @@ public class RunTimerManager : MonoBehaviour
 
         if (Instance != null)
             Instance.PauseTimerInternal();
+    }
+
+    public static void SetVisible(bool visible)
+    {
+        EnsureInstance();
+
+        if (Instance != null)
+            Instance.SetVisibleInternal(visible);
     }
 
     private static void EnsureInstance()
@@ -135,9 +149,15 @@ public class RunTimerManager : MonoBehaviour
         UpdateTimerText();
     }
 
+    private void SetVisibleInternal(bool visible)
+    {
+        isHiddenByPause = !visible;
+        ApplySceneVisibility(SceneManager.GetActiveScene().name);
+    }
+
     private void UpdateTimerText()
     {
-        if (timerText == null)
+        if (timerText == null || (timerCanvas != null && !timerCanvas.gameObject.activeSelf))
             return;
 
         string timeString = string.Format(timeFormat, elapsedTime);
@@ -172,6 +192,27 @@ public class RunTimerManager : MonoBehaviour
 
         if (TMP_Settings.defaultFontAsset != null)
             timerText.font = TMP_Settings.defaultFontAsset;
+    }
+
+    private void ApplySceneVisibility(string sceneName)
+    {
+        bool showTimer = !string.Equals(sceneName, hiddenSceneName, System.StringComparison.OrdinalIgnoreCase) && !isHiddenByPause;
+
+        if (!showTimer)
+        {
+            if (timerCanvas != null)
+                timerCanvas.gameObject.SetActive(false);
+
+            return;
+        }
+
+        EnsureTimerText();
+
+        if (timerCanvas != null)
+            timerCanvas.gameObject.SetActive(true);
+
+        if (timerText != null)
+            timerText.gameObject.SetActive(true);
     }
 
     private void EnsureCanvas()

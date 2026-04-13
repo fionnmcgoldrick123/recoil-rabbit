@@ -9,6 +9,8 @@ public class SceneTransition : MonoBehaviour
     private const string StartTrigger = "Start";
     private const string EndTrigger = "End";
 
+    public static event System.Action StartTransitionCompleted;
+
     [System.Serializable]
     private class LevelLabelEntry
     {
@@ -197,6 +199,7 @@ public class SceneTransition : MonoBehaviour
             yield return new WaitForSecondsRealtime(waitTime);
 
         RunTimerManager.ResumeTimer();
+        StartTransitionCompleted?.Invoke();
     }
 
     private void RefreshLevelText(string sceneName)

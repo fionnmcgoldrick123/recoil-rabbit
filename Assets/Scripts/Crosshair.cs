@@ -6,7 +6,6 @@ public class Crosshair : MonoBehaviour
     [Header("Crosshair")]
     [SerializeField] private Image crosshairImage;
 
-    private Canvas canvas;
     private RectTransform rectTransform;
 
     private void Awake()
@@ -14,11 +13,14 @@ public class Crosshair : MonoBehaviour
         if (crosshairImage == null)
             crosshairImage = GetComponent<Image>();
 
-        rectTransform = GetComponent<RectTransform>();
-        canvas = GetComponentInParent<Canvas>();
+        if (crosshairImage != null)
+            crosshairImage.raycastTarget = false;
 
-        if (canvas == null)
-            Debug.LogError("[Crosshair] Crosshair must be inside a Canvas!");
+        rectTransform = GetComponent<RectTransform>();
+
+        Canvas parentCanvas = GetComponentInParent<Canvas>();
+        if (parentCanvas != null)
+            transform.SetAsLastSibling();
 
         Cursor.visible = false;
     }
