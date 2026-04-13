@@ -134,7 +134,10 @@ public class WeaponController : MonoBehaviour
 
             PlayerController pc = playerRb.GetComponent<PlayerController>();
             if (pc != null)
+            {
                 pc.SetBhopProtected();
+                pc.ClearJumpCut();
+            }
         }
 
         if (cameraShake != null)

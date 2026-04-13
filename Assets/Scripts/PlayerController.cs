@@ -67,6 +67,7 @@ public class PlayerController : MonoBehaviour
     private float wallJumpLockTimer;
 
     public void SetBhopProtected() { bhopProtected = true; }
+    public void ClearJumpCut() { jumpCut = false; }
 
     private void Awake()
     {
