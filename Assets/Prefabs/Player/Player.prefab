@@ -377,11 +377,11 @@ MonoBehaviour:
   jumpForce: 12
   coyoteTime: 0.1
   jumpBufferTime: 0.1
-  wallJumpUpForce: 14
+  wallJumpUpForce: 18
   wallJumpSideForce: 10
   wallCheckDistance: 0.5
   wallJumpBufferTime: 0.1
-  wallJumpLockTime: 0.1
+  wallJumpLockTime: 0.08
   wallLayer:
     serializedVersion: 2
     m_Bits: 1024
@@ -425,7 +425,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speedThreshold: 10
-  spawnInterval: 0.05
+  spawnInterval: 0.04
   fadeDuration: 0.2
   afterImageColor: {r: 0.9647059, g: 0.1882353, b: 0.5647059, a: 0.4}
 --- !u!61 &240532935157104147

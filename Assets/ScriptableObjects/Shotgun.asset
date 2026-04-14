@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: Shotgun
   m_EditorClassIdentifier: 
   gunName: Shotgun
-  fireRate: 20
+  fireRate: 12
   pelletsPerShot: 5
   spreadAngle: 30
   bulletPrefab: {fileID: 1935227397540580479, guid: 88473aa44936d06458a43d6a0c357fb1, type: 3}
   bulletSpeed: 20
   bulletRange: 5
   damage: 1
-  playerRecoilForce: 20
+  playerRecoilForce: 18
   infiniteAmmo: 0
   startingAmmo: 10000

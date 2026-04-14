@@ -893,6 +893,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 313cc8f1829fce04ea6d50fd4763f105, type: 3}
+--- !u!1 &460949820 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7003045570502132115, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
+  m_PrefabInstance: {fileID: 2147380813}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &497835245
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1967,7 +1972,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 685805505004212226, guid: bae890b39f18dde4f863912b994b1ddf, type: 3}
       propertyPath: orthographic size
-      value: 7.6875
+      value: 7.484375
       objectReference: {fileID: 0}
     - target: {fileID: 2801734962751823166, guid: bae890b39f18dde4f863912b994b1ddf, type: 3}
       propertyPath: m_Name
@@ -2877,8 +2882,8 @@ MonoBehaviour:
   m_text: Holding SPACE while using powerful shells lets you go A LOT higher and
     further!
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 9a8bff23bda0a564d823f2f6f2f075d8, type: 2}
-  m_sharedMaterial: {fileID: -7341857326883630700, guid: 9a8bff23bda0a564d823f2f6f2f075d8, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -31622,6 +31627,10 @@ PrefabInstance:
       propertyPath: shotgunAmmoAnimator
       value: 
       objectReference: {fileID: 1919712083}
+    - target: {fileID: 8050381305028736681, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
+      propertyPath: gunObject
+      value: 
+      objectReference: {fileID: 460949820}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

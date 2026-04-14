@@ -33942,7 +33942,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 685805505004212226, guid: bae890b39f18dde4f863912b994b1ddf, type: 3}
       propertyPath: orthographic size
-      value: 7.671875
+      value: 7.484375
       objectReference: {fileID: 0}
     - target: {fileID: 2801734962751823166, guid: bae890b39f18dde4f863912b994b1ddf, type: 3}
       propertyPath: m_Name
@@ -34185,6 +34185,10 @@ PrefabInstance:
     - target: {fileID: 7444892227907233762, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
       propertyPath: fadeDuration
       value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7444892227907233762, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
+      propertyPath: spawnInterval
+      value: 0.02
       objectReference: {fileID: 0}
     - target: {fileID: 7444892227907233762, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
       propertyPath: afterImageColor.b
