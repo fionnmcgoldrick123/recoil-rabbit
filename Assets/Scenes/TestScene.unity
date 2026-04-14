@@ -460,9 +460,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4802878292288242470, guid: d48cd99dc8b1e0743a62ac287b535390, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6428623561056281219, guid: d48cd99dc8b1e0743a62ac287b535390, type: 3}
       propertyPath: m_Name
       value: Grid
+      objectReference: {fileID: 0}
+    - target: {fileID: 6858848509826392337, guid: d48cd99dc8b1e0743a62ac287b535390, type: 3}
+      propertyPath: m_ColliderPaths.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6858848509826392337, guid: d48cd99dc8b1e0743a62ac287b535390, type: 3}
       propertyPath: m_CompositePaths.m_Paths.Array.size

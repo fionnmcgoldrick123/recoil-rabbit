@@ -183,7 +183,7 @@ public class PlayerController : MonoBehaviour
 
         // Check if player is pressing towards the wall
         float moveX = Input.GetAxisRaw("Horizontal");
-        if (wallDirection != 0 && Mathf.Sign(moveX) == wallDirection)
+        if (wallDirection != 0 && moveX != 0 && Mathf.Sign(moveX) == wallDirection)
         {
             isWallSliding = true;
             
