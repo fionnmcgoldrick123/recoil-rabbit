@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7476874520881496776
 Transform:
   m_ObjectHideFlags: 0
@@ -428,7 +428,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cae6d8d1b66c2b42830da240c4ea5c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedThreshold: 17
+  speedThreshold: 16
   spawnInterval: 0.04
   fadeDuration: 0.5
   minFadeDurationMultiplier: 8

@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b9f411cf6ff03e408ab21edd294465c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bounceForce: 15
+  bounceForce: 16.5
   animationResetDelay: 0.12
 --- !u!212 &6564774083028228103
 SpriteRenderer:
@@ -142,7 +142,7 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0.22679603}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: -0.33333334}
+    pivot: {x: 0.5, y: 0}
     oldSize: {x: 0.875, y: 0.1875}
     newSize: {x: 0.875, y: 0.1875}
     adaptiveTilingThreshold: 0.5
