@@ -166,17 +166,17 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.007470295, y: 0.22372685}
+  m_Offset: {x: -0.007470295, y: 0.0010178685}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: -0.2}
+    pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 0.375, y: 0.3125}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.3881065, y: 0.3130453}
+  m_Size: {x: 0.3881065, y: 0.31304514}
   m_EdgeRadius: 0
 --- !u!96 &5218422704339192382
 TrailRenderer:

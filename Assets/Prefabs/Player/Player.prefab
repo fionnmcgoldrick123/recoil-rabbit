@@ -366,14 +366,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1bea8a2c907a7543815b4bee36655a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 8
-  groundAcceleration: 90
+  maxSpeed: 9
+  groundAcceleration: 80
   groundDeceleration: 100
   airAcceleration: 100
   airDeceleration: 30
-  overSpeedDeceleration: 91
-  overSpeedGroundedBleed: 5
-  maxOverSpeed: 1000
+  overSpeedDeceleration: 100
+  overSpeedGroundedBleed: 2
+  maxOverSpeed: 5000
   jumpForce: 12
   coyoteTime: 0.1
   jumpBufferTime: 0.1
@@ -386,9 +386,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   wallSlideFriction: 1
-  wallSlideMaxFallSpeed: 3
+  wallSlideMaxFallSpeed: 3.5
   wallMomentumMultiplier: 0.8
-  wallMomentumDecay: 3
+  wallMomentumDecay: 8
   baseGravityScale: 3
   fallGravityScale: 6
   jumpCutGravityScale: 12
@@ -398,7 +398,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1088
   isDead: 0
-  gunObject: {fileID: 7003045570502132115}
+  gunObject: {fileID: 0}
   OnPlayerDeath:
     m_PersistentCalls:
       m_Calls: []
@@ -428,9 +428,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cae6d8d1b66c2b42830da240c4ea5c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedThreshold: 10
+  speedThreshold: 17
   spawnInterval: 0.04
-  fadeDuration: 0.2
+  fadeDuration: 0.5
+  minFadeDurationMultiplier: 8
   afterImageColor: {r: 0.9647059, g: 0.1882353, b: 0.5647059, a: 0.4}
 --- !u!61 &240532935157104147
 BoxCollider2D:

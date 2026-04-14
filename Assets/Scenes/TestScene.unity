@@ -171,18 +171,38 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 7131254550150526233, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
+      propertyPath: gunView
+      value: 
+      objectReference: {fileID: 1422750834}
+    - target: {fileID: 7131254550150526233, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
+      propertyPath: playerRb
+      value: 
+      objectReference: {fileID: 420740685}
+    - target: {fileID: 7131254550150526233, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
+      propertyPath: firePoint
+      value: 
+      objectReference: {fileID: 334263105}
     - target: {fileID: 7444892227907233762, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
       propertyPath: speedThreshold
-      value: 10
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 7444892227907233762, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
       propertyPath: minFadeDurationMultiplier
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8050381305028736681, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
+      propertyPath: maxSpeed
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8050381305028736681, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
       propertyPath: gunObject
       value: 
       objectReference: {fileID: 1422750833}
+    - target: {fileID: 8050381305028736681, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
+      propertyPath: maxOverSpeed
+      value: 5000
+      objectReference: {fileID: 0}
     - target: {fileID: 8050381305028736681, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
       propertyPath: wallMomentumDecay
       value: 8
@@ -192,8 +212,24 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8050381305028736681, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
+      propertyPath: groundAcceleration
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 8050381305028736681, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
       propertyPath: wallSlideUpDuration
       value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 8050381305028736681, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
+      propertyPath: overSpeedDeceleration
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 8050381305028736681, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
+      propertyPath: wallSlideMaxFallSpeed
+      value: 3.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8050381305028736681, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
+      propertyPath: overSpeedGroundedBleed
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8050381305028736681, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
       propertyPath: minUpwardSpeedToSlideUp
@@ -204,6 +240,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
+--- !u!4 &334263105 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3950720654860677888, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
+  m_PrefabInstance: {fileID: 89782619}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &348038668 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1144769744216048035, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
@@ -306,6 +347,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7a91df6f7f445514c9a8976d271e33bc, type: 3}
+--- !u!50 &420740685 stripped
+Rigidbody2D:
+  m_CorrespondingSourceObject: {fileID: 3102248566110250253, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
+  m_PrefabInstance: {fileID: 89782619}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &482424781
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -373,7 +419,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 685805505004212226, guid: bae890b39f18dde4f863912b994b1ddf, type: 3}
       propertyPath: orthographic size
-      value: 6.796875
+      value: 6.90625
       objectReference: {fileID: 0}
     - target: {fileID: 2801734962751823166, guid: bae890b39f18dde4f863912b994b1ddf, type: 3}
       propertyPath: m_Name
@@ -5242,6 +5288,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7003045570502132115, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
   m_PrefabInstance: {fileID: 89782619}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1422750834 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8806626624275682494, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
+  m_PrefabInstance: {fileID: 89782619}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1422750833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38aa3be480d014249aa7668186f374fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
