@@ -125,7 +125,7 @@ ScriptedImporter:
   animatedSpriteImportData:
   - name: shotgun
     originalName: 
-    pivot: {x: 0.15993619, y: 0.6140043}
+    pivot: {x: 0.19232318, y: 0.65493804}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
