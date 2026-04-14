@@ -385,6 +385,10 @@ MonoBehaviour:
   wallLayer:
     serializedVersion: 2
     m_Bits: 1024
+  wallSlideFriction: 1
+  wallSlideMaxFallSpeed: 3
+  wallMomentumMultiplier: 0.8
+  wallMomentumDecay: 3
   baseGravityScale: 3
   fallGravityScale: 6
   jumpCutGravityScale: 12

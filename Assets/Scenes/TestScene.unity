@@ -171,6 +171,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 7444892227907233762, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
+      propertyPath: speedThreshold
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7444892227907233762, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
+      propertyPath: minFadeDurationMultiplier
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8050381305028736681, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
+      propertyPath: gunObject
+      value: 
+      objectReference: {fileID: 1422750833}
+    - target: {fileID: 8050381305028736681, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
+      propertyPath: wallMomentumDecay
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 8050381305028736681, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
       propertyPath: wallSlideFriction
       value: 1
@@ -357,7 +373,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 685805505004212226, guid: bae890b39f18dde4f863912b994b1ddf, type: 3}
       propertyPath: orthographic size
-      value: 6.84375
+      value: 6.796875
       objectReference: {fileID: 0}
     - target: {fileID: 2801734962751823166, guid: bae890b39f18dde4f863912b994b1ddf, type: 3}
       propertyPath: m_Name
@@ -5221,6 +5237,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d48cd99dc8b1e0743a62ac287b535390, type: 3}
+--- !u!1 &1422750833 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7003045570502132115, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
+  m_PrefabInstance: {fileID: 89782619}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

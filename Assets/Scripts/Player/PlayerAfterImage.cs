@@ -7,24 +7,28 @@ public class PlayerAfterImage : MonoBehaviour
     [SerializeField] private float speedThreshold = 10f;
     [SerializeField] private float spawnInterval = 0.05f;
     [SerializeField] private float fadeDuration = 0.2f;
+    [SerializeField] private float minFadeDurationMultiplier = 0.3f;
     [SerializeField] private Color afterImageColor = new Color(0.5f, 0.75f, 1f, 0.4f);
 
     private PlayerController playerController;
     private SpriteRenderer sourceRenderer;
+    private Rigidbody2D rb;
     private float spawnTimer;
 
     private void Awake()
     {
         playerController = GetComponent<PlayerController>();
         sourceRenderer = GetComponentInChildren<SpriteRenderer>();
+        rb = GetComponent<Rigidbody2D>();
     }
 
     private void Update()
     {
-        if (playerController == null || playerController.IsDead || sourceRenderer == null)
+        if (playerController == null || playerController.IsDead || sourceRenderer == null || rb == null)
             return;
 
-        float speed = playerController.HorizontalSpeed;
+        // Use total velocity magnitude (includes both horizontal and vertical movement)
+        float speed = rb.linearVelocity.magnitude;
 
         if (speed <= speedThreshold)
         {
@@ -61,21 +65,23 @@ public class PlayerAfterImage : MonoBehaviour
         c.a = Mathf.Lerp(0.2f, afterImageColor.a, speedFactor);
         ghostRenderer.color = c;
 
-        StartCoroutine(FadeAndDestroy(ghostRenderer));
+        // Scale fade duration with speed - faster = shorter duration
+        float scaledFadeDuration = Mathf.Lerp(fadeDuration, fadeDuration * minFadeDurationMultiplier, speedFactor);
+        StartCoroutine(FadeAndDestroy(ghostRenderer, scaledFadeDuration));
     }
 
-    private IEnumerator FadeAndDestroy(SpriteRenderer ghostRenderer)
+    private IEnumerator FadeAndDestroy(SpriteRenderer ghostRenderer, float duration)
     {
         float elapsed = 0f;
         Color startColor = ghostRenderer.color;
 
-        while (elapsed < fadeDuration)
+        while (elapsed < duration)
         {
             if (ghostRenderer == null)
                 yield break;
 
             elapsed += Time.deltaTime;
-            float alpha = Mathf.Lerp(startColor.a, 0f, elapsed / fadeDuration);
+            float alpha = Mathf.Lerp(startColor.a, 0f, elapsed / duration);
             ghostRenderer.color = new Color(startColor.r, startColor.g, startColor.b, alpha);
             yield return null;
         }

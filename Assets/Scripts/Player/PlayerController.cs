@@ -294,6 +294,13 @@ public class PlayerController : MonoBehaviour
 
     private void ApplyWallSlide()
     {
+        // Don't apply wall slide friction during wall jump lock period
+        if (wallJumpLockTimer > 0f)
+        {
+            wallSlideMomentum = 0f;
+            return;
+        }
+
         if (!isWallSliding || isGrounded)
         {
             wallSlideMomentum = 0f;
@@ -349,6 +356,8 @@ public class PlayerController : MonoBehaviour
         jumpBufferTimer = 0;
         wallJumpBufferTimer = 0f;
         wallJumpLockTimer = wallJumpLockTime;
+        isWallSliding = false;
+        wallSlideMomentum = 0f;
         bhopProtected = true;
 
         float sideVelocity = -jumpWallDirection * wallJumpSideForce;
