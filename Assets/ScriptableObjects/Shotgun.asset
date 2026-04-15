@@ -20,6 +20,6 @@ MonoBehaviour:
   bulletSpeed: 20
   bulletRange: 5
   damage: 1
-  playerRecoilForce: 18
+  playerRecoilForce: 20
   infiniteAmmo: 0
   startingAmmo: 10000
