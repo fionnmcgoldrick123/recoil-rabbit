@@ -51,7 +51,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   smoothSpeed: 10
-  offset: {x: 0, y: 0.5, z: 0}
+  offset: {x: 0, y: 0, z: 0}
+  useDirectionalOffset: 1
+  directionOffsetX: 3.3
+  directionOffsetY: 3.3
+  velocityThreshold: 11
+  directionOffsetSmoothSpeed: 1.2
   useBounds: 0
   minBounds: {x: 0, y: 0}
   maxBounds: {x: 0, y: 0}
@@ -67,7 +72,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2f9daf2f4263f646abf021061335066, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shakeAmount: 0
+  shakeAmount: 0.5
   shakeDuration: 0.1
   shakeFrequency: 35
 --- !u!20 &685805505004212226
@@ -105,7 +110,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 6.921875
+  orthographic size: 6.71875
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2

@@ -1801,7 +1801,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 1492770818}
+    m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1144769744216048035, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1847,20 +1847,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 8050381305028736681, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
-      propertyPath: gunObject
-      value: 
-      objectReference: {fileID: 274713184}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
---- !u!1 &274713184 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7003045570502132115, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
-  m_PrefabInstance: {fileID: 274713183}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &276680105
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1993,25 +1984,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 685805505004212226, guid: bae890b39f18dde4f863912b994b1ddf, type: 3}
-      propertyPath: orthographic size
-      value: 6.84375
-      objectReference: {fileID: 0}
-    - target: {fileID: 941175650758682223, guid: bae890b39f18dde4f863912b994b1ddf, type: 3}
-      propertyPath: m_RefResolutionX
-      value: 320
-      objectReference: {fileID: 0}
-    - target: {fileID: 941175650758682223, guid: bae890b39f18dde4f863912b994b1ddf, type: 3}
-      propertyPath: m_RefResolutionY
-      value: 180
-      objectReference: {fileID: 0}
     - target: {fileID: 2801734962751823166, guid: bae890b39f18dde4f863912b994b1ddf, type: 3}
       propertyPath: m_Name
       value: Main Camera
-      objectReference: {fileID: 0}
-    - target: {fileID: 3348994088824081619, guid: bae890b39f18dde4f863912b994b1ddf, type: 3}
-      propertyPath: shakeAmount
-      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3432943904205812929, guid: bae890b39f18dde4f863912b994b1ddf, type: 3}
       propertyPath: m_LocalPosition.x
@@ -72941,7 +72916,6 @@ Transform:
   - {fileID: 1825599570}
   - {fileID: 484463951}
   - {fileID: 902833431}
-  - {fileID: 1471779709}
   - {fileID: 1848730460}
   - {fileID: 1841019492}
   - {fileID: 857602914}
@@ -74232,7 +74206,14 @@ MonoBehaviour:
   m_text: 'PRESS ''Z'' FOR INFINITE AMMO!
 
 
-    PRESS ''V'' FOR RESET LEVEL!'
+    PRESS ''V'' FOR RESET LEVEL!
+
+
+    PRESS
+    ''P'' FOR CAMERA CHANGE.
+
+    (please tell me how you feel about these cameras.
+    There is no middle ground sadly with pixel perfect camera)'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -75983,6 +75964,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 290464350}
   - {fileID: 803542657}
+  - {fileID: 274713183}
   - {fileID: 482424781}
   - {fileID: 371747456}
   - {fileID: 541195223}
