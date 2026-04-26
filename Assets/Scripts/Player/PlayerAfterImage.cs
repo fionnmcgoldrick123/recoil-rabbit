@@ -89,4 +89,25 @@ public class PlayerAfterImage : MonoBehaviour
         if (ghostRenderer != null)
             Destroy(ghostRenderer.gameObject);
     }
+
+    public void SpawnWhiteAfterImage(float fadeDuration = 0.3f)
+    {
+        if (sourceRenderer == null)
+            return;
+
+        GameObject ghost = new GameObject("WhiteAfterImage");
+        ghost.transform.position = sourceRenderer.transform.position;
+        ghost.transform.rotation = sourceRenderer.transform.rotation;
+        ghost.transform.localScale = sourceRenderer.transform.lossyScale;
+
+        SpriteRenderer ghostRenderer = ghost.AddComponent<SpriteRenderer>();
+        ghostRenderer.sprite = sourceRenderer.sprite;
+        ghostRenderer.flipX = sourceRenderer.flipX;
+        ghostRenderer.flipY = sourceRenderer.flipY;
+        ghostRenderer.sortingLayerID = sourceRenderer.sortingLayerID;
+        ghostRenderer.sortingOrder = sourceRenderer.sortingOrder - 1;
+
+        ghostRenderer.color = new Color(1f, 1f, 1f, 0.6f);
+        StartCoroutine(FadeAndDestroy(ghostRenderer, fadeDuration));
+    }
 }

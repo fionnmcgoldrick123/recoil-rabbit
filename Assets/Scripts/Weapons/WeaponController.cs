@@ -24,6 +24,9 @@ public class WeaponController : MonoBehaviour
     [SerializeField] private float shotgunScaleMultiplier = 1.15f;
     [SerializeField] private float shotgunScaleDuration = 0.12f;
 
+    [Header("Shotgun After Image")]
+    [SerializeField] private float shotgunAfterImageFadeDuration = 0.3f;
+
     [Header("UI (Optional)")]
     [SerializeField] private TMPro.TextMeshProUGUI shotgunAmmoText;
     [SerializeField] private Animator shotgunAmmoAnimator;
@@ -39,6 +42,7 @@ public class WeaponController : MonoBehaviour
     private Camera mainCamera;
     private PlayerController playerController;
     private Vector3 originalGunScale;
+    private PlayerAfterImage playerAfterImage;
 
     private void OnEnable()
     {
@@ -67,6 +71,8 @@ public class WeaponController : MonoBehaviour
         playerController = GetComponentInParent<PlayerController>();
         if (gunView != null)
             originalGunScale = gunView.transform.localScale;
+        if (playerController != null)
+            playerAfterImage = playerController.GetComponent<PlayerAfterImage>();
         SetShotgunHudVisible(false);
     }
 
@@ -141,6 +147,9 @@ public class WeaponController : MonoBehaviour
             weaponScaleRoutine = StartCoroutine(AnimateWeaponScale(shotgunScaleMultiplier, shotgunScaleDuration));
         }
 
+        if (playerAfterImage != null)
+            playerAfterImage.SpawnWhiteAfterImage(shotgunAfterImageFadeDuration);
+
         if (AudioManager.Instance != null)
             AudioManager.Instance.PlayShotgunShot();
 
@@ -210,22 +219,35 @@ public class WeaponController : MonoBehaviour
         return dir.sqrMagnitude > 0.001f ? dir.normalized : Vector2.right;
     }
 
+    private Vector3 GetRestingScale()
+    {
+        // Calculate the resting scale based on original magnitude but preserve current flip direction
+        Vector3 current = gunView.transform.localScale;
+        return new Vector3(
+            Mathf.Abs(originalGunScale.x) * Mathf.Sign(current.x),
+            Mathf.Abs(originalGunScale.y) * Mathf.Sign(current.y),
+            Mathf.Abs(originalGunScale.z) * Mathf.Sign(current.z)
+        );
+    }
+
     private System.Collections.IEnumerator AnimateWeaponScale(float scaleMultiplier, float duration)
     {
-        // Capture the current scale (which may be flipped) at the time of the shot
+        // Get the resting scale (what it should be when not scaling)
+        Vector3 restingScale = GetRestingScale();
+        // Capture the current scale (which may be intermediate if spamming)
         Vector3 currentScale = gunView.transform.localScale;
         
-        // Preserve the flip direction (sign) while scaling the magnitude
+        // Calculate the scaled size based on resting scale to prevent drift
         Vector3 scaledSize = new Vector3(
-            Mathf.Abs(currentScale.x) * scaleMultiplier * Mathf.Sign(currentScale.x),
-            Mathf.Abs(currentScale.y) * scaleMultiplier * Mathf.Sign(currentScale.y),
-            Mathf.Abs(currentScale.z) * scaleMultiplier * Mathf.Sign(currentScale.z)
+            Mathf.Abs(restingScale.x) * scaleMultiplier * Mathf.Sign(restingScale.x),
+            Mathf.Abs(restingScale.y) * scaleMultiplier * Mathf.Sign(restingScale.y),
+            Mathf.Abs(restingScale.z) * scaleMultiplier * Mathf.Sign(restingScale.z)
         );
         
         float elapsed = 0f;
         float halfDuration = duration * 0.5f;
 
-        // Scale up
+        // Scale up from current to scaled
         while (elapsed < halfDuration)
         {
             elapsed += Time.deltaTime;
@@ -237,16 +259,16 @@ public class WeaponController : MonoBehaviour
         gunView.transform.localScale = scaledSize;
         elapsed = 0f;
 
-        // Scale down
+        // Scale down from scaled back to resting (always returns to correct size)
         while (elapsed < halfDuration)
         {
             elapsed += Time.deltaTime;
             float t = elapsed / halfDuration;
-            gunView.transform.localScale = Vector3.Lerp(scaledSize, currentScale, t);
+            gunView.transform.localScale = Vector3.Lerp(scaledSize, restingScale, t);
             yield return null;
         }
 
-        gunView.transform.localScale = currentScale;
+        gunView.transform.localScale = restingScale;
         weaponScaleRoutine = null;
     }
 

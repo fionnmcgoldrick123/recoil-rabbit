@@ -1849,7 +1849,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7131254550150526233, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
       propertyPath: shotgunScaleMultiplier
-      value: 1.5
+      value: 1.65
+      objectReference: {fileID: 0}
+    - target: {fileID: 7131254550150526233, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
+      propertyPath: shotgunAfterImageFadeDuration
+      value: 0.4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
