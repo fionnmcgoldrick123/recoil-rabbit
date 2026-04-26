@@ -351,6 +351,10 @@ MonoBehaviour:
   revolverShakeDuration: 0
   shotgunShakeIntensity: 0.5
   shotgunShakeDuration: 0.12
+  revolverScaleMultiplier: 1.1
+  revolverScaleDuration: 0.1
+  shotgunScaleMultiplier: 1.2
+  shotgunScaleDuration: 0.12
   shotgunAmmoText: {fileID: 0}
   shotgunAmmoAnimator: {fileID: 0}
   shotgunAmmoAnimationResetDelay: 0.12

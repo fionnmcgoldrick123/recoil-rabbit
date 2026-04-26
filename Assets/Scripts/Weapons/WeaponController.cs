@@ -18,6 +18,12 @@ public class WeaponController : MonoBehaviour
     [SerializeField] private float shotgunShakeIntensity = 0.03f;
     [SerializeField] private float shotgunShakeDuration = 0.07f;
 
+    [Header("Weapon Scale")]
+    [SerializeField] private float revolverScaleMultiplier = 1.1f;
+    [SerializeField] private float revolverScaleDuration = 0.1f;
+    [SerializeField] private float shotgunScaleMultiplier = 1.15f;
+    [SerializeField] private float shotgunScaleDuration = 0.12f;
+
     [Header("UI (Optional)")]
     [SerializeField] private TMPro.TextMeshProUGUI shotgunAmmoText;
     [SerializeField] private Animator shotgunAmmoAnimator;
@@ -28,9 +34,11 @@ public class WeaponController : MonoBehaviour
     private float shotgunCooldown;
     private int shotgunAmmo;
     private Coroutine shotgunAmmoResetRoutine;
+    private Coroutine weaponScaleRoutine;
 
     private Camera mainCamera;
     private PlayerController playerController;
+    private Vector3 originalGunScale;
 
     private void OnEnable()
     {
@@ -57,6 +65,8 @@ public class WeaponController : MonoBehaviour
             cameraShake = FindFirstObjectByType<CameraShake>();
 
         playerController = GetComponentInParent<PlayerController>();
+        if (gunView != null)
+            originalGunScale = gunView.transform.localScale;
         SetShotgunHudVisible(false);
     }
 
@@ -98,6 +108,13 @@ public class WeaponController : MonoBehaviour
         Vector2 direction = GetMouseDirection();
         SpawnBullets(revolverStats, direction, isRevolver: true);
 
+        if (gunView != null)
+        {
+            if (weaponScaleRoutine != null)
+                StopCoroutine(weaponScaleRoutine);
+            weaponScaleRoutine = StartCoroutine(AnimateWeaponScale(revolverScaleMultiplier, revolverScaleDuration));
+        }
+
         if (AudioManager.Instance != null)
             AudioManager.Instance.PlayRevolverShot();
 
@@ -116,6 +133,13 @@ public class WeaponController : MonoBehaviour
 
         Vector2 direction = GetMouseDirection();
         SpawnBullets(shotgunStats, direction, isRevolver: false);
+
+        if (gunView != null)
+        {
+            if (weaponScaleRoutine != null)
+                StopCoroutine(weaponScaleRoutine);
+            weaponScaleRoutine = StartCoroutine(AnimateWeaponScale(shotgunScaleMultiplier, shotgunScaleDuration));
+        }
 
         if (AudioManager.Instance != null)
             AudioManager.Instance.PlayShotgunShot();
@@ -184,6 +208,46 @@ public class WeaponController : MonoBehaviour
         Vector2 mouseWorld = mainCamera.ScreenToWorldPoint(Input.mousePosition);
         Vector2 dir = (mouseWorld - (Vector2)firePoint.position);
         return dir.sqrMagnitude > 0.001f ? dir.normalized : Vector2.right;
+    }
+
+    private System.Collections.IEnumerator AnimateWeaponScale(float scaleMultiplier, float duration)
+    {
+        // Capture the current scale (which may be flipped) at the time of the shot
+        Vector3 currentScale = gunView.transform.localScale;
+        
+        // Preserve the flip direction (sign) while scaling the magnitude
+        Vector3 scaledSize = new Vector3(
+            Mathf.Abs(currentScale.x) * scaleMultiplier * Mathf.Sign(currentScale.x),
+            Mathf.Abs(currentScale.y) * scaleMultiplier * Mathf.Sign(currentScale.y),
+            Mathf.Abs(currentScale.z) * scaleMultiplier * Mathf.Sign(currentScale.z)
+        );
+        
+        float elapsed = 0f;
+        float halfDuration = duration * 0.5f;
+
+        // Scale up
+        while (elapsed < halfDuration)
+        {
+            elapsed += Time.deltaTime;
+            float t = elapsed / halfDuration;
+            gunView.transform.localScale = Vector3.Lerp(currentScale, scaledSize, t);
+            yield return null;
+        }
+
+        gunView.transform.localScale = scaledSize;
+        elapsed = 0f;
+
+        // Scale down
+        while (elapsed < halfDuration)
+        {
+            elapsed += Time.deltaTime;
+            float t = elapsed / halfDuration;
+            gunView.transform.localScale = Vector3.Lerp(scaledSize, currentScale, t);
+            yield return null;
+        }
+
+        gunView.transform.localScale = currentScale;
+        weaponScaleRoutine = null;
     }
 
     public void OnRevolverKill()

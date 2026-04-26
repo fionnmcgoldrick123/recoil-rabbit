@@ -1847,6 +1847,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 7131254550150526233, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
+      propertyPath: shotgunScaleMultiplier
+      value: 1.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1986,7 +1990,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 685805505004212226, guid: bae890b39f18dde4f863912b994b1ddf, type: 3}
       propertyPath: orthographic size
-      value: 5.625
+      value: 7.234375
       objectReference: {fileID: 0}
     - target: {fileID: 2801734962751823166, guid: bae890b39f18dde4f863912b994b1ddf, type: 3}
       propertyPath: m_Name
