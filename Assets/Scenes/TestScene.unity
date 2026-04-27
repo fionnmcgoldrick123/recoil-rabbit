@@ -1994,7 +1994,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 685805505004212226, guid: bae890b39f18dde4f863912b994b1ddf, type: 3}
       propertyPath: orthographic size
-      value: 7.234375
+      value: 7.375
       objectReference: {fileID: 0}
     - target: {fileID: 2801734962751823166, guid: bae890b39f18dde4f863912b994b1ddf, type: 3}
       propertyPath: m_Name
@@ -72183,10 +72183,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'HELLO PLAYER!
-
-    Thank you for testing my game. Have fun in the sandbox.
-    Please be honest with your feedback.'
+  m_text: Tell me what you think of the white after image <3
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

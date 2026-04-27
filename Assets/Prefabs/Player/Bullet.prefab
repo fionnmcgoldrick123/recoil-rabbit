@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8992149567159799039}
   - component: {fileID: 5574736808446426423}
   - component: {fileID: 7466806775601913035}
+  - component: {fileID: 4486187544239164680}
   - component: {fileID: 4380973096982008505}
   - component: {fileID: 3325614705215195353}
   - component: {fileID: 5218422704339192382}
@@ -105,6 +106,23 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &4486187544239164680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1935227397540580479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55a3b3fd236eca04dbf9182dc7c6bb05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speedThreshold: 0.1
+  spawnInterval: 0.001
+  fadeDuration: 0.1
+  minFadeDurationMultiplier: 0.1
+  afterImageColor: {r: 0.9647059, g: 0.1882353, b: 0.5647059, a: 0.09019608}
 --- !u!50 &4380973096982008505
 Rigidbody2D:
   serializedVersion: 5
@@ -166,7 +184,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.007470295, y: 0.0010178685}
+  m_Offset: {x: -0.007470295, y: 0.00040462613}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -176,7 +194,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.3881065, y: 0.31304514}
+  m_Size: {x: 0.3881065, y: 0.18180934}
   m_EdgeRadius: 0
 --- !u!96 &5218422704339192382
 TrailRenderer:
@@ -223,7 +241,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 0.1
+  m_Time: 0.04
   m_PreviewTimeScale: 1
   m_Parameters:
     serializedVersion: 3

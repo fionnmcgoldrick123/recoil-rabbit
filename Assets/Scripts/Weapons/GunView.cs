@@ -9,6 +9,7 @@ public class GunView : MonoBehaviour
 
     [Header("Aiming")]
     [SerializeField] private float horizontalDeadzone = 0.2f;
+    [SerializeField] private float centerDeadzone = 0.5f;
 
     private Camera mainCamera;
     private bool lastFacingLeft = false;
@@ -33,7 +34,13 @@ public class GunView : MonoBehaviour
 
         Vector2 mouseWorld = mainCamera.ScreenToWorldPoint(Input.mousePosition);
         Vector2 gunPivot = transform.position;
-        Vector2 dirToMouse = (mouseWorld - gunPivot).normalized;
+        Vector2 rawDir = mouseWorld - gunPivot;
+
+        // Skip update if mouse is too close to the pivot to avoid erratic flipping
+        if (rawDir.magnitude < centerDeadzone)
+            return;
+
+        Vector2 dirToMouse = rawDir.normalized;
 
         float angle = Mathf.Atan2(dirToMouse.y, dirToMouse.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0, 0, angle);

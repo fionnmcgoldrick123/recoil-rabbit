@@ -31,7 +31,7 @@ public class WeaponController : MonoBehaviour
     [SerializeField] private TMPro.TextMeshProUGUI shotgunAmmoText;
     [SerializeField] private Animator shotgunAmmoAnimator;
     [SerializeField] private float shotgunAmmoAnimationResetDelay = 0.12f;
-    
+
 
     private float revolverCooldown;
     private float shotgunCooldown;
@@ -236,14 +236,14 @@ public class WeaponController : MonoBehaviour
         Vector3 restingScale = GetRestingScale();
         // Capture the current scale (which may be intermediate if spamming)
         Vector3 currentScale = gunView.transform.localScale;
-        
+
         // Calculate the scaled size based on resting scale to prevent drift
         Vector3 scaledSize = new Vector3(
             Mathf.Abs(restingScale.x) * scaleMultiplier * Mathf.Sign(restingScale.x),
             Mathf.Abs(restingScale.y) * scaleMultiplier * Mathf.Sign(restingScale.y),
             Mathf.Abs(restingScale.z) * scaleMultiplier * Mathf.Sign(restingScale.z)
         );
-        
+
         float elapsed = 0f;
         float halfDuration = duration * 0.5f;
 
