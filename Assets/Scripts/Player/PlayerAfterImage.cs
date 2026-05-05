@@ -10,10 +10,15 @@ public class PlayerAfterImage : MonoBehaviour
     [SerializeField] private float minFadeDurationMultiplier = 0.3f;
     [SerializeField] private Color afterImageColor = new Color(0.5f, 0.75f, 1f, 0.4f);
 
+    [Header("Shotgun Flash")]
+    [SerializeField] private Color flashAfterImageColor = new Color(1f, 1f, 1f, 0.8f);
+    [SerializeField] private float flashFadeOutDuration = 0.5f;
+
     private PlayerController playerController;
     private SpriteRenderer sourceRenderer;
     private Rigidbody2D rb;
     private float spawnTimer;
+    private float flashBlend = 0f;
 
     private void Awake()
     {
@@ -26,6 +31,9 @@ public class PlayerAfterImage : MonoBehaviour
     {
         if (playerController == null || playerController.IsDead || sourceRenderer == null || rb == null)
             return;
+
+        if (flashBlend > 0f)
+            flashBlend = Mathf.MoveTowards(flashBlend, 0f, Time.deltaTime / flashFadeOutDuration);
 
         // Use total velocity magnitude (includes both horizontal and vertical movement)
         float speed = rb.linearVelocity.magnitude;
@@ -63,6 +71,7 @@ public class PlayerAfterImage : MonoBehaviour
 
         Color c = afterImageColor;
         c.a = Mathf.Lerp(0.2f, afterImageColor.a, speedFactor);
+        c = Color.Lerp(c, new Color(flashAfterImageColor.r, flashAfterImageColor.g, flashAfterImageColor.b, c.a), flashBlend);
         ghostRenderer.color = c;
 
         // Scale fade duration with speed - faster = shorter duration
@@ -107,7 +116,8 @@ public class PlayerAfterImage : MonoBehaviour
         ghostRenderer.sortingLayerID = sourceRenderer.sortingLayerID;
         ghostRenderer.sortingOrder = sourceRenderer.sortingOrder - 1;
 
-        ghostRenderer.color = new Color(1f, 1f, 1f, 0.6f);
+        flashBlend = 1f;
+        ghostRenderer.color = flashAfterImageColor;
         StartCoroutine(FadeAndDestroy(ghostRenderer, fadeDuration));
     }
 }

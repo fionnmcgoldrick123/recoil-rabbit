@@ -343,9 +343,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   revolverStats: {fileID: 11400000, guid: 769a05e9eadf0e244b4f6d57990cfb2d, type: 2}
   shotgunStats: {fileID: 11400000, guid: 593649b639eb13946add42bcaff43427, type: 2}
-  firePoint: {fileID: 3950720654860677888}
-  playerRb: {fileID: 3102248566110250253}
-  gunView: {fileID: 8806626624275682494}
+  firePoint: {fileID: 0}
+  playerRb: {fileID: 0}
+  gunView: {fileID: 0}
   cameraShake: {fileID: 3348994088824081619, guid: bae890b39f18dde4f863912b994b1ddf, type: 3}
   revolverShakeIntensity: 0
   revolverShakeDuration: 0
@@ -353,8 +353,9 @@ MonoBehaviour:
   shotgunShakeDuration: 0.12
   revolverScaleMultiplier: 1.1
   revolverScaleDuration: 0.1
-  shotgunScaleMultiplier: 1.2
+  shotgunScaleMultiplier: 1.65
   shotgunScaleDuration: 0.12
+  shotgunAfterImageFadeDuration: 0.4
   shotgunAmmoText: {fileID: 0}
   shotgunAmmoAnimator: {fileID: 0}
   shotgunAmmoAnimationResetDelay: 0.12
@@ -402,7 +403,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1088
   isDead: 0
-  gunObject: {fileID: 7003045570502132115}
+  gunObject: {fileID: 0}
   OnPlayerDeath:
     m_PersistentCalls:
       m_Calls: []
@@ -692,3 +693,4 @@ MonoBehaviour:
   playerBody: {fileID: 1144769744216048035}
   playerRb: {fileID: 3102248566110250253}
   horizontalDeadzone: 0.2
+  centerDeadzone: 0.5
