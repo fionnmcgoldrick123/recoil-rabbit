@@ -359,6 +359,10 @@ MonoBehaviour:
   shotgunAmmoText: {fileID: 0}
   shotgunAmmoAnimator: {fileID: 0}
   shotgunAmmoAnimationResetDelay: 0.12
+  tilesetLayer:
+    serializedVersion: 2
+    m_Bits: 1024
+  bulletSpawnOffset: 0.5
 --- !u!114 &8050381305028736681
 MonoBehaviour:
   m_ObjectHideFlags: 0

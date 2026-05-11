@@ -1,7 +1,10 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class Bullet : MonoBehaviour
 {
+    [SerializeField] private LayerMask groundLayer;
+    
     private int damage;
     private float range;
     private bool isRevolverBullet;
@@ -24,6 +27,19 @@ public class Bullet : MonoBehaviour
         animator = GetComponent<Animator>();
 
         rb.linearVelocity = direction.normalized * speed;
+
+        // Check if firepoint was inside tileset - if so, destroy immediately
+        Collider2D collider = GetComponent<Collider2D>();
+        if (collider != null)
+        {
+            List<Collider2D> overlappingColliders = new List<Collider2D>();
+            ContactFilter2D filter = new ContactFilter2D { layerMask = groundLayer, useLayerMask = true };
+            Physics2D.OverlapCollider(collider, filter, overlappingColliders);
+            if (overlappingColliders.Count > 0)
+            {
+                PlayHitAnimationAndDestroy();
+            }
+        }
     }
 
     private void Update()
@@ -37,6 +53,14 @@ public class Bullet : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (hasHit) return;
+
+        // Check for ground/tileset collision first - destroy immediately
+        if (((1 << other.gameObject.layer) & groundLayer) != 0)
+        {
+            hasHit = true;
+            PlayHitAnimationAndDestroy();
+            return;
+        }
 
         Enemy enemy = other.GetComponent<Enemy>();
         if (enemy != null)

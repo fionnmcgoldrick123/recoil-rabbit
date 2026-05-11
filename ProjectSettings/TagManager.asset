@@ -17,7 +17,7 @@ TagManager:
   - Hazard
   - Trees
   - TileMap
-  - 
+  - Bullets
   - 
   - 
   - 
@@ -53,6 +53,12 @@ TagManager:
     locked: 0
   - name: Enemy
     uniqueID: 3388211699
+    locked: 0
+  - name: Bullets
+    uniqueID: 3031459955
+    locked: 0
+  - name: TileMap
+    uniqueID: 2150823313
     locked: 0
   m_RenderingLayers:
   - Default

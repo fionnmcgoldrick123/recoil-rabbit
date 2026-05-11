@@ -2010,7 +2010,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 685805505004212226, guid: bae890b39f18dde4f863912b994b1ddf, type: 3}
       propertyPath: orthographic size
-      value: 7.140625
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 2801734962751823166, guid: bae890b39f18dde4f863912b994b1ddf, type: 3}
       propertyPath: m_Name
@@ -4195,6 +4195,10 @@ PrefabInstance:
     - target: {fileID: 6428623561056281219, guid: d48cd99dc8b1e0743a62ac287b535390, type: 3}
       propertyPath: m_Name
       value: Grid
+      objectReference: {fileID: 0}
+    - target: {fileID: 6428623561056281219, guid: d48cd99dc8b1e0743a62ac287b535390, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6858848509826392337, guid: d48cd99dc8b1e0743a62ac287b535390, type: 3}
       propertyPath: m_ColliderPaths.Array.size
@@ -75976,6 +75980,10 @@ PrefabInstance:
     - target: {fileID: 180509937786003126, guid: 15d0563fe7238bf46911924178186934, type: 3}
       propertyPath: m_Name
       value: TestSandboxScript
+      objectReference: {fileID: 0}
+    - target: {fileID: 180509937786003126, guid: 15d0563fe7238bf46911924178186934, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7195339178446058064, guid: 15d0563fe7238bf46911924178186934, type: 3}
       propertyPath: m_LocalPosition.x
