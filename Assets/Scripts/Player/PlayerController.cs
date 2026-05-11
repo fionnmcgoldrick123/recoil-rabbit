@@ -47,6 +47,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Health")]
     [SerializeField] private bool isDead = false;
+    [SerializeField] private float deathImmunityDuration = 0.1f;
 
     [Header("References")]
     [SerializeField] private GameObject gunObject;
@@ -75,12 +76,18 @@ public class PlayerController : MonoBehaviour
     private bool isWallSliding;
     private bool wasWallSlidingLastFrame;
     private float wallSlideMomentum;
+    private float deathImmunityTimer;
 
     public void SetBhopProtected() { bhopProtected = true; }
     public void ClearJumpCut()
     {
         jumpCut = false;
         jumpCutSuppressedUntilGrounded = true;
+    }
+
+    public void ActivateDeathImmunity()
+    {
+        deathImmunityTimer = deathImmunityDuration;
     }
 
     private void Awake()
@@ -102,6 +109,9 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         if (isDead) return;
+
+        if (deathImmunityTimer > 0f)
+            deathImmunityTimer -= Time.deltaTime;
 
         wasGrounded = isGrounded;
         wasWallSlidingLastFrame = isWallSliding;
@@ -384,6 +394,9 @@ public class PlayerController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (isDead) return;
+
+        // Don't die if we have death immunity (just killed an enemy)
+        if (deathImmunityTimer > 0f) return;
 
         if (other.GetComponent<Enemy>() != null || other.GetComponent<FlyingEnemy>() != null)
         {

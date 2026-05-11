@@ -343,9 +343,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   revolverStats: {fileID: 11400000, guid: 769a05e9eadf0e244b4f6d57990cfb2d, type: 2}
   shotgunStats: {fileID: 11400000, guid: 593649b639eb13946add42bcaff43427, type: 2}
-  firePoint: {fileID: 0}
-  playerRb: {fileID: 0}
-  gunView: {fileID: 0}
+  firePoint: {fileID: 3950720654860677888}
+  playerRb: {fileID: 3102248566110250253}
+  gunView: {fileID: 8806626624275682494}
   cameraShake: {fileID: 3348994088824081619, guid: bae890b39f18dde4f863912b994b1ddf, type: 3}
   revolverShakeIntensity: 0
   revolverShakeDuration: 0
@@ -403,7 +403,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1088
   isDead: 0
-  gunObject: {fileID: 0}
+  deathImmunityDuration: 0.1
+  gunObject: {fileID: 7003045570502132115}
   OnPlayerDeath:
     m_PersistentCalls:
       m_Calls: []
@@ -438,6 +439,8 @@ MonoBehaviour:
   fadeDuration: 0.5
   minFadeDurationMultiplier: 8
   afterImageColor: {r: 0.9647059, g: 0.1882353, b: 0.5647059, a: 0.4}
+  flashAfterImageColor: {r: 1, g: 1, b: 1, a: 0.8}
+  flashFadeOutDuration: 0.5
 --- !u!61 &240532935157104147
 BoxCollider2D:
   m_ObjectHideFlags: 0

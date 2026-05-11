@@ -275,6 +275,9 @@ public class WeaponController : MonoBehaviour
     public void OnRevolverKill()
     {
         shotgunAmmo++;
+        if (playerController != null)
+            playerController.ActivateDeathImmunity();
+        
         if (shotgunAmmoAnimator != null)
         {
             shotgunAmmoAnimator.ResetTrigger("Bullet");

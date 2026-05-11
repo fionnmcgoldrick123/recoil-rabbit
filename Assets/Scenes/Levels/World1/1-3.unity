@@ -1962,7 +1962,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 685805505004212226, guid: bae890b39f18dde4f863912b994b1ddf, type: 3}
       propertyPath: orthographic size
-      value: 7.171875
+      value: 7.140625
       objectReference: {fileID: 0}
     - target: {fileID: 2801734962751823166, guid: bae890b39f18dde4f863912b994b1ddf, type: 3}
       propertyPath: m_Name
@@ -2950,7 +2950,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -391.34, y: -221.08}
+  m_AnchoredPosition: {x: -391.34, y: -220.5}
   m_SizeDelta: {x: 4.64, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1171014674
@@ -2973,11 +2973,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Holding SPACE while using powerful shells lets you go A LOT higher and
-    further!
+  m_text: 'Thank you so much galway meetup tester for testing my game <3 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: adcc4625b831d8840ba77d62c2e9863c, type: 2}
+  m_sharedMaterial: {fileID: 9190750604108940287, guid: adcc4625b831d8840ba77d62c2e9863c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
