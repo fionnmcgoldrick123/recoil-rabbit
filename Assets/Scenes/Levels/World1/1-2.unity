@@ -620,6 +620,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 470388032}
     - target: {fileID: 7131254550150526233, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
+      propertyPath: bulletPool
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7131254550150526233, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
       propertyPath: shotgunAmmoText
       value: 
       objectReference: {fileID: 1906073069}
@@ -631,6 +635,10 @@ PrefabInstance:
       propertyPath: gunObject
       value: 
       objectReference: {fileID: 470388033}
+    - target: {fileID: 8341451778601153750, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: bc0b7f6d9f88b8244b4e2cba79852761, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -31133,6 +31141,66 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 106919639110258509, guid: f142ab4983aaf50429a63ca6a491e7f4, type: 3}
   m_PrefabInstance: {fileID: 1445907297}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1446620859
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1446620861}
+  - component: {fileID: 1446620860}
+  m_Layer: 0
+  m_Name: 'Palette '
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1446620860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1446620859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b27596af1be11684fb9cace35b119e02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  paletteMaterial: {fileID: 2100000, guid: bc0b7f6d9f88b8244b4e2cba79852761, type: 2}
+  palettes:
+  - paletteName: Deep Sea
+    darkColor: {r: 0.01, g: 0.04, b: 0.18, a: 1}
+    highlightColor: {r: 0.05, g: 0.55, b: 0.95, a: 1}
+    lightColor: {r: 0.82, g: 0.96, b: 1, a: 1}
+  - paletteName: Toxic
+    darkColor: {r: 0.04, g: 0.16, b: 0, a: 1}
+    highlightColor: {r: 0.4, g: 1, b: 0.05, a: 1}
+    lightColor: {r: 0.88, g: 1, b: 0.72, a: 1}
+  - paletteName: Ember
+    darkColor: {r: 0.14, g: 0.02, b: 0, a: 1}
+    highlightColor: {r: 1, g: 0.28, b: 0, a: 1}
+    lightColor: {r: 1, g: 0.94, b: 0.65, a: 1}
+  overrideMaterials: []
+  targets: []
+--- !u!4 &1446620861
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1446620859}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1454385040
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -32387,7 +32455,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 685805505004212226, guid: bae890b39f18dde4f863912b994b1ddf, type: 3}
       propertyPath: orthographic size
-      value: 7.140625
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 2801734962751823166, guid: bae890b39f18dde4f863912b994b1ddf, type: 3}
       propertyPath: m_Name
@@ -32517,3 +32585,4 @@ SceneRoots:
   - {fileID: 562782153}
   - {fileID: 2037701369}
   - {fileID: 470388029}
+  - {fileID: 1446620861}

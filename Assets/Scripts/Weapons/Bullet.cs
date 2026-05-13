@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 
 public class Bullet : MonoBehaviour
 {
@@ -22,16 +23,36 @@ public class Bullet : MonoBehaviour
         this.isRevolverBullet = isRevolverBullet;
         this.owner = owner;
         this.origin = transform.position;
+        this.hasHit = false;
+
+        // Stop any running coroutines from previous use
+        StopAllCoroutines();
 
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+
+        // Reset animator state - exit Hit animation
+        if (animator != null)
+        {
+            animator.Rebind();
+            animator.Update(0f);
+        }
+
+        // Make sure sprite renderer is visible
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.enabled = true;
+        }
 
         rb.linearVelocity = direction.normalized * speed;
+        rb.angularVelocity = 0f; // Reset rotation velocity
 
-        // Check if firepoint was inside tileset - if so, destroy immediately
+        // Re-enable collider
         Collider2D collider = GetComponent<Collider2D>();
         if (collider != null)
         {
+            collider.enabled = true;
             List<Collider2D> overlappingColliders = new List<Collider2D>();
             ContactFilter2D filter = new ContactFilter2D { layerMask = groundLayer, useLayerMask = true };
             Physics2D.OverlapCollider(collider, filter, overlappingColliders);
@@ -41,6 +62,7 @@ public class Bullet : MonoBehaviour
             }
         }
     }
+
 
     private void Update()
     {
@@ -88,6 +110,7 @@ public class Bullet : MonoBehaviour
     {
         rb.linearVelocity = Vector2.zero;
         GetComponent<Collider2D>().enabled = false;
+        
         if (animator != null)
         {
             animator.SetTrigger("Hit");
@@ -97,6 +120,7 @@ public class Bullet : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
 
     public void OnHitAnimationComplete()
     {
