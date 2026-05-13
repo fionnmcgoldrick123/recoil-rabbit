@@ -31644,6 +31644,18 @@ PrefabInstance:
       value: AudioManager
       objectReference: {fileID: 0}
     - target: {fileID: 4698072109146537988, guid: 1c20310b6925c9d4ba1c51bddc060215, type: 3}
+      propertyPath: sfxVolume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4698072109146537988, guid: 1c20310b6925c9d4ba1c51bddc060215, type: 3}
+      propertyPath: musicVolume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4698072109146537988, guid: 1c20310b6925c9d4ba1c51bddc060215, type: 3}
+      propertyPath: masterVolume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4698072109146537988, guid: 1c20310b6925c9d4ba1c51bddc060215, type: 3}
       propertyPath: musicPlaylist.Array.size
       value: 1
       objectReference: {fileID: 0}
