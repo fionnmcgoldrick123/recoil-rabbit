@@ -19,12 +19,14 @@ public class PlayerAfterImage : MonoBehaviour
     private Rigidbody2D rb;
     private float spawnTimer;
     private float flashBlend = 0f;
+    private PaletteSwapperManager paletteManager;
 
     private void Awake()
     {
         playerController = GetComponent<PlayerController>();
         sourceRenderer = GetComponentInChildren<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
+        paletteManager = FindFirstObjectByType<PaletteSwapperManager>();
     }
 
     private void Update()
@@ -69,8 +71,13 @@ public class PlayerAfterImage : MonoBehaviour
         ghostRenderer.sortingLayerID = sourceRenderer.sortingLayerID;
         ghostRenderer.sortingOrder = sourceRenderer.sortingOrder - 1;
 
-        Color c = afterImageColor;
-        c.a = Mathf.Lerp(0.2f, afterImageColor.a, speedFactor);
+        // Use palette manager's afterimage color if available, otherwise use serialized value
+        Color currentAfterImageColor = (paletteManager != null) 
+            ? paletteManager.GetCurrentAfterImageColor() 
+            : afterImageColor;
+
+        Color c = currentAfterImageColor;
+        c.a = Mathf.Lerp(0.2f, currentAfterImageColor.a, speedFactor);
         c = Color.Lerp(c, new Color(flashAfterImageColor.r, flashAfterImageColor.g, flashAfterImageColor.b, c.a), flashBlend);
         ghostRenderer.color = c;
 

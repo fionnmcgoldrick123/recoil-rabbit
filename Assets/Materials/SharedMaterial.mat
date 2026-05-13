@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: HillsMaterial
+  m_Name: SharedMaterial
   m_Shader: {fileID: 4800000, guid: cc78a2c1e97edab4b8e07d4245a9c58f, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -50,8 +50,8 @@ Material:
     - _BaseColor3: {r: 1, g: 1, b: 0.961, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
-    - _RepColor1: {r: 0.12941177, g: 0.023529412, b: 0.07450981, a: 1}
-    - _RepColor2: {r: 0.9647059, g: 0.1882353, b: 0.5647059, a: 1}
-    - _RepColor3: {r: 1, g: 1, b: 0.9607843, a: 1}
+    - _RepColor1: {r: 0.01, g: 0.04, b: 0.18, a: 1}
+    - _RepColor2: {r: 0.05, g: 0.55, b: 0.95, a: 1}
+    - _RepColor3: {r: 0.82, g: 0.96, b: 1, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

@@ -15,11 +15,13 @@ public class BulletAfterImage : MonoBehaviour
     private Rigidbody2D rb;
     private float spawnTimer;
     private bool isActive = true;
+    private PaletteSwapperManager paletteManager;
 
     private void Awake()
     {
         sourceRenderer = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
+        paletteManager = FindFirstObjectByType<PaletteSwapperManager>();
     }
 
     private void Update()
@@ -60,7 +62,12 @@ public class BulletAfterImage : MonoBehaviour
         ghostRenderer.sortingLayerID = sourceRenderer.sortingLayerID;
         ghostRenderer.sortingOrder = sourceRenderer.sortingOrder - 1;
 
-        ghostRenderer.color = afterImageColor;
+        // Use palette manager's afterimage color if available, otherwise use serialized value
+        Color currentAfterImageColor = (paletteManager != null) 
+            ? paletteManager.GetCurrentAfterImageColor() 
+            : afterImageColor;
+
+        ghostRenderer.color = currentAfterImageColor;
 
         StartCoroutine(FadeAndDestroy(ghostRenderer, fadeDuration));
     }

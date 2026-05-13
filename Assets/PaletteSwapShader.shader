@@ -12,10 +12,10 @@ Shader "Unlit/PaletteSwapper"
         _BaseColor2 ("Base Highlight", Color) = (0.965, 0.188, 0.565, 1)
         _BaseColor3 ("Base Light",     Color) = (1.000, 1.000, 0.961, 1)
 
-        // --- Replacement palette (set these per material) ---
-        _RepColor1 ("Replacement Dark",      Color) = (0.129, 0.024, 0.075, 1)
-        _RepColor2 ("Replacement Highlight", Color) = (0.965, 0.188, 0.565, 1)
-        _RepColor3 ("Replacement Light",     Color) = (1.000, 1.000, 0.961, 1)
+        // --- Replacement palette (set by PaletteSwapperManager at runtime) ---
+        _RepColor1 ("Replacement Dark",      Color) = (0, 0, 0, 1)
+        _RepColor2 ("Replacement Highlight", Color) = (0, 0, 0, 1)
+        _RepColor3 ("Replacement Light",     Color) = (0, 0, 0, 1)
 
         // How closely a pixel must match a base colour to be swapped.
         // Increase if colours are not swapping; decrease if wrong pixels swap.

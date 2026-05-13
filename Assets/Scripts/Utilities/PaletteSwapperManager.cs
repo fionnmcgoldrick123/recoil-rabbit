@@ -13,6 +13,8 @@ public class PaletteSwapperManager : MonoBehaviour
         [ColorUsage(false)] public Color darkColor;
         [ColorUsage(false)] public Color highlightColor;
         [ColorUsage(false)] public Color lightColor;
+        [ColorUsage(false)] public Color backgroundColor;
+        [ColorUsage(false)] public Color afterImageColor;
     }
 
     // -------------------------------------------------------------------------
@@ -32,7 +34,9 @@ public class PaletteSwapperManager : MonoBehaviour
             paletteName   = "Deep Sea",
             darkColor      = new Color(0.01f, 0.04f, 0.18f),   // near-black navy
             highlightColor = new Color(0.05f, 0.55f, 0.95f),   // bright ocean blue
-            lightColor     = new Color(0.82f, 0.96f, 1.00f)    // icy white-blue
+            lightColor     = new Color(0.82f, 0.96f, 1.00f),   // icy white-blue
+            backgroundColor = new Color(0.01f, 0.08f, 0.20f),  // very dark navy
+            afterImageColor = new Color(0.20f, 0.80f, 1.00f, 0.4f) // cyan
         },
         // --- Test Palette 2: Toxic ---
         new PaletteData
@@ -40,7 +44,9 @@ public class PaletteSwapperManager : MonoBehaviour
             paletteName   = "Toxic",
             darkColor      = new Color(0.04f, 0.16f, 0.00f),   // deep swamp green
             highlightColor = new Color(0.40f, 1.00f, 0.05f),   // acid green
-            lightColor     = new Color(0.88f, 1.00f, 0.72f)    // pale lime
+            lightColor     = new Color(0.88f, 1.00f, 0.72f),   // pale lime
+            backgroundColor = new Color(0.04f, 0.10f, 0.00f),  // very dark green
+            afterImageColor = new Color(0.60f, 1.00f, 0.20f, 0.4f) // bright lime
         },
         // --- Test Palette 3: Ember ---
         new PaletteData
@@ -48,7 +54,9 @@ public class PaletteSwapperManager : MonoBehaviour
             paletteName   = "Ember",
             darkColor      = new Color(0.14f, 0.02f, 0.00f),   // charcoal red
             highlightColor = new Color(1.00f, 0.28f, 0.00f),   // hot orange
-            lightColor     = new Color(1.00f, 0.94f, 0.65f)    // warm cream
+            lightColor     = new Color(1.00f, 0.94f, 0.65f),   // warm cream
+            backgroundColor = new Color(0.10f, 0.02f, 0.00f),  // very dark red
+            afterImageColor = new Color(1.00f, 0.60f, 0.00f, 0.4f) // bright orange
         },
     };
 
@@ -66,6 +74,7 @@ public class PaletteSwapperManager : MonoBehaviour
 
     private int _currentIndex = 0;
     private bool _useOverrideMaterials;
+    private Color _currentAfterImageColor = new Color(0.5f, 0.75f, 1f, 0.4f); // default
 
     // -------------------------------------------------------------------------
     // Unity lifecycle
@@ -118,7 +127,7 @@ public class PaletteSwapperManager : MonoBehaviour
         }
     }
 
-    /// <summary>Sets the three replacement colour properties on the shared material.</summary>
+    /// <summary>Sets the three replacement colour properties on the shared material, and applies background color.</summary>
     private void ApplyPaletteData(PaletteData palette)
     {
         if (paletteMaterial == null)
@@ -130,6 +139,16 @@ public class PaletteSwapperManager : MonoBehaviour
         paletteMaterial.SetColor("_RepColor1", palette.darkColor);
         paletteMaterial.SetColor("_RepColor2", palette.highlightColor);
         paletteMaterial.SetColor("_RepColor3", palette.lightColor);
+
+        // Apply background color to camera
+        Camera mainCamera = Camera.main;
+        if (mainCamera != null)
+        {
+            mainCamera.backgroundColor = palette.backgroundColor;
+        }
+
+        // Store afterimage color for other scripts to use
+        _currentAfterImageColor = palette.afterImageColor;
     }
 
     /// <summary>Swaps the entire material on every target renderer.</summary>
@@ -152,6 +171,12 @@ public class PaletteSwapperManager : MonoBehaviour
     // -------------------------------------------------------------------------
     // Public API (call from other scripts if needed)
     // -------------------------------------------------------------------------
+
+    /// <summary>Get the current palette's afterimage color.</summary>
+    public Color GetCurrentAfterImageColor()
+    {
+        return _currentAfterImageColor;
+    }
 
     /// <summary>Immediately apply a palette by its index in the Palettes array.</summary>
     public void SetPalette(int index)
