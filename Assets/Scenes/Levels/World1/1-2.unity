@@ -31156,7 +31156,7 @@ GameObject:
   - component: {fileID: 1446620861}
   - component: {fileID: 1446620860}
   m_Layer: 0
-  m_Name: 'Palette '
+  m_Name: PaletteManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31175,21 +31175,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   paletteMaterial: {fileID: 2100000, guid: bc0b7f6d9f88b8244b4e2cba79852761, type: 2}
-  palettes:
-  - paletteName: Deep Sea
-    darkColor: {r: 0.01, g: 0.04, b: 0.18, a: 1}
-    highlightColor: {r: 0.05, g: 0.55, b: 0.95, a: 1}
-    lightColor: {r: 0.82, g: 0.96, b: 1, a: 1}
-  - paletteName: Toxic
-    darkColor: {r: 0.04, g: 0.16, b: 0, a: 1}
-    highlightColor: {r: 0.4, g: 1, b: 0.05, a: 1}
-    lightColor: {r: 0.88, g: 1, b: 0.72, a: 1}
-  - paletteName: Ember
-    darkColor: {r: 0.14, g: 0.02, b: 0, a: 1}
-    highlightColor: {r: 1, g: 0.28, b: 0, a: 1}
-    lightColor: {r: 1, g: 0.94, b: 0.65, a: 1}
-  overrideMaterials: []
-  targets: []
+  paletteScriptables:
+  - {fileID: 11400000, guid: deef1463d77840345a03bc8364f943a7, type: 2}
+  - {fileID: 11400000, guid: 69b9b5e259afb24409e08a79470dff6c, type: 2}
+  - {fileID: 11400000, guid: 1a8cbd9353533ca4aa21e0c3915b240b, type: 2}
+  - {fileID: 11400000, guid: f8227863c6242f34aa79731fbb699183, type: 2}
+  - {fileID: 11400000, guid: a79dc54375f994648a8022253197322b, type: 2}
+  - {fileID: 11400000, guid: 147c54da6ae51ef47a9e44811ea487e6, type: 2}
+  - {fileID: 11400000, guid: 32980882207da0649966ecc3903d5a58, type: 2}
+  - {fileID: 11400000, guid: 2157c05194753ef4592a4ed7c25157cb, type: 2}
+  - {fileID: 11400000, guid: 5e769d577ddaabb45990646811853c35, type: 2}
+  - {fileID: 11400000, guid: 8505cc108f652954aaf118dfe450bf26, type: 2}
+  - {fileID: 11400000, guid: 43f912d3326009e46aafbfce17309305, type: 2}
+  defaultPalette: {fileID: 11400000, guid: deef1463d77840345a03bc8364f943a7, type: 2}
 --- !u!4 &1446620861
 Transform:
   m_ObjectHideFlags: 0
@@ -32006,6 +32004,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7434948816021751608, guid: 1af2bfd407623bb428a9e3d9bea1c688, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 2100000, guid: bc0b7f6d9f88b8244b4e2cba79852761, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

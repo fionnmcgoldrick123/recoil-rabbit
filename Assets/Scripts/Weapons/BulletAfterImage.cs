@@ -4,7 +4,6 @@ using System.Collections;
 public class BulletAfterImage : MonoBehaviour
 {
     [Header("After Image")]
-    // 
     [SerializeField] private float speedThreshold = 5f;
     [SerializeField] private float spawnInterval = 0.05f;
     [SerializeField] private float fadeDuration = 0.2f;
@@ -29,7 +28,6 @@ public class BulletAfterImage : MonoBehaviour
         if (!isActive || sourceRenderer == null || rb == null)
             return;
 
-        // Use velocity magnitude
         float speed = rb.linearVelocity.magnitude;
 
         if (speed <= speedThreshold)
@@ -62,7 +60,6 @@ public class BulletAfterImage : MonoBehaviour
         ghostRenderer.sortingLayerID = sourceRenderer.sortingLayerID;
         ghostRenderer.sortingOrder = sourceRenderer.sortingOrder - 1;
 
-        // Use palette manager's afterimage color if available, otherwise use serialized value
         Color currentAfterImageColor = (paletteManager != null) 
             ? paletteManager.GetCurrentAfterImageColor() 
             : afterImageColor;

@@ -37,7 +37,6 @@ public class PlayerAfterImage : MonoBehaviour
         if (flashBlend > 0f)
             flashBlend = Mathf.MoveTowards(flashBlend, 0f, Time.deltaTime / flashFadeOutDuration);
 
-        // Use total velocity magnitude (includes both horizontal and vertical movement)
         float speed = rb.linearVelocity.magnitude;
 
         if (speed <= speedThreshold)
@@ -71,7 +70,6 @@ public class PlayerAfterImage : MonoBehaviour
         ghostRenderer.sortingLayerID = sourceRenderer.sortingLayerID;
         ghostRenderer.sortingOrder = sourceRenderer.sortingOrder - 1;
 
-        // Use palette manager's afterimage color if available, otherwise use serialized value
         Color currentAfterImageColor = (paletteManager != null) 
             ? paletteManager.GetCurrentAfterImageColor() 
             : afterImageColor;
@@ -81,7 +79,6 @@ public class PlayerAfterImage : MonoBehaviour
         c = Color.Lerp(c, new Color(flashAfterImageColor.r, flashAfterImageColor.g, flashAfterImageColor.b, c.a), flashBlend);
         ghostRenderer.color = c;
 
-        // Scale fade duration with speed - faster = shorter duration
         float scaledFadeDuration = Mathf.Lerp(fadeDuration, fadeDuration * minFadeDurationMultiplier, speedFactor);
         StartCoroutine(FadeAndDestroy(ghostRenderer, scaledFadeDuration));
     }
