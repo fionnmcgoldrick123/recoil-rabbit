@@ -77,6 +77,7 @@ public class PlayerController : MonoBehaviour
     private bool wasWallSlidingLastFrame;
     private float wallSlideMomentum;
     private float deathImmunityTimer;
+    private float speedMultiplier = 1f;
 
     public void SetBhopProtected() { bhopProtected = true; }
     public void ClearJumpCut()
@@ -239,7 +240,7 @@ public class PlayerController : MonoBehaviour
             return;
 
         float moveX = Input.GetAxisRaw("Horizontal");
-        float inputSpeed = moveX * maxSpeed;
+        float inputSpeed = moveX * maxSpeed * speedMultiplier;
         float currentX = rb.linearVelocity.x;
         float absCurrentX = Mathf.Abs(currentX);
         bool hasInput = Mathf.Abs(moveX) > 0.01f;
@@ -263,7 +264,7 @@ public class PlayerController : MonoBehaviour
             else
             {
                 if (sameDir)
-                    newX = Mathf.MoveTowards(currentX, direction * maxSpeed, overSpeedGroundedBleed * Time.fixedDeltaTime);
+                    newX = Mathf.MoveTowards(currentX, direction * maxSpeed * speedMultiplier, overSpeedGroundedBleed * Time.fixedDeltaTime);
                 else if (opposite)
                     newX = Mathf.MoveTowards(currentX, inputSpeed, overSpeedDeceleration * 2f * Time.fixedDeltaTime);
                 else
@@ -445,6 +446,18 @@ public class PlayerController : MonoBehaviour
     public void OnDeathAnimationComplete()
     {
         SceneTransition.ReloadActiveScene();
+    }
+
+    public void ApplySpeedBoost(float multiplier, float duration)
+    {
+        StartCoroutine(SpeedBoostCoroutine(multiplier, duration));
+    }
+
+    private System.Collections.IEnumerator SpeedBoostCoroutine(float multiplier, float duration)
+    {
+        speedMultiplier = multiplier;
+        yield return new WaitForSeconds(duration);
+        speedMultiplier = 1f;
     }
 
     private void OnDrawGizmos()

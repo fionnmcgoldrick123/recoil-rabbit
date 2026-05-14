@@ -38,6 +38,8 @@ public class WeaponController : MonoBehaviour
     private int shotgunAmmo;
     private Coroutine shotgunAmmoResetRoutine;
     private Coroutine weaponScaleRoutine;
+    private float nextShotRecoilMultiplier = 1f;
+    private bool infiniteAmmoOverride = false;
 
     private Camera mainCamera;
     private PlayerController playerController;
@@ -132,10 +134,10 @@ public class WeaponController : MonoBehaviour
     {
         if (shotgunCooldown > 0 || shotgunStats == null) return;
         if (firePoint == null) return;
-        if (shotgunAmmo <= 0) return;
+        if (shotgunAmmo <= 0 && !infiniteAmmoOverride) return;
 
         shotgunCooldown = 1f / shotgunStats.fireRate;
-        shotgunAmmo--;
+        if (!infiniteAmmoOverride) shotgunAmmo--;
 
         Vector2 direction = GetMouseDirection();
         SpawnBullets(shotgunStats, direction, isRevolver: false);
@@ -159,7 +161,8 @@ public class WeaponController : MonoBehaviour
             Vector2 currentVel = playerRb.linearVelocity;
             float currentAlongRecoil = Vector2.Dot(currentVel, recoilDir);
 
-            float desiredSpeed = shotgunStats.playerRecoilForce;
+            float desiredSpeed = shotgunStats.playerRecoilForce * nextShotRecoilMultiplier;
+            nextShotRecoilMultiplier = 1f;
             float newSpeed = Mathf.Max(currentAlongRecoil, desiredSpeed);
 
             Vector2 perp = currentVel - currentAlongRecoil * recoilDir;
@@ -344,4 +347,27 @@ public class WeaponController : MonoBehaviour
     }
 
     public int ShotgunAmmo => shotgunAmmo;
+
+    /// <summary>
+    /// Called by PowerRecoilEffect — the multiplier is consumed on the next shotgun shot.
+    /// </summary>
+    public void SetNextShotRecoilMultiplier(float multiplier)
+    {
+        nextShotRecoilMultiplier = multiplier;
+    }
+
+    /// <summary>
+    /// Called by InfiniteAmmoEffect — disables ammo cost on shotgun for the given duration.
+    /// </summary>
+    public void StartInfiniteAmmoOverride(float duration)
+    {
+        StartCoroutine(InfiniteAmmoCoroutine(duration));
+    }
+
+    private System.Collections.IEnumerator InfiniteAmmoCoroutine(float duration)
+    {
+        infiniteAmmoOverride = true;
+        yield return new WaitForSeconds(duration);
+        infiniteAmmoOverride = false;
+    }
 }
