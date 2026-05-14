@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 23403a932fcd69049815025421993815
+guid: 2afa5fff94d8b0b4fa3bfcf95deaaae5
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -98,7 +98,7 @@ ScriptedImporter:
     addSortingGroup: 1
     addShadowCasters: 0
   importFileNodeState: 1
-  platformSettingsDirtyTick: 639143724174976738
+  platformSettingsDirtyTick: 639143742269063495
   textureAssetName: 
   singleSpriteImportData:
   - name: 
@@ -123,7 +123,7 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: item-bubble
+  - name: infinite-ammo
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -133,9 +133,9 @@ ScriptedImporter:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 28
-      height: 28
-    spriteID: db9e629e34b509c4b9596e389aa3ad94
+      width: 16
+      height: 18
+    spriteID: f16ea7c8344b5b44fa3d414638531736
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -148,25 +148,25 @@ ScriptedImporter:
   asepriteLayers:
   - layerIndex: 0
     uuid:
-      value0: 2297731270
+      value0: 770941769
       value1: 0
       value2: 0
       value3: 0
     guid: 0
-    name: item-bubble
+    name: infinite-ammo
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: item-bubble
+    - name: infinite-ammo
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
-        x: 2
-        y: 2
-        width: 28
-        height: 28
-      spriteId: db9e629e34b509c4b9596e389aa3ad94
+        x: 8
+        y: 8
+        width: 16
+        height: 18
+      spriteId: f16ea7c8344b5b44fa3d414638531736
     linkedCells: []
     parentIndex: -1
   platformSettings:
@@ -246,4 +246,4 @@ ScriptedImporter:
   secondarySpriteTextures: []
   spritePackingTag: 
   canvasSize: {x: 32, y: 32}
-  previousTextureSize: {x: 64, y: 64}
+  previousTextureSize: {x: 32, y: 32}

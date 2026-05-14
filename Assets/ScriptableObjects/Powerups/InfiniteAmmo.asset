@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   displayName: InfiniteAmmo
   description: Player gets infinite shotgun shells for 2 seconds!
-  icon: {fileID: -1923338394183949740, guid: fa432df0ac599e54c87152443cf4b3c4, type: 3}
+  icon: {fileID: 4945160175714341302, guid: 2afa5fff94d8b0b4fa3bfcf95deaaae5, type: 3}
   effect: {fileID: 11400000, guid: 3000f678d7e55074fa576a516fd1e0c8, type: 2}
