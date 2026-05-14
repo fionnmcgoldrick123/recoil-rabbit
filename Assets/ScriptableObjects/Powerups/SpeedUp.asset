@@ -15,4 +15,4 @@ MonoBehaviour:
   displayName: SpeedUp
   description: Increase player movement speed for 3 seconds!
   icon: {fileID: -4469064674185426108, guid: e99742f3f4bcb0142b027335e8591343, type: 3}
-  effect: {fileID: 0}
+  effect: {fileID: 11400000, guid: a20d725614e1bb24dac3006c0df21b77, type: 2}

@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   displayName: PowerShot
   description: Once activated, player's next shot has much more recoil!
-  icon: {fileID: 3423820547465383185, guid: 52f9552d0a90d7c4caed397cefddd5f1, type: 3}
+  icon: {fileID: -7051907817224690353, guid: 8e31724e9fd8aff4d8a750c1e3104177, type: 3}
   effect: {fileID: 11400000, guid: 019bd87ba6ecda040b0a6e187c9f342c, type: 2}

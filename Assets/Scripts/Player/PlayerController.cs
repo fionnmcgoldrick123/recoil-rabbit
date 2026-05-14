@@ -244,7 +244,7 @@ public class PlayerController : MonoBehaviour
         float currentX = rb.linearVelocity.x;
         float absCurrentX = Mathf.Abs(currentX);
         bool hasInput = Mathf.Abs(moveX) > 0.01f;
-        bool overSpeed = absCurrentX > maxSpeed;
+        bool overSpeed = absCurrentX > maxSpeed * speedMultiplier;
 
         float newX;
 
