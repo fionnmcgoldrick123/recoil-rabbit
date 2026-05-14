@@ -9,8 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a97aaef19a642542a1bcc947fab17fc, type: 3}
-  m_Name: SpeedBoostEffect
+  m_Script: {fileID: 11500000, guid: 1eb7442694bd63c4ca41637035fd1f37, type: 3}
+  m_Name: GravityFlipEffect
   m_EditorClassIdentifier: 
-  speedMultiplier: 2
   duration: 4

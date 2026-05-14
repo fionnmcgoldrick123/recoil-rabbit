@@ -78,6 +78,7 @@ public class PlayerController : MonoBehaviour
     private float wallSlideMomentum;
     private float deathImmunityTimer;
     private float speedMultiplier = 1f;
+    private float gravityMultiplier = 1f;
 
     public void SetBhopProtected() { bhopProtected = true; }
     public void ClearJumpCut()
@@ -134,13 +135,16 @@ public class PlayerController : MonoBehaviour
         TryJump();
         TryWallJump();
 
-        float clampedY = Mathf.Max(rb.linearVelocity.y, -maxFallSpeed);
+        float clampedY = gravityMultiplier > 0 
+            ? Mathf.Max(rb.linearVelocity.y, -maxFallSpeed)
+            : Mathf.Min(rb.linearVelocity.y, maxFallSpeed);
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, clampedY);
     }
 
     private void UpdateGroundedState()
     {
-        isGrounded = Physics2D.Raycast(transform.position, Vector2.down, groundCheckDistance, groundLayer);
+        Vector2 groundCheckDirection = gravityMultiplier > 0 ? Vector2.down : Vector2.up;
+        isGrounded = Physics2D.Raycast(transform.position, groundCheckDirection, groundCheckDistance, groundLayer);
 
         if (isGrounded)
         {
@@ -289,17 +293,19 @@ public class PlayerController : MonoBehaviour
 
     private void ApplyGravityScale()
     {
-        if (jumpCut && rb.linearVelocity.y > 0)
+        float velocityCheck = rb.linearVelocity.y * gravityMultiplier;
+        
+        if (jumpCut && velocityCheck > 0)
         {
-            rb.gravityScale = jumpCutGravityScale;
+            rb.gravityScale = jumpCutGravityScale * gravityMultiplier;
         }
-        else if (rb.linearVelocity.y < 0)
+        else if (velocityCheck < 0)
         {
-            rb.gravityScale = fallGravityScale;
+            rb.gravityScale = fallGravityScale * gravityMultiplier;
         }
         else
         {
-            rb.gravityScale = baseGravityScale;
+            rb.gravityScale = baseGravityScale * gravityMultiplier;
         }
     }
 
@@ -321,18 +327,22 @@ public class PlayerController : MonoBehaviour
         // Decay wall momentum over time
         wallSlideMomentum = Mathf.Max(0f, wallSlideMomentum - wallMomentumDecay * Time.fixedDeltaTime);
 
-        // If we still have momentum, apply upward force
+        // If we still have momentum, apply momentum force (direction flips with gravity)
         if (wallSlideMomentum > 0f)
         {
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, wallSlideMomentum);
+            float momentumDir = gravityMultiplier > 0 ? wallSlideMomentum : -wallSlideMomentum;
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, momentumDir);
         }
         else
         {
-            // When momentum is depleted, apply friction for downward slide
-            if (rb.linearVelocity.y < 0)
+            // When momentum is depleted, apply friction for fall
+            float velocityCheck = rb.linearVelocity.y * gravityMultiplier;
+            if (velocityCheck < 0)
             {
                 float newY = Mathf.Lerp(rb.linearVelocity.y, 0f, wallSlideFriction * Time.fixedDeltaTime);
-                newY = Mathf.Max(newY, -wallSlideMaxFallSpeed);
+                newY = gravityMultiplier > 0 
+                    ? Mathf.Max(newY, -wallSlideMaxFallSpeed)
+                    : Mathf.Min(newY, wallSlideMaxFallSpeed);
                 rb.linearVelocity = new Vector2(rb.linearVelocity.x, newY);
             }
         }
@@ -348,7 +358,7 @@ public class PlayerController : MonoBehaviour
             coyoteTimer = 0;
             if (Mathf.Abs(rb.linearVelocity.x) > maxSpeed)
                 bhopProtected = true;
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce * gravityMultiplier);
 
             if (AudioManager.Instance != null)
                 AudioManager.Instance.PlayJump();
@@ -372,7 +382,7 @@ public class PlayerController : MonoBehaviour
         bhopProtected = true;
 
         float sideVelocity = -jumpWallDirection * wallJumpSideForce;
-        rb.linearVelocity = new Vector2(sideVelocity, wallJumpUpForce);
+        rb.linearVelocity = new Vector2(sideVelocity, wallJumpUpForce * gravityMultiplier);
 
         if (AudioManager.Instance != null)
             AudioManager.Instance.PlayJump();
@@ -458,6 +468,55 @@ public class PlayerController : MonoBehaviour
         speedMultiplier = multiplier;
         yield return new WaitForSeconds(duration);
         speedMultiplier = 1f;
+    }
+
+    public void StartGravityFlip(float duration)
+    {
+        StartCoroutine(GravityFlipCoroutine(duration));
+    }
+
+    private System.Collections.IEnumerator GravityFlipCoroutine(float duration)
+    {
+        gravityMultiplier = -1f;
+        // Apply upward impulse to lift player away from ground
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, 5f);
+
+        // Flip player sprite upside down
+        SpriteRenderer playerSprite = GetComponentInChildren<SpriteRenderer>();
+        if (playerSprite != null)
+            playerSprite.flipY = true;
+
+        // Flip gun and adjust its position to stay aligned
+        if (gunObject != null)
+        {
+            SpriteRenderer gunSprite = gunObject.GetComponentInChildren<SpriteRenderer>();
+            if (gunSprite != null)
+                gunSprite.flipY = true;
+
+            // Flip gun's Y position relative to player to keep alignment
+            Vector3 gunLocalPos = gunObject.transform.localPosition;
+            gunObject.transform.localPosition = new Vector3(gunLocalPos.x, -gunLocalPos.y, gunLocalPos.z);
+        }
+
+        yield return new WaitForSeconds(duration);
+
+        gravityMultiplier = 1f;
+
+        // Flip player sprite back to normal
+        if (playerSprite != null)
+            playerSprite.flipY = false;
+
+        // Flip gun sprite and position back to normal
+        if (gunObject != null)
+        {
+            SpriteRenderer gunSprite = gunObject.GetComponentInChildren<SpriteRenderer>();
+            if (gunSprite != null)
+                gunSprite.flipY = false;
+
+            // Flip gun's Y position back
+            Vector3 gunLocalPos = gunObject.transform.localPosition;
+            gunObject.transform.localPosition = new Vector3(gunLocalPos.x, -gunLocalPos.y, gunLocalPos.z);
+        }
     }
 
     private void OnDrawGizmos()

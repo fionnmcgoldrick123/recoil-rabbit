@@ -32840,6 +32840,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0ab21c27f5ddee74192be7c47f699627, type: 2}
   - {fileID: 11400000, guid: 1b29b0db7b027de45a4430ae2125ed3b, type: 2}
   - {fileID: 11400000, guid: 1569419b4b010074690289f5f4864841, type: 2}
+  - {fileID: 11400000, guid: c19559cfa93b476439eabcf0e83d62c3, type: 2}
   cycleInterval: 1
   iconRenderer: {fileID: 2103712293}
 --- !u!58 &2103712295

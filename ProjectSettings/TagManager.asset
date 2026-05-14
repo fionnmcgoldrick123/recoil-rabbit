@@ -45,6 +45,9 @@ TagManager:
   - name: Trees
     uniqueID: 2479580063
     locked: 0
+  - name: TileMap
+    uniqueID: 2150823313
+    locked: 0
   - name: Player
     uniqueID: 4110617903
     locked: 0
@@ -56,9 +59,6 @@ TagManager:
     locked: 0
   - name: Bullets
     uniqueID: 3031459955
-    locked: 0
-  - name: TileMap
-    uniqueID: 2150823313
     locked: 0
   m_RenderingLayers:
   - Default
