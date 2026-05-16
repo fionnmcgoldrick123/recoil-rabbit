@@ -17,6 +17,7 @@ public class ItemBubble : MonoBehaviour
 
     private int currentIndex;
     private float cycleTimer;
+    private bool hasBeenCollected;
 
     private void Start()
     {
@@ -46,11 +47,15 @@ public class ItemBubble : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (hasBeenCollected) return;
+
         // Check if this is a bullet or the player
         Bullet bullet = other.GetComponent<Bullet>();
         PlayerController player = other.GetComponent<PlayerController>();
         
         if (bullet == null && player == null) return;
+
+        hasBeenCollected = true;
 
         // Award powerup to player
         if (items != null && items.Length > 0 && items[currentIndex] != null)
