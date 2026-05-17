@@ -142,6 +142,13 @@ public class WeaponController : MonoBehaviour
         Vector2 direction = GetMouseDirection();
         SpawnBullets(shotgunStats, direction, isRevolver: false);
 
+        // Hyper window: airborne + shooting diagonally upward (recoil pushes player down-diagonal)
+        if (playerController != null && !playerController.IsGrounded &&
+            direction.y > 0.3f && Mathf.Abs(direction.x) > 0.3f)
+        {
+            playerController.TriggerHyperWindow(-direction.x);
+        }
+
         if (gunView != null)
         {
             if (weaponScaleRoutine != null)

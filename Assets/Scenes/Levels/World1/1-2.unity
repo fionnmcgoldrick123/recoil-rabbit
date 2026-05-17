@@ -780,6 +780,18 @@ PrefabInstance:
       propertyPath: gunObject
       value: 
       objectReference: {fileID: 470388033}
+    - target: {fileID: 8050381305028736681, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
+      propertyPath: hyperSpeed
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 8050381305028736681, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
+      propertyPath: hyperJumpForce
+      value: 12.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8050381305028736681, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
+      propertyPath: hyperWindowTime
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 8341451778601153750, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 

@@ -16,6 +16,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float overSpeedGroundedBleed = 2f;
     [SerializeField] private float maxOverSpeed = 25f;
 
+    [Header("Hyper")]
+    [SerializeField] private float hyperSpeed = 30f;
+    [SerializeField] private float hyperJumpForce = 10f;
+    [SerializeField] private float hyperWindowTime = 0.25f;
+
     [Header("Jump")]
     [SerializeField] private float jumpForce = 14f;
     [SerializeField] private float coyoteTime = 0.1f;
@@ -79,12 +84,20 @@ public class PlayerController : MonoBehaviour
     private float deathImmunityTimer;
     private float speedMultiplier = 1f;
     private float gravityMultiplier = 1f;
+    private float hyperWindowTimer;
+    private float hyperDirection;
 
     public void SetBhopProtected() { bhopProtected = true; }
     public void ClearJumpCut()
     {
         jumpCut = false;
         jumpCutSuppressedUntilGrounded = true;
+    }
+
+    public void TriggerHyperWindow(float horizontalDir)
+    {
+        hyperWindowTimer = hyperWindowTime;
+        hyperDirection = Mathf.Sign(horizontalDir);
     }
 
     public void ActivateDeathImmunity()
@@ -114,6 +127,9 @@ public class PlayerController : MonoBehaviour
 
         if (deathImmunityTimer > 0f)
             deathImmunityTimer -= Time.deltaTime;
+
+        if (hyperWindowTimer > 0f)
+            hyperWindowTimer -= Time.deltaTime;
 
         wasGrounded = isGrounded;
         wasWallSlidingLastFrame = isWallSliding;
@@ -356,9 +372,20 @@ public class PlayerController : MonoBehaviour
             jumpCut = false;
             jumpBufferTimer = 0;
             coyoteTimer = 0;
-            if (Mathf.Abs(rb.linearVelocity.x) > maxSpeed)
-                bhopProtected = true;
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce * gravityMultiplier);
+            bhopProtected = true;
+
+            if (hyperWindowTimer > 0f)
+            {
+                // Hyper: massive horizontal speed + slightly lower jump
+                hyperWindowTimer = 0f;
+                rb.linearVelocity = new Vector2(hyperDirection * hyperSpeed, hyperJumpForce * gravityMultiplier);
+            }
+            else
+            {
+                if (Mathf.Abs(rb.linearVelocity.x) > maxSpeed)
+                    bhopProtected = true;
+                rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce * gravityMultiplier);
+            }
 
             if (AudioManager.Instance != null)
                 AudioManager.Instance.PlayJump();
