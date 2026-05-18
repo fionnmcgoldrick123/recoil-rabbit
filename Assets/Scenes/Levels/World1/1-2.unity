@@ -792,6 +792,22 @@ PrefabInstance:
       propertyPath: hyperWindowTime
       value: 0.2
       objectReference: {fileID: 0}
+    - target: {fileID: 8050381305028736681, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
+      propertyPath: wallLaunchForce
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 8050381305028736681, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
+      propertyPath: wallLaunchUpForce
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8050381305028736681, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
+      propertyPath: hyperComboMultiplier
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8050381305028736681, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
+      propertyPath: hyperHorizontalMultiplier
+      value: 1.2
+      objectReference: {fileID: 0}
     - target: {fileID: 8341451778601153750, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 

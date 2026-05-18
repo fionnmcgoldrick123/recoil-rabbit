@@ -148,6 +148,10 @@ public class WeaponController : MonoBehaviour
         {
             playerController.TriggerHyperWindow(-direction.x);
         }
+        else
+        {
+            playerController?.ResetHyperCombo();
+        }
 
         if (gunView != null)
         {

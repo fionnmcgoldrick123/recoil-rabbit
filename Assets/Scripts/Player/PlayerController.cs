@@ -93,6 +93,12 @@ public class PlayerController : MonoBehaviour
     private float hyperComboLandTimer = 0f;
 
     public void SetBhopProtected() { bhopProtected = true; }
+
+    public void ResetHyperCombo()
+    {
+        hyperComboCount = 0;
+    }
+
     public void ClearJumpCut()
     {
         jumpCut = false;
