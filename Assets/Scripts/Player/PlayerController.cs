@@ -20,6 +20,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float hyperSpeed = 30f;
     [SerializeField] private float hyperJumpForce = 10f;
     [SerializeField] private float hyperWindowTime = 0.25f;
+    [SerializeField] private float hyperComboMultiplier = 1.3f;
+    [SerializeField] private float hyperHorizontalMultiplier = 1.1f;
+    [SerializeField] private float hyperComboLandGraceTime = 0.08f;
 
     [Header("Jump")]
     [SerializeField] private float jumpForce = 14f;
@@ -86,6 +89,8 @@ public class PlayerController : MonoBehaviour
     private float gravityMultiplier = 1f;
     private float hyperWindowTimer;
     private float hyperDirection;
+    private int hyperComboCount = 0;
+    private float hyperComboLandTimer = 0f;
 
     public void SetBhopProtected() { bhopProtected = true; }
     public void ClearJumpCut()
@@ -170,6 +175,13 @@ public class PlayerController : MonoBehaviour
                 isJumping = false;
                 jumpCut = false;
                 jumpCutSuppressedUntilGrounded = false;
+                hyperComboLandTimer = hyperComboLandGraceTime;
+            }
+            else
+            {
+                hyperComboLandTimer -= Time.deltaTime;
+                if (hyperComboLandTimer <= 0f)
+                    hyperComboCount = 0;
             }
         }
         else
@@ -204,6 +216,7 @@ public class PlayerController : MonoBehaviour
         {
             bufferedWallDirection = wallDirection;
             wallJumpBufferTimer = wallJumpBufferTime;
+            hyperComboCount = 0;
         }
         else
         {
@@ -377,14 +390,19 @@ public class PlayerController : MonoBehaviour
             if (hyperWindowTimer > 0f)
             {
                 // Hyper: massive horizontal speed + slightly lower jump
+                // Successive hyper jumps gain extra speed via combo multipliers
                 hyperWindowTimer = 0f;
-                rb.linearVelocity = new Vector2(hyperDirection * hyperSpeed, hyperJumpForce * gravityMultiplier);
+                float comboMult = Mathf.Pow(hyperComboMultiplier, hyperComboCount);
+                float hComboMult = Mathf.Pow(hyperHorizontalMultiplier, hyperComboCount);
+                rb.linearVelocity = new Vector2(hyperDirection * hyperSpeed * hComboMult, hyperJumpForce * comboMult * gravityMultiplier);
+                hyperComboCount++;
             }
             else
             {
                 if (Mathf.Abs(rb.linearVelocity.x) > maxSpeed)
                     bhopProtected = true;
                 rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce * gravityMultiplier);
+                hyperComboCount = 0;
             }
 
             if (AudioManager.Instance != null)
