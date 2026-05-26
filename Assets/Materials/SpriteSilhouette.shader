@@ -1,5 +1,6 @@
-// Renders a sprite as a flat solid colour, using the sprite texture only for its alpha mask.
-// Set the SpriteRenderer.color to control the tint and alpha.
+﻿// Renders a sprite as a flat solid colour, using the sprite texture only for its alpha mask.
+// Forces point (nearest-neighbour) sampling so pixel-art sprites keep crisp, hard pixel edges.
+// Set SpriteRenderer.color to control the tint and alpha.
 Shader "Custom/SpriteSilhouette"
 {
     Properties
@@ -26,50 +27,49 @@ Shader "Custom/SpriteSilhouette"
 
         Pass
         {
-            CGPROGRAM
+            HLSLPROGRAM
             #pragma vertex vert
             #pragma fragment frag
-            #include "UnityCG.cginc"
 
-            struct appdata_t
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+
+            struct Attributes
             {
-                float4 vertex   : POSITION;
-                float4 color    : COLOR;
-                float2 texcoord : TEXCOORD0;
-                UNITY_VERTEX_INPUT_INSTANCE_ID
+                float4 posOS  : POSITION;
+                float4 color  : COLOR;
+                float2 uv     : TEXCOORD0;
             };
 
-            struct v2f
+            struct Varyings
             {
-                float4 vertex   : SV_POSITION;
-                fixed4 color    : COLOR;
-                float2 texcoord : TEXCOORD0;
-                UNITY_VERTEX_OUTPUT_STEREO
+                float4 posCS  : SV_POSITION;
+                float4 color  : COLOR;
+                float2 uv     : TEXCOORD0;
             };
 
-            sampler2D _MainTex;
-            fixed4    _Color;
+            TEXTURE2D(_MainTex);
+            // Unity auto-creates this sampler state from the name:
+            // "point" = nearest-neighbour filter, "clamp" = clamp wrap.
+            // Overrides the texture asset's own filter setting -- guarantees hard pixel edges.
+            SamplerState sampler_point_clamp;
+            float4 _Color;
 
-            v2f vert(appdata_t IN)
+            Varyings vert(Attributes IN)
             {
-                v2f OUT;
-                UNITY_SETUP_INSTANCE_ID(IN);
-                UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(OUT);
-                OUT.vertex   = UnityObjectToClipPos(IN.vertex);
-                OUT.texcoord = IN.texcoord;
-                // Vertex colour (= SpriteRenderer.color) * material tint
-                OUT.color    = IN.color * _Color;
+                Varyings OUT;
+                OUT.posCS = TransformObjectToHClip(IN.posOS.xyz);
+                OUT.uv    = IN.uv;
+                OUT.color = IN.color * _Color;
                 return OUT;
             }
 
-            fixed4 frag(v2f IN) : SV_Target
+            float4 frag(Varyings IN) : SV_Target
             {
-                // Sample only the alpha channel — discard texture RGB entirely
-                float alpha = tex2D(_MainTex, IN.texcoord).a;
-                // Output: solid tint colour with the sprite's alpha mask
-                return fixed4(IN.color.rgb, alpha * IN.color.a);
+                // Point-sampled alpha only -- crisp pixel edges, no RGB from the sprite
+                float alpha = SAMPLE_TEXTURE2D(_MainTex, sampler_point_clamp, IN.uv).a;
+                return float4(IN.color.rgb, alpha * IN.color.a);
             }
-            ENDCG
+            ENDHLSL
         }
     }
 }

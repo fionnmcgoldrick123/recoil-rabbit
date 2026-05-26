@@ -402,6 +402,14 @@ PrefabInstance:
       propertyPath: wallHyperAngleThreshold
       value: 0.35
       objectReference: {fileID: 0}
+    - target: {fileID: 7444892227907233762, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
+      propertyPath: spawnInterval
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 7444892227907233762, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
+      propertyPath: speedThreshold
+      value: 17
+      objectReference: {fileID: 0}
     - target: {fileID: 8050381305028736681, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
       propertyPath: gizmoLineLength
       value: 3.84
