@@ -411,6 +411,10 @@ PrefabInstance:
       value: 23.5
       objectReference: {fileID: 0}
     - target: {fileID: 8050381305028736681, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
+      propertyPath: showSuperBhopGizmo
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8050381305028736681, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
       propertyPath: wallHyperDownSpeed
       value: 23.5
       objectReference: {fileID: 0}
@@ -433,6 +437,14 @@ PrefabInstance:
     - target: {fileID: 8050381305028736681, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
       propertyPath: hyperHorizontalMultiplier
       value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8050381305028736681, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
+      propertyPath: superBhopHorizontalThreshold
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8050381305028736681, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
+      propertyPath: gizmoSuperBhopHorizontalThreshold
+      value: 0.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
