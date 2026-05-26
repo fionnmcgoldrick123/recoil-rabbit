@@ -225,7 +225,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -184349393
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 1
   m_Sprite: {fileID: 5851585598304553043, guid: fefa21ea39f753443b28759b0a2377f5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -344,9 +344,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   revolverStats: {fileID: 11400000, guid: 769a05e9eadf0e244b4f6d57990cfb2d, type: 2}
   shotgunStats: {fileID: 11400000, guid: 593649b639eb13946add42bcaff43427, type: 2}
-  firePoint: {fileID: 3950720654860677888}
-  playerRb: {fileID: 3102248566110250253}
-  gunView: {fileID: 8806626624275682494}
+  firePoint: {fileID: 0}
+  playerRb: {fileID: 0}
+  gunView: {fileID: 0}
   cameraShake: {fileID: 3348994088824081619, guid: bae890b39f18dde4f863912b994b1ddf, type: 3}
   revolverShakeIntensity: 0
   revolverShakeDuration: 0
@@ -380,6 +380,12 @@ MonoBehaviour:
   overSpeedDeceleration: 100
   overSpeedGroundedBleed: 2
   maxOverSpeed: 5000
+  hyperSpeed: 23.5
+  hyperJumpForce: 12.5
+  hyperWindowTime: 0.2
+  hyperComboMultiplier: 1.2
+  hyperHorizontalMultiplier: 1.2
+  hyperComboLandGraceTime: 0.08
   jumpForce: 12
   coyoteTime: 0.1
   jumpBufferTime: 0.1
@@ -405,7 +411,7 @@ MonoBehaviour:
     m_Bits: 1088
   isDead: 0
   deathImmunityDuration: 0.1
-  gunObject: {fileID: 7003045570502132115}
+  gunObject: {fileID: 0}
   OnPlayerDeath:
     m_PersistentCalls:
       m_Calls: []
@@ -682,7 +688,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1969592219
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 1
   m_Sprite: {fileID: -5033546409207523041, guid: 36be8c84d1e06ff4e8fa43d51fefd4e0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

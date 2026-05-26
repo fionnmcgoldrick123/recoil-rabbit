@@ -27,6 +27,10 @@ public class WeaponController : MonoBehaviour
     [Header("Shotgun After Image")]
     [SerializeField] private float shotgunAfterImageFadeDuration = 0.3f;
 
+    [Header("Wall Hyper")]
+    [Tooltip("How diagonal the shot must be (both X and Y components of the normalised direction must exceed this). 0 = any angle, 0.5 = ~30° from axis, 0.7 = near-45°.")]
+    [SerializeField] private float wallHyperAngleThreshold = 0.3f;
+
     [Header("UI (Optional)")]
     [SerializeField] private TMPro.TextMeshProUGUI shotgunAmmoText;
     [SerializeField] private Animator shotgunAmmoAnimator;
@@ -142,11 +146,18 @@ public class WeaponController : MonoBehaviour
         Vector2 direction = GetMouseDirection();
         SpawnBullets(shotgunStats, direction, isRevolver: false);
 
-        // Hyper window: airborne + shooting diagonally upward (recoil pushes player down-diagonal)
+        // Hyper window detection: airborne + diagonal shot
         if (playerController != null && !playerController.IsGrounded &&
-            direction.y > 0.3f && Mathf.Abs(direction.x) > 0.3f)
+            Mathf.Abs(direction.x) > wallHyperAngleThreshold && Mathf.Abs(direction.y) > wallHyperAngleThreshold)
         {
-            playerController.TriggerHyperWindow(-direction.x);
+            // Any diagonal shot opens the wall hyper window.
+            // Bottom angles (y < 0) → upward wall hyper; top angles (y > 0) → downward wall hyper.
+            float wallVertDir = -Mathf.Sign(direction.y);
+            playerController.TriggerWallHyperShot(wallVertDir);
+
+            // Upward diagonal also opens the ground hyper window (unchanged behaviour).
+            if (direction.y > 0f)
+                playerController.TriggerHyperWindow(-direction.x);
         }
         else
         {

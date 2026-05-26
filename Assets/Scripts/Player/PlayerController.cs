@@ -37,6 +37,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float wallJumpLockTime = 0.15f;
     [SerializeField] private LayerMask wallLayer;
 
+    [Header("Wall Hyper")]
+    [SerializeField] private float wallHyperUpSpeed = 25f;
+    [SerializeField] private float wallHyperDownSpeed = 25f;
+    [SerializeField] private float wallHyperSideSpeed = 10f;
+    [SerializeField] private float wallHyperWindowTime = 0.25f;
+
     [Header("Wall Slide")]
     [SerializeField] private float wallSlideFriction = 0.5f;
     [SerializeField] private float wallSlideMaxFallSpeed = 3f;
@@ -91,6 +97,10 @@ public class PlayerController : MonoBehaviour
     private float hyperDirection;
     private int hyperComboCount = 0;
     private float hyperComboLandTimer = 0f;
+    private float wallHyperShotWindowTimer;
+    private float wallHyperVerticalDir;
+
+    public int WallDirection => wallDirection;
 
     public void SetBhopProtected() { bhopProtected = true; }
 
@@ -109,6 +119,12 @@ public class PlayerController : MonoBehaviour
     {
         hyperWindowTimer = hyperWindowTime;
         hyperDirection = Mathf.Sign(horizontalDir);
+    }
+
+    public void TriggerWallHyperShot(float verticalDir)
+    {
+        wallHyperShotWindowTimer = wallHyperWindowTime;
+        wallHyperVerticalDir = Mathf.Sign(verticalDir);
     }
 
     public void ActivateDeathImmunity()
@@ -141,6 +157,8 @@ public class PlayerController : MonoBehaviour
 
         if (hyperWindowTimer > 0f)
             hyperWindowTimer -= Time.deltaTime;
+        if (wallHyperShotWindowTimer > 0f)
+            wallHyperShotWindowTimer -= Time.deltaTime;
 
         wasGrounded = isGrounded;
         wasWallSlidingLastFrame = isWallSliding;
@@ -182,6 +200,7 @@ public class PlayerController : MonoBehaviour
                 jumpCut = false;
                 jumpCutSuppressedUntilGrounded = false;
                 hyperComboLandTimer = hyperComboLandGraceTime;
+                wallHyperShotWindowTimer = 0f;
             }
             else
             {
@@ -222,7 +241,10 @@ public class PlayerController : MonoBehaviour
         {
             bufferedWallDirection = wallDirection;
             wallJumpBufferTimer = wallJumpBufferTime;
-            hyperComboCount = 0;
+
+            // Only reset combo if no wall hyper shot is pending
+            if (wallHyperShotWindowTimer <= 0f)
+                hyperComboCount = 0;
         }
         else
         {
@@ -422,6 +444,32 @@ public class PlayerController : MonoBehaviour
 
         if (jumpBufferTimer <= 0 || jumpWallDirection == 0 || isGrounded)
             return;
+
+        // Wall Hyper: shot window active → launch vertically instead of a normal wall jump
+        if (wallHyperShotWindowTimer > 0f)
+        {
+            wallHyperShotWindowTimer = 0f;
+            isJumping = true;
+            jumpCut = false;
+            jumpBufferTimer = 0;
+            wallJumpBufferTimer = 0f;
+            wallJumpLockTimer = wallJumpLockTime;
+            isWallSliding = false;
+            wallSlideMomentum = 0f;
+            bhopProtected = true;
+
+            float comboMult = Mathf.Pow(hyperComboMultiplier, hyperComboCount);
+            float hComboMult = Mathf.Pow(hyperHorizontalMultiplier, hyperComboCount);
+            float vertMagnitude = wallHyperVerticalDir > 0 ? wallHyperUpSpeed : wallHyperDownSpeed;
+            float hSpeed = -jumpWallDirection * wallHyperSideSpeed * hComboMult;
+            float vSpeed = wallHyperVerticalDir * vertMagnitude * comboMult * gravityMultiplier;
+            rb.linearVelocity = new Vector2(hSpeed, vSpeed);
+            hyperComboCount++;
+
+            if (AudioManager.Instance != null)
+                AudioManager.Instance.PlayJump();
+            return;
+        }
 
         isJumping = true;
         jumpCut = false;
