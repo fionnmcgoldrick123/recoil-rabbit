@@ -49,6 +49,15 @@ public class PlayerController : MonoBehaviour
     [Tooltip("Horizontal kick multiplier per combo level for wall hyper dash.")]
     [SerializeField] private float wallHyperHorizComboMult = 1.1f;
 
+    [Header("Super Bhop")]
+    [SerializeField] private float superBhopUpwardForce = 30f;
+    [SerializeField] private float superBhopHorizontalForce = 3f;
+    [SerializeField] private float superBhopWindowTime = 0.25f;
+    [Tooltip("Max horizontal component of normalised direction to trigger super bhop (nearly vertical shots only).")]
+    [SerializeField] private float superBhopHorizontalThreshold = 0.3f;
+    [Tooltip("Min vertical component of normalised direction to trigger super bhop.")]
+    [SerializeField] private float superBhopUpwardThreshold = 0.7f;
+
     [Header("Wall Slide")]
     [SerializeField] private float wallSlideFriction = 0.5f;
     [SerializeField] private float wallSlideMaxFallSpeed = 3f;
@@ -111,6 +120,8 @@ public class PlayerController : MonoBehaviour
     private float hyperComboLandTimer = 0f;
     private float wallHyperShotWindowTimer;
     private float wallHyperVerticalDir;
+    private float superBhopShotWindowTimer;
+    private float superBhopHorizontalDir;
     private bool skipFallClampThisFrame;
 
     public int WallDirection => wallDirection;
@@ -138,6 +149,12 @@ public class PlayerController : MonoBehaviour
     {
         wallHyperShotWindowTimer = wallHyperWindowTime;
         wallHyperVerticalDir = Mathf.Sign(verticalDir);
+    }
+
+    public void TriggerSuperBhopShot(float horizontalDir)
+    {
+        superBhopShotWindowTimer = superBhopWindowTime;
+        superBhopHorizontalDir = Mathf.Sign(horizontalDir);
     }
 
     public void ActivateDeathImmunity()
@@ -172,6 +189,8 @@ public class PlayerController : MonoBehaviour
             hyperWindowTimer -= Time.deltaTime;
         if (wallHyperShotWindowTimer > 0f)
             wallHyperShotWindowTimer -= Time.deltaTime;
+        if (superBhopShotWindowTimer > 0f)
+            superBhopShotWindowTimer -= Time.deltaTime;
 
         wasGrounded = isGrounded;
         wasWallSlidingLastFrame = isWallSliding;
@@ -436,7 +455,16 @@ public class PlayerController : MonoBehaviour
         coyoteTimer = 0;
         bhopProtected = true;
 
-        if (hyperWindowTimer > 0f)
+        if (superBhopShotWindowTimer > 0f)
+        {
+            // Super bhop: huge upward velocity + preserve horizontal momentum
+            superBhopShotWindowTimer = 0f;
+            float hVel = Mathf.Clamp(rb.linearVelocity.x, -superBhopHorizontalForce, superBhopHorizontalForce);
+            rb.linearVelocity = new Vector2(hVel, superBhopUpwardForce * gravityMultiplier);
+            jumpCutSuppressedUntilGrounded = true; // Don't let jump cut reduce this fixed upward force
+            hyperComboCount = Mathf.Min(hyperComboCount + 1, maxHyperComboLevel - 1);
+        }
+        else if (hyperWindowTimer > 0f)
         {
             // Platform hyper: massive horizontal speed + slightly lower jump
             hyperWindowTimer = 0f;

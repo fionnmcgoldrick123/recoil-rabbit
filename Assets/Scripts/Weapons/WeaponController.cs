@@ -147,17 +147,29 @@ public class WeaponController : MonoBehaviour
         SpawnBullets(shotgunStats, direction, isRevolver: false);
 
         // Hyper window detection: airborne + diagonal shot
-        if (playerController != null && !playerController.IsGrounded &&
-            Mathf.Abs(direction.x) > wallHyperAngleThreshold && Mathf.Abs(direction.y) > wallHyperAngleThreshold)
+        if (playerController != null && !playerController.IsGrounded)
         {
-            // Any diagonal shot opens the wall hyper window.
-            // Bottom angles (y < 0) → upward wall hyper; top angles (y > 0) → downward wall hyper.
-            float wallVertDir = -Mathf.Sign(direction.y);
-            playerController.TriggerWallHyperShot(wallVertDir);
+            // Super bhop: nearly vertical upward shot (|x| < threshold, y > threshold)
+            if (Mathf.Abs(direction.x) <= wallHyperAngleThreshold && direction.y > 0.7f)
+            {
+                playerController.TriggerSuperBhopShot(direction.x);
+            }
+            // Wall hyper: diagonal shot (both components exceed threshold)
+            else if (Mathf.Abs(direction.x) > wallHyperAngleThreshold && Mathf.Abs(direction.y) > wallHyperAngleThreshold)
+            {
+                // Any diagonal shot opens the wall hyper window.
+                // Bottom angles (y < 0) → upward wall hyper; top angles (y > 0) → downward wall hyper.
+                float wallVertDir = -Mathf.Sign(direction.y);
+                playerController.TriggerWallHyperShot(wallVertDir);
 
-            // Upward diagonal also opens the ground hyper window (unchanged behaviour).
-            if (direction.y > 0f)
-                playerController.TriggerHyperWindow(-direction.x);
+                // Upward diagonal also opens the ground hyper window (unchanged behaviour).
+                if (direction.y > 0f)
+                    playerController.TriggerHyperWindow(-direction.x);
+            }
+            else
+            {
+                playerController.ResetHyperCombo();
+            }
         }
         else
         {
