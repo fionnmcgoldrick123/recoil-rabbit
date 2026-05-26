@@ -109,7 +109,6 @@ public class PlayerAfterImage : MonoBehaviour
     {
         float elapsed = 0f;
         Color startColor  = ghostRenderer.color;
-        Vector3 startScale = ghostRenderer.transform.localScale;
 
         while (elapsed < duration)
         {
@@ -118,8 +117,7 @@ public class PlayerAfterImage : MonoBehaviour
             elapsed += Time.deltaTime;
             float t     = elapsed / duration;
             float alpha = Mathf.Lerp(startColor.a, 0f, t);
-            ghostRenderer.color          = new Color(startColor.r, startColor.g, startColor.b, alpha);
-            ghostRenderer.transform.localScale = Vector3.Lerp(startScale, Vector3.zero, t);
+            ghostRenderer.color = new Color(startColor.r, startColor.g, startColor.b, alpha);
             yield return null;
         }
 

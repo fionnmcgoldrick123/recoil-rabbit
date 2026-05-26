@@ -91,9 +91,8 @@ public class BulletAfterImage : MonoBehaviour
 
     private IEnumerator FadeAndDestroy(SpriteRenderer ghostRenderer, float duration)
     {
-        float elapsed   = 0f;
+        float elapsed = 0f;
         Color startColor  = ghostRenderer.color;
-        Vector3 startScale = ghostRenderer.transform.localScale;
 
         while (elapsed < duration)
         {
@@ -103,7 +102,6 @@ public class BulletAfterImage : MonoBehaviour
             float t     = elapsed / duration;
             float alpha = Mathf.Lerp(startColor.a, 0f, t);
             ghostRenderer.color = new Color(startColor.r, startColor.g, startColor.b, alpha);
-            ghostRenderer.transform.localScale = Vector3.Lerp(startScale, Vector3.zero, t);
             yield return null;
         }
 
