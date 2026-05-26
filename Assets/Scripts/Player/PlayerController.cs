@@ -37,6 +37,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float wallCheckDistance = 0.3f;
     [SerializeField] private float wallJumpBufferTime = 0.1f;
     [SerializeField] private float wallJumpLockTime = 0.15f;
+    [SerializeField] private float wallContactHyperWindow = 0.15f;
     [SerializeField] private LayerMask wallLayer;
 
     [Header("Wall Hyper")]
@@ -85,6 +86,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private bool showHyperAngleGizmos = true;
     [Tooltip("Must match 'Wall Hyper Angle Threshold' on WeaponController.")]
     [SerializeField] private float gizmoHyperAngleThreshold = 0.3f;
+    [SerializeField] private bool showSuperBhopGizmo = true;
+    [Tooltip("Must match 'Super Bhop Horizontal Threshold' on PlayerController.")]
+    [SerializeField] private float gizmoSuperBhopHorizontalThreshold = 0.3f;
+    [Tooltip("Must match 'Super Bhop Upward Threshold' on PlayerController.")]
+    [SerializeField] private float gizmoSuperBhopUpwardThreshold = 0.7f;
     [SerializeField] private float gizmoLineLength = 4f;
 
     public UnityEvent OnPlayerDeath = new UnityEvent();
@@ -111,6 +117,8 @@ public class PlayerController : MonoBehaviour
     private bool isWallSliding;
     private bool wasWallSlidingLastFrame;
     private float wallSlideMomentum;
+    private float wallContactWindowTimer;
+    private bool wallHyperDisabledThisContact;
     private float deathImmunityTimer;
     private float speedMultiplier = 1f;
     private float gravityMultiplier = 1f;
@@ -278,11 +286,20 @@ public class PlayerController : MonoBehaviour
             bufferedWallDirection = wallDirection;
             wallJumpBufferTimer = wallJumpBufferTime;
 
-            // Wall contact no longer resets the combo; only the land grace timer does
+            // Track continuous wall contact for hyper dash window
+            wallContactWindowTimer += Time.deltaTime;
+            if (wallContactWindowTimer > wallContactHyperWindow)
+            {
+                // Stayed too long on wall: disable hyper dash and reset combo
+                wallHyperDisabledThisContact = true;
+                hyperComboCount = 0;
+            }
         }
         else
         {
             wallJumpBufferTimer -= Time.deltaTime;
+            wallContactWindowTimer = 0f;
+            wallHyperDisabledThisContact = false;
             isWallSliding = false;
             wallSlideMomentum = 0f;
         }
@@ -494,8 +511,8 @@ public class PlayerController : MonoBehaviour
         if (jumpBufferTimer <= 0 || jumpWallDirection == 0 || isGrounded)
             return;
 
-        // Wall Hyper: shot window active → launch vertically instead of a normal wall jump
-        if (wallHyperShotWindowTimer > 0f)
+        // Wall Hyper: shot window active + not disabled by staying too long on wall
+        if (wallHyperShotWindowTimer > 0f && !wallHyperDisabledThisContact)
         {
             wallHyperShotWindowTimer = 0f;
             isJumping = true;
@@ -677,42 +694,81 @@ public class PlayerController : MonoBehaviour
         Gizmos.DrawLine(transform.position, transform.position + Vector3.right * wallCheckDistance);
         Gizmos.DrawLine(transform.position, transform.position + Vector3.left  * wallCheckDistance);
 
-        if (!showHyperAngleGizmos) return;
-
-        float thr = gizmoHyperAngleThreshold;
-        if (thr <= 0f || thr >= 1f) return;
-
-        // The valid hyper-dash zone in each quadrant is where BOTH |x| and |y| of the
-        // normalised shot direction exceed the threshold.
-        // On the unit circle that gives an arc from asin(thr) to acos(thr) per quadrant.
-        float lo = Mathf.Asin(thr); // lower boundary angle from +X (≈17.5° at 0.3)
-        float hi = Mathf.Acos(thr); // upper boundary angle from +X (≈72.5° at 0.3)
-
-        float[] starts = { lo,                  Mathf.PI - hi, Mathf.PI + lo, -hi  };
-        float[] ends   = { hi, Mathf.PI - lo,   Mathf.PI + hi, -lo           };
-
-        Vector3 origin = transform.position;
-        const int arcSegments = 20;
-
-        for (int z = 0; z < 4; z++)
+        if (showHyperAngleGizmos)
         {
-            float startAngle = starts[z];
-            float endAngle   = ends[z];
-
-            // Boundary rays — orange
-            Gizmos.color = new Color(1f, 0.45f, 0f, 1f);
-            Gizmos.DrawLine(origin, origin + new Vector3(Mathf.Cos(startAngle), Mathf.Sin(startAngle), 0f) * gizmoLineLength);
-            Gizmos.DrawLine(origin, origin + new Vector3(Mathf.Cos(endAngle),   Mathf.Sin(endAngle),   0f) * gizmoLineLength);
-
-            // Arc connecting the two boundaries — green
-            Gizmos.color = new Color(0.1f, 1f, 0.35f, 0.8f);
-            Vector3 prev = origin + new Vector3(Mathf.Cos(startAngle), Mathf.Sin(startAngle), 0f) * gizmoLineLength;
-            for (int s = 1; s <= arcSegments; s++)
+            float thr = gizmoHyperAngleThreshold;
+            if (thr > 0f && thr < 1f)
             {
-                float a    = Mathf.Lerp(startAngle, endAngle, (float)s / arcSegments);
-                Vector3 next = origin + new Vector3(Mathf.Cos(a), Mathf.Sin(a), 0f) * gizmoLineLength;
-                Gizmos.DrawLine(prev, next);
-                prev = next;
+                // The valid hyper-dash zone in each quadrant is where BOTH |x| and |y| of the
+                // normalised shot direction exceed the threshold.
+                // On the unit circle that gives an arc from asin(thr) to acos(thr) per quadrant.
+                float lo = Mathf.Asin(thr); // lower boundary angle from +X (≈17.5° at 0.3)
+                float hi = Mathf.Acos(thr); // upper boundary angle from +X (≈72.5° at 0.3)
+
+                float[] starts = { lo,                  Mathf.PI - hi, Mathf.PI + lo, -hi  };
+                float[] ends   = { hi, Mathf.PI - lo,   Mathf.PI + hi, -lo           };
+
+                Vector3 origin = transform.position;
+                const int arcSegments = 20;
+
+                for (int z = 0; z < 4; z++)
+                {
+                    float startAngle = starts[z];
+                    float endAngle   = ends[z];
+
+                    // Boundary rays — orange
+                    Gizmos.color = new Color(1f, 0.45f, 0f, 1f);
+                    Gizmos.DrawLine(origin, origin + new Vector3(Mathf.Cos(startAngle), Mathf.Sin(startAngle), 0f) * gizmoLineLength);
+                    Gizmos.DrawLine(origin, origin + new Vector3(Mathf.Cos(endAngle),   Mathf.Sin(endAngle),   0f) * gizmoLineLength);
+
+                    // Arc connecting the two boundaries — green
+                    Gizmos.color = new Color(0.1f, 1f, 0.35f, 0.8f);
+                    Vector3 prev = origin + new Vector3(Mathf.Cos(startAngle), Mathf.Sin(startAngle), 0f) * gizmoLineLength;
+                    for (int s = 1; s <= arcSegments; s++)
+                    {
+                        float a    = Mathf.Lerp(startAngle, endAngle, (float)s / arcSegments);
+                        Vector3 next = origin + new Vector3(Mathf.Cos(a), Mathf.Sin(a), 0f) * gizmoLineLength;
+                        Gizmos.DrawLine(prev, next);
+                        prev = next;
+                    }
+                }
+            }
+        }
+
+        if (showSuperBhopGizmo)
+        {
+            float hThr = gizmoSuperBhopHorizontalThreshold;
+            float vThr = gizmoSuperBhopUpwardThreshold;
+            if (hThr > 0f && hThr < 1f && vThr > 0f && vThr < 1f)
+            {
+                // Super bhop zone: nearly vertical upward shots
+                // Valid where |cos(angle)| <= hThr and sin(angle) >= vThr
+                // Boundaries are at cos(angle) = ±hThr
+                float rightBoundary = Mathf.Acos(hThr);  // angle where cos = +hThr
+                float leftBoundary = Mathf.Acos(-hThr);  // angle where cos = -hThr
+
+                Vector3 origin = transform.position;
+                const int arcSegments = 20;
+
+                // Draw boundary rays — cyan
+                Gizmos.color = new Color(0f, 1f, 1f, 1f);
+                Gizmos.DrawLine(origin, origin + new Vector3(Mathf.Cos(rightBoundary), Mathf.Sin(rightBoundary), 0f) * gizmoLineLength);
+                Gizmos.DrawLine(origin, origin + new Vector3(Mathf.Cos(leftBoundary), Mathf.Sin(leftBoundary), 0f) * gizmoLineLength);
+
+                // Draw arc connecting boundaries — bright yellow
+                Gizmos.color = new Color(1f, 1f, 0f, 0.9f);
+                Vector3 prev = origin + new Vector3(Mathf.Cos(rightBoundary), Mathf.Sin(rightBoundary), 0f) * gizmoLineLength;
+                for (int s = 1; s <= arcSegments; s++)
+                {
+                    float a = Mathf.Lerp(rightBoundary, leftBoundary, (float)s / arcSegments);
+                    Vector3 next = origin + new Vector3(Mathf.Cos(a), Mathf.Sin(a), 0f) * gizmoLineLength;
+                    Gizmos.DrawLine(prev, next);
+                    prev = next;
+                }
+
+                // Draw center line (straight up) — yellow dashed effect
+                Gizmos.color = new Color(1f, 1f, 0f, 0.6f);
+                Gizmos.DrawLine(origin, origin + Vector3.up * gizmoLineLength);
             }
         }
     }
