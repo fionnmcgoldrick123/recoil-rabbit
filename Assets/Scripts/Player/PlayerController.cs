@@ -23,6 +23,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float hyperComboMultiplier = 1.3f;
     [SerializeField] private float hyperHorizontalMultiplier = 1.1f;
     [SerializeField] private float hyperComboLandGraceTime = 0.08f;
+    [Tooltip("Maximum combo level (1 = no stacking). At level 3 the multiplier is applied twice and stays there.")]
+    [SerializeField] private int maxHyperComboLevel = 3;
 
     [Header("Jump")]
     [SerializeField] private float jumpForce = 14f;
@@ -42,6 +44,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float wallHyperDownSpeed = 25f;
     [SerializeField] private float wallHyperSideSpeed = 10f;
     [SerializeField] private float wallHyperWindowTime = 0.25f;
+    [Tooltip("Vertical speed multiplier per combo level for wall hyper dash.")]
+    [SerializeField] private float wallHyperVertComboMult = 1.3f;
+    [Tooltip("Horizontal kick multiplier per combo level for wall hyper dash.")]
+    [SerializeField] private float wallHyperHorizComboMult = 1.1f;
 
     [Header("Wall Slide")]
     [SerializeField] private float wallSlideFriction = 0.5f;
@@ -65,6 +71,12 @@ public class PlayerController : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private GameObject gunObject;
+
+    [Header("Debug Gizmos")]
+    [SerializeField] private bool showHyperAngleGizmos = true;
+    [Tooltip("Must match 'Wall Hyper Angle Threshold' on WeaponController.")]
+    [SerializeField] private float gizmoHyperAngleThreshold = 0.3f;
+    [SerializeField] private float gizmoLineLength = 4f;
 
     public UnityEvent OnPlayerDeath = new UnityEvent();
 
@@ -99,6 +111,7 @@ public class PlayerController : MonoBehaviour
     private float hyperComboLandTimer = 0f;
     private float wallHyperShotWindowTimer;
     private float wallHyperVerticalDir;
+    private bool skipFallClampThisFrame;
 
     public int WallDirection => wallDirection;
 
@@ -180,10 +193,14 @@ public class PlayerController : MonoBehaviour
         TryJump();
         TryWallJump();
 
-        float clampedY = gravityMultiplier > 0 
-            ? Mathf.Max(rb.linearVelocity.y, -maxFallSpeed)
-            : Mathf.Min(rb.linearVelocity.y, maxFallSpeed);
-        rb.linearVelocity = new Vector2(rb.linearVelocity.x, clampedY);
+        if (!skipFallClampThisFrame)
+        {
+            float clampedY = gravityMultiplier > 0
+                ? Mathf.Max(rb.linearVelocity.y, -maxFallSpeed)
+                : Mathf.Min(rb.linearVelocity.y, maxFallSpeed);
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, clampedY);
+        }
+        skipFallClampThisFrame = false;
     }
 
     private void UpdateGroundedState()
@@ -242,9 +259,7 @@ public class PlayerController : MonoBehaviour
             bufferedWallDirection = wallDirection;
             wallJumpBufferTimer = wallJumpBufferTime;
 
-            // Only reset combo if no wall hyper shot is pending
-            if (wallHyperShotWindowTimer <= 0f)
-                hyperComboCount = 0;
+            // Wall contact no longer resets the combo; only the land grace timer does
         }
         else
         {
@@ -407,35 +422,41 @@ public class PlayerController : MonoBehaviour
 
     private void TryJump()
     {
-        if (jumpBufferTimer > 0 && coyoteTimer > 0)
+        if (jumpBufferTimer <= 0 || coyoteTimer <= 0)
+            return;
+
+        // Yield to TryWallJump when a wall hyper shot window is active and the player is near a wall
+        int nearWallDir = wallDirection != 0 ? wallDirection : (wallJumpBufferTimer > 0f ? bufferedWallDirection : 0);
+        if (wallHyperShotWindowTimer > 0f && nearWallDir != 0)
+            return;
+
+        isJumping = true;
+        jumpCut = false;
+        jumpBufferTimer = 0;
+        coyoteTimer = 0;
+        bhopProtected = true;
+
+        if (hyperWindowTimer > 0f)
         {
-            isJumping = true;
-            jumpCut = false;
-            jumpBufferTimer = 0;
-            coyoteTimer = 0;
-            bhopProtected = true;
-
-            if (hyperWindowTimer > 0f)
-            {
-                // Hyper: massive horizontal speed + slightly lower jump
-                // Successive hyper jumps gain extra speed via combo multipliers
-                hyperWindowTimer = 0f;
-                float comboMult = Mathf.Pow(hyperComboMultiplier, hyperComboCount);
-                float hComboMult = Mathf.Pow(hyperHorizontalMultiplier, hyperComboCount);
-                rb.linearVelocity = new Vector2(hyperDirection * hyperSpeed * hComboMult, hyperJumpForce * comboMult * gravityMultiplier);
-                hyperComboCount++;
-            }
-            else
-            {
-                if (Mathf.Abs(rb.linearVelocity.x) > maxSpeed)
-                    bhopProtected = true;
-                rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce * gravityMultiplier);
-                hyperComboCount = 0;
-            }
-
-            if (AudioManager.Instance != null)
-                AudioManager.Instance.PlayJump();
+            // Platform hyper: massive horizontal speed + slightly lower jump
+            hyperWindowTimer = 0f;
+            int clampedCombo = Mathf.Min(hyperComboCount, maxHyperComboLevel - 1);
+            float comboMult = Mathf.Pow(hyperComboMultiplier, clampedCombo);
+            float hComboMult = Mathf.Pow(hyperHorizontalMultiplier, clampedCombo);
+            rb.linearVelocity = new Vector2(hyperDirection * hyperSpeed * hComboMult, hyperJumpForce * comboMult * gravityMultiplier);
+            hyperComboCount = Mathf.Min(hyperComboCount + 1, maxHyperComboLevel - 1);
         }
+        else
+        {
+            if (Mathf.Abs(rb.linearVelocity.x) > maxSpeed)
+                bhopProtected = true;
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce * gravityMultiplier);
+            if (hyperComboLandTimer <= 0f)
+                hyperComboCount = 0;
+        }
+
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlayJump();
     }
 
     private void TryWallJump()
@@ -458,13 +479,15 @@ public class PlayerController : MonoBehaviour
             wallSlideMomentum = 0f;
             bhopProtected = true;
 
-            float comboMult = Mathf.Pow(hyperComboMultiplier, hyperComboCount);
-            float hComboMult = Mathf.Pow(hyperHorizontalMultiplier, hyperComboCount);
+            int clampedCombo = Mathf.Min(hyperComboCount, maxHyperComboLevel - 1);
+            float comboMult = Mathf.Pow(wallHyperVertComboMult, clampedCombo);
+            float hComboMult = Mathf.Pow(wallHyperHorizComboMult, clampedCombo);
             float vertMagnitude = wallHyperVerticalDir > 0 ? wallHyperUpSpeed : wallHyperDownSpeed;
             float hSpeed = -jumpWallDirection * wallHyperSideSpeed * hComboMult;
             float vSpeed = wallHyperVerticalDir * vertMagnitude * comboMult * gravityMultiplier;
             rb.linearVelocity = new Vector2(hSpeed, vSpeed);
-            hyperComboCount++;
+            skipFallClampThisFrame = true; // don't let the fall-speed cap cancel the downward launch
+            hyperComboCount = Mathf.Min(hyperComboCount + 1, maxHyperComboLevel - 1);
 
             if (AudioManager.Instance != null)
                 AudioManager.Instance.PlayJump();
@@ -625,5 +648,44 @@ public class PlayerController : MonoBehaviour
         Gizmos.color = Color.blue;
         Gizmos.DrawLine(transform.position, transform.position + Vector3.right * wallCheckDistance);
         Gizmos.DrawLine(transform.position, transform.position + Vector3.left  * wallCheckDistance);
+
+        if (!showHyperAngleGizmos) return;
+
+        float thr = gizmoHyperAngleThreshold;
+        if (thr <= 0f || thr >= 1f) return;
+
+        // The valid hyper-dash zone in each quadrant is where BOTH |x| and |y| of the
+        // normalised shot direction exceed the threshold.
+        // On the unit circle that gives an arc from asin(thr) to acos(thr) per quadrant.
+        float lo = Mathf.Asin(thr); // lower boundary angle from +X (≈17.5° at 0.3)
+        float hi = Mathf.Acos(thr); // upper boundary angle from +X (≈72.5° at 0.3)
+
+        float[] starts = { lo,                  Mathf.PI - hi, Mathf.PI + lo, -hi  };
+        float[] ends   = { hi, Mathf.PI - lo,   Mathf.PI + hi, -lo           };
+
+        Vector3 origin = transform.position;
+        const int arcSegments = 20;
+
+        for (int z = 0; z < 4; z++)
+        {
+            float startAngle = starts[z];
+            float endAngle   = ends[z];
+
+            // Boundary rays — orange
+            Gizmos.color = new Color(1f, 0.45f, 0f, 1f);
+            Gizmos.DrawLine(origin, origin + new Vector3(Mathf.Cos(startAngle), Mathf.Sin(startAngle), 0f) * gizmoLineLength);
+            Gizmos.DrawLine(origin, origin + new Vector3(Mathf.Cos(endAngle),   Mathf.Sin(endAngle),   0f) * gizmoLineLength);
+
+            // Arc connecting the two boundaries — green
+            Gizmos.color = new Color(0.1f, 1f, 0.35f, 0.8f);
+            Vector3 prev = origin + new Vector3(Mathf.Cos(startAngle), Mathf.Sin(startAngle), 0f) * gizmoLineLength;
+            for (int s = 1; s <= arcSegments; s++)
+            {
+                float a    = Mathf.Lerp(startAngle, endAngle, (float)s / arcSegments);
+                Vector3 next = origin + new Vector3(Mathf.Cos(a), Mathf.Sin(a), 0f) * gizmoLineLength;
+                Gizmos.DrawLine(prev, next);
+                prev = next;
+            }
+        }
     }
 }

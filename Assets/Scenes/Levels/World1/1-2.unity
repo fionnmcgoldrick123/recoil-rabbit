@@ -753,22 +753,6 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 7131254550150526233, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
-      propertyPath: gunView
-      value: 
-      objectReference: {fileID: 470388031}
-    - target: {fileID: 7131254550150526233, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
-      propertyPath: playerRb
-      value: 
-      objectReference: {fileID: 470388030}
-    - target: {fileID: 7131254550150526233, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
-      propertyPath: firePoint
-      value: 
-      objectReference: {fileID: 470388032}
-    - target: {fileID: 7131254550150526233, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
-      propertyPath: bulletPool
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7131254550150526233, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
       propertyPath: shotgunAmmoText
       value: 
       objectReference: {fileID: 1906073069}
@@ -776,89 +760,11 @@ PrefabInstance:
       propertyPath: shotgunAmmoAnimator
       value: 
       objectReference: {fileID: 1906073068}
-    - target: {fileID: 8050381305028736681, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
-      propertyPath: gunObject
-      value: 
-      objectReference: {fileID: 470388033}
-    - target: {fileID: 8050381305028736681, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
-      propertyPath: hyperSpeed
-      value: 23.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8050381305028736681, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
-      propertyPath: hyperJumpForce
-      value: 12.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8050381305028736681, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
-      propertyPath: hyperWindowTime
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8050381305028736681, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
-      propertyPath: wallLaunchForce
-      value: 23
-      objectReference: {fileID: 0}
-    - target: {fileID: 8050381305028736681, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
-      propertyPath: wallHyperUpSpeed
-      value: 23.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8050381305028736681, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
-      propertyPath: wallLaunchUpForce
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 8050381305028736681, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
-      propertyPath: wallHyperDownSpeed
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 8050381305028736681, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
-      propertyPath: wallHyperWindowTime
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8050381305028736681, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
-      propertyPath: hyperComboMultiplier
-      value: 1.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8050381305028736681, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
-      propertyPath: wallHyperLandGraceTime
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8050381305028736681, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
-      propertyPath: hyperHorizontalMultiplier
-      value: 1.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8341451778601153750, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: bc0b7f6d9f88b8244b4e2cba79852761, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
---- !u!50 &470388030 stripped
-Rigidbody2D:
-  m_CorrespondingSourceObject: {fileID: 3102248566110250253, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
-  m_PrefabInstance: {fileID: 470388029}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &470388031 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8806626624275682494, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
-  m_PrefabInstance: {fileID: 470388029}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 470388033}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38aa3be480d014249aa7668186f374fc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &470388032 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3950720654860677888, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
-  m_PrefabInstance: {fileID: 470388029}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &470388033 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7003045570502132115, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
-  m_PrefabInstance: {fileID: 470388029}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &470388034 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1144769744216048035, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
