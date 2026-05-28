@@ -122,6 +122,9 @@ public class WeaponController : MonoBehaviour
 
         if (gunView != null)
         {
+            // Reset gun position to snap out of breathing animation
+            gunView.ResetGunPosition();
+
             if (weaponScaleRoutine != null)
                 StopCoroutine(weaponScaleRoutine);
             weaponScaleRoutine = StartCoroutine(AnimateWeaponScale(revolverScaleMultiplier, revolverScaleDuration));
@@ -178,6 +181,9 @@ public class WeaponController : MonoBehaviour
 
         if (gunView != null)
         {
+            // Reset gun position to snap out of breathing animation
+            gunView.ResetGunPosition();
+
             if (weaponScaleRoutine != null)
                 StopCoroutine(weaponScaleRoutine);
             weaponScaleRoutine = StartCoroutine(AnimateWeaponScale(shotgunScaleMultiplier, shotgunScaleDuration));
