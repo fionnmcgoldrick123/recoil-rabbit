@@ -67,10 +67,10 @@ public class PlayerAfterImage : MonoBehaviour
         if (flashBlend > 0f)
             flashBlend = Mathf.MoveTowards(flashBlend, 0f, Time.deltaTime / flashFadeOutDuration);
 
-        // Use only horizontal speed - this prevents afterimages from spawning on jumps alone
-        float horizontalSpeed = Mathf.Abs(rb.linearVelocity.x);
+        // Use total speed for afterimage spawning
+        float horizontalSpeed = rb.linearVelocity.magnitude;
 
-        // Only spawn afterimages if horizontal speed is well above the minimum spawn threshold
+        // Only spawn afterimages if speed exceeds the minimum spawn threshold
         if (horizontalSpeed < minSpawnSpeed)
         {
             spawnTimer = 0f;

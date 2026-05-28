@@ -7155,6 +7155,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3976843053293628765, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3976843053293628765, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
       propertyPath: runSpread
       value: 1
       objectReference: {fileID: 0}
@@ -7206,7 +7210,9 @@ PrefabInstance:
       propertyPath: sortingLayerName
       value: Particles
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6960149312682117763, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
+    - {fileID: 3976843053293628765, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

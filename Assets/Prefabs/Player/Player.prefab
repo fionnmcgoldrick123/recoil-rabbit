@@ -226,7 +226,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -184349393
-  m_SortingLayer: 4
+  m_SortingLayer: 2
   m_SortingOrder: 1
   m_Sprite: {fileID: 5851585598304553043, guid: fefa21ea39f753443b28759b0a2377f5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -301,7 +301,6 @@ GameObject:
   - component: {fileID: 7131254550150526233}
   - component: {fileID: 8050381305028736681}
   - component: {fileID: 3526585793338227938}
-  - component: {fileID: 3976843053293628765}
   - component: {fileID: 7444892227907233762}
   - component: {fileID: 122496350135326730}
   - component: {fileID: 240532935157104147}
@@ -454,56 +453,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 6338949584525562850}
   playerController: {fileID: 8050381305028736681}
---- !u!114 &3976843053293628765
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1473489899234942715}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5abde24a70d46594abd49091f34ad450, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  poolSize: 120
-  particleSprite: {fileID: 0}
-  sortingLayerName: Particles
-  sortingOrder: 5
-  feetOffset: {x: 0, y: -0.5}
-  wallSideOffset: 0.25
-  wallHeightRange: 0.2
-  wallSlideUpY: -0.4
-  wallSlideDownY: 0.4
-  runEmitRate: 12
-  runSpeedThreshold: 3
-  runLifetime: 0.25
-  runSpread: 0.15
-  runSpeedMin: 0.5
-  runSpeedMax: 2
-  runColor: {r: 1, g: 1, b: 0.9607843, a: 0.7}
-  runGravity: 1.5
-  runUpSpeedMin: 0.3
-  runUpSpeedMax: 2.5
-  landParticleCount: 8
-  landLifetime: 0.28
-  landSpreadX: 0.3
-  landSpeedMin: 1.5
-  landSpeedMax: 4
-  landColor: {r: 1, g: 1, b: 0.9607843, a: 1}
-  landGravity: 2
-  jumpParticleCount: 6
-  jumpLifetime: 0.2
-  jumpSpeedMin: 1
-  jumpSpeedMax: 3
-  jumpColor: {r: 1, g: 1, b: 0.9607843, a: 1}
-  jumpGravity: 1
-  wallEmitRate: 10
-  wallLifetime: 0.2
-  wallSpeedMin: 1
-  wallSpeedMax: 3
-  wallColor: {r: 1, g: 1, b: 0.9607843, a: 1}
-  wallGravity: 3
 --- !u!114 &7444892227907233762
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -538,7 +487,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddb8613644c0cc24fa2bcbf7e682b3c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  breathingAmount: 0.01
+  breathingAmount: 0.025
   breathingSpeed: 1.5
   playerAnimator: {fileID: 6338949584525562850}
 --- !u!61 &240532935157104147
@@ -749,7 +698,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -184349393
-  m_SortingLayer: 4
+  m_SortingLayer: 2
   m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: 20e5495f9ac000d4bb3334f68283ea2e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -882,7 +831,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1969592219
-  m_SortingLayer: 5
+  m_SortingLayer: 3
   m_SortingOrder: 1
   m_Sprite: {fileID: -5033546409207523041, guid: 36be8c84d1e06ff4e8fa43d51fefd4e0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

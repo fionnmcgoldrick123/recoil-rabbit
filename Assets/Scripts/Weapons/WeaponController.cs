@@ -50,7 +50,6 @@ public class WeaponController : MonoBehaviour
     private PlayerController playerController;
     private Vector3 originalGunScale;
     private PlayerAfterImage playerAfterImage;
-    private PlayerDust playerDust;
 
     private void OnEnable()
     {
@@ -82,7 +81,6 @@ public class WeaponController : MonoBehaviour
         if (playerController != null)
         {
             playerAfterImage = playerController.GetComponent<PlayerAfterImage>();
-            playerDust = playerController.GetComponent<PlayerDust>();
         }
         SetShotgunHudVisible(false);
     }
