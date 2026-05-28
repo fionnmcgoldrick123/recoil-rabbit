@@ -429,6 +429,7 @@ MonoBehaviour:
   isDead: 0
   deathImmunityDuration: 0.1
   gunObject: {fileID: 7003045570502132115}
+  headObject: {fileID: 4863154826030988575}
   showHyperAngleGizmos: 1
   gizmoHyperAngleThreshold: 0.3
   showSuperBhopGizmo: 1

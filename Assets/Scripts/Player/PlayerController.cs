@@ -81,6 +81,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private GameObject gunObject;
+    [SerializeField] private GameObject headObject;
 
     [Header("Debug Gizmos")]
     [SerializeField] private bool showHyperAngleGizmos = true;
@@ -184,6 +185,10 @@ public class PlayerController : MonoBehaviour
             if (weaponController != null)
                 gunObject = weaponController.gameObject;
         }
+
+        // Ensure head is enabled on startup (for respawns)
+        if (headObject != null)
+            headObject.SetActive(true);
     }
 
     private void Update()
@@ -606,6 +611,8 @@ public class PlayerController : MonoBehaviour
         }
         if (gunObject != null)
             gunObject.SetActive(false);
+        if (headObject != null)
+            headObject.SetActive(false);
         if (animator != null)
         {
             animator.SetBool("IsGrounded", true);
@@ -653,6 +660,14 @@ public class PlayerController : MonoBehaviour
         if (playerSprite != null)
             playerSprite.flipY = true;
 
+        // Flip head upside down
+        if (headObject != null)
+        {
+            SpriteRenderer headSprite = headObject.GetComponentInChildren<SpriteRenderer>();
+            if (headSprite != null)
+                headSprite.flipY = true;
+        }
+
         // Flip gun and adjust its position to stay aligned
         if (gunObject != null)
         {
@@ -672,6 +687,14 @@ public class PlayerController : MonoBehaviour
         // Flip player sprite back to normal
         if (playerSprite != null)
             playerSprite.flipY = false;
+
+        // Flip head sprite back to normal
+        if (headObject != null)
+        {
+            SpriteRenderer headSprite = headObject.GetComponentInChildren<SpriteRenderer>();
+            if (headSprite != null)
+                headSprite.flipY = false;
+        }
 
         // Flip gun sprite and position back to normal
         if (gunObject != null)

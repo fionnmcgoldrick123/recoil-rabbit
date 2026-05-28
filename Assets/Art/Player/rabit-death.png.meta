@@ -162,10 +162,10 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 28
-        height: 20
+        width: 32
+        height: 32
       alignment: 9
-      pivot: {x: 0.5844256, y: 0.4818161}
+      pivot: {x: 0.4999993, y: 0.2212696}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -182,12 +182,12 @@ TextureImporter:
       name: rabit-death_1
       rect:
         serializedVersion: 2
-        x: 28
+        x: 32
         y: 0
-        width: 28
-        height: 20
+        width: 32
+        height: 32
       alignment: 9
-      pivot: {x: 0.5779314, y: 0.48181644}
+      pivot: {x: 0.4999993, y: 0.2212696}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -204,12 +204,12 @@ TextureImporter:
       name: rabit-death_2
       rect:
         serializedVersion: 2
-        x: 56
+        x: 64
         y: 0
-        width: 28
-        height: 20
+        width: 32
+        height: 32
       alignment: 9
-      pivot: {x: 0.5714373, y: 0.5000001}
+      pivot: {x: 0.4999993, y: 0.2212696}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -226,12 +226,12 @@ TextureImporter:
       name: rabit-death_3
       rect:
         serializedVersion: 2
-        x: 84
+        x: 96
         y: 0
-        width: 28
-        height: 20
+        width: 32
+        height: 32
       alignment: 9
-      pivot: {x: 0.55195427, y: 0.46363205}
+      pivot: {x: 0.4999993, y: 0.2212696}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -248,12 +248,12 @@ TextureImporter:
       name: rabit-death_4
       rect:
         serializedVersion: 2
-        x: 140
+        x: 160
         y: 0
-        width: 28
-        height: 20
+        width: 32
+        height: 32
       alignment: 9
-      pivot: {x: 0.54545975, y: 0.48181644}
+      pivot: {x: 0.4999993, y: 0.2212696}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -270,12 +270,12 @@ TextureImporter:
       name: rabit-death_5
       rect:
         serializedVersion: 2
-        x: 168
+        x: 192
         y: 0
-        width: 28
-        height: 20
+        width: 32
+        height: 32
       alignment: 9
-      pivot: {x: 0.54545975, y: 0.5000001}
+      pivot: {x: 0.4999993, y: 0.2212696}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -292,12 +292,12 @@ TextureImporter:
       name: rabit-death_6
       rect:
         serializedVersion: 2
-        x: 196
+        x: 224
         y: 0
-        width: 28
-        height: 20
+        width: 32
+        height: 32
       alignment: 9
-      pivot: {x: 0.54545975, y: 0.4909083}
+      pivot: {x: 0.4999993, y: 0.2212696}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -314,12 +314,12 @@ TextureImporter:
       name: rabit-death_7
       rect:
         serializedVersion: 2
-        x: 224
+        x: 256
         y: 0
-        width: 28
-        height: 20
+        width: 32
+        height: 32
       alignment: 9
-      pivot: {x: 0.53896606, y: 0.4818161}
+      pivot: {x: 0.4999993, y: 0.2212696}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -336,12 +336,12 @@ TextureImporter:
       name: rabit-death_8
       rect:
         serializedVersion: 2
-        x: 252
+        x: 288
         y: 0
-        width: 28
-        height: 20
+        width: 32
+        height: 32
       alignment: 9
-      pivot: {x: 0.5454603, y: 0.4818161}
+      pivot: {x: 0.4999993, y: 0.2212696}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -358,12 +358,12 @@ TextureImporter:
       name: rabit-death_9
       rect:
         serializedVersion: 2
-        x: 280
+        x: 320
         y: 0
-        width: 28
-        height: 20
+        width: 32
+        height: 32
       alignment: 9
-      pivot: {x: 0.5389666, y: 0.4909083}
+      pivot: {x: 0.4999993, y: 0.2212696}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -372,6 +372,28 @@ TextureImporter:
       bones: []
       spriteID: dc89e0d6ee19a744cb9587fcac873c0a
       internalID: -1189166479
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rabit-death_10
+      rect:
+        serializedVersion: 2
+        x: 352
+        y: 0
+        width: 32
+        height: 32
+      alignment: 9
+      pivot: {x: 0.4999993, y: 0.2212696}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 15c1a9c663772bd44a557cb5cd1a683c
+      internalID: -1279997869
       vertices: []
       indices: 
       edges: []
@@ -392,6 +414,7 @@ TextureImporter:
     nameFileIdTable:
       rabit-death_0: 4583483288817764207
       rabit-death_1: 4029608390539575290
+      rabit-death_10: -1279997869
       rabit-death_2: -1923338394183949740
       rabit-death_3: 6848138586053197451
       rabit-death_4: -7893528323756493981

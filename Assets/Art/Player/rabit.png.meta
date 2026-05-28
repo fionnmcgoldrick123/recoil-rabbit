@@ -447,9 +447,9 @@ TextureImporter:
       name: rabit_11
       rect:
         serializedVersion: 2
-        x: 352
+        x: 351
         y: 0
-        width: 32
+        width: 1
         height: 32
       alignment: 9
       pivot: {x: 0.4999993, y: 0.2212696}
@@ -469,9 +469,9 @@ TextureImporter:
       name: rabit_12
       rect:
         serializedVersion: 2
-        x: 384
+        x: 351
         y: 0
-        width: 32
+        width: 1
         height: 32
       alignment: 9
       pivot: {x: 0.4999993, y: 0.2212696}
@@ -491,9 +491,9 @@ TextureImporter:
       name: rabit_13
       rect:
         serializedVersion: 2
-        x: 416
+        x: 351
         y: 0
-        width: 32
+        width: 1
         height: 32
       alignment: 9
       pivot: {x: 0.4999993, y: 0.2212696}
@@ -513,9 +513,9 @@ TextureImporter:
       name: rabit_14
       rect:
         serializedVersion: 2
-        x: 448
+        x: 351
         y: 0
-        width: 32
+        width: 1
         height: 32
       alignment: 9
       pivot: {x: 0.4999993, y: 0.2212696}
@@ -535,9 +535,9 @@ TextureImporter:
       name: rabit_15
       rect:
         serializedVersion: 2
-        x: 512
+        x: 351
         y: 0
-        width: 32
+        width: 1
         height: 32
       alignment: 9
       pivot: {x: 0.4999993, y: 0.2212696}
@@ -557,9 +557,9 @@ TextureImporter:
       name: rabit_16
       rect:
         serializedVersion: 2
-        x: 544
+        x: 351
         y: 0
-        width: 32
+        width: 1
         height: 32
       alignment: 9
       pivot: {x: 0.4999993, y: 0.2212696}
@@ -579,9 +579,9 @@ TextureImporter:
       name: rabit_17
       rect:
         serializedVersion: 2
-        x: 576
+        x: 351
         y: 0
-        width: 32
+        width: 1
         height: 32
       alignment: 9
       pivot: {x: 0.4999993, y: 0.2212696}
@@ -601,9 +601,9 @@ TextureImporter:
       name: rabit_18
       rect:
         serializedVersion: 2
-        x: 608
+        x: 351
         y: 0
-        width: 32
+        width: 1
         height: 32
       alignment: 9
       pivot: {x: 0.4999993, y: 0.2212696}
@@ -623,9 +623,9 @@ TextureImporter:
       name: rabit_19
       rect:
         serializedVersion: 2
-        x: 640
+        x: 351
         y: 0
-        width: 32
+        width: 1
         height: 32
       alignment: 9
       pivot: {x: 0.4999993, y: 0.2212696}
@@ -645,9 +645,9 @@ TextureImporter:
       name: rabit_20
       rect:
         serializedVersion: 2
-        x: 672
+        x: 351
         y: 0
-        width: 32
+        width: 1
         height: 32
       alignment: 9
       pivot: {x: 0.4999993, y: 0.2212696}
@@ -667,9 +667,9 @@ TextureImporter:
       name: rabit_21
       rect:
         serializedVersion: 2
-        x: 704
+        x: 351
         y: 0
-        width: 32
+        width: 1
         height: 32
       alignment: 9
       pivot: {x: 0.4999993, y: 0.2212696}
