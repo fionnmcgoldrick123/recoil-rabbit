@@ -471,6 +471,8 @@ MonoBehaviour:
   afterImageColor: {r: 0.9647059, g: 0.1882353, b: 0.5647059, a: 0.4}
   flashAfterImageColor: {r: 1, g: 1, b: 1, a: 0.8}
   flashFadeOutDuration: 0.5
+  bodyRenderer: {fileID: 8341451778601153750}
+  headRenderer: {fileID: 210943324049533327}
 --- !u!114 &122496350135326730
 MonoBehaviour:
   m_ObjectHideFlags: 0
