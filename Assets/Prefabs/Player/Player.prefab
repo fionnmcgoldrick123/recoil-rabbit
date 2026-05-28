@@ -162,7 +162,7 @@ GameObject:
   - component: {fileID: 6338949584525562850}
   - component: {fileID: 3635478050370219896}
   m_Layer: 3
-  m_Name: Sprite Renderer
+  m_Name: BodyRenderer
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -180,7 +180,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 7655339842811033712}
   m_Father: {fileID: 1144769744216048035}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8341451778601153750
@@ -301,6 +302,7 @@ GameObject:
   - component: {fileID: 8050381305028736681}
   - component: {fileID: 3526585793338227938}
   - component: {fileID: 7444892227907233762}
+  - component: {fileID: 122496350135326730}
   - component: {fileID: 240532935157104147}
   - component: {fileID: 3102248566110250253}
   - component: {fileID: 6687175735907586506}
@@ -348,6 +350,7 @@ MonoBehaviour:
   playerRb: {fileID: 3102248566110250253}
   gunView: {fileID: 8806626624275682494}
   cameraShake: {fileID: 3348994088824081619, guid: bae890b39f18dde4f863912b994b1ddf, type: 3}
+  headBreathing: {fileID: 2786573411403722610}
   revolverShakeIntensity: 0
   revolverShakeDuration: 0
   shotgunShakeIntensity: 0.5
@@ -396,6 +399,7 @@ MonoBehaviour:
   wallCheckDistance: 0.35
   wallJumpBufferTime: 0.1
   wallJumpLockTime: 0.08
+  wallContactHyperWindow: 0.15
   wallLayer:
     serializedVersion: 2
     m_Bits: 1024
@@ -405,6 +409,11 @@ MonoBehaviour:
   wallHyperWindowTime: 0.2
   wallHyperVertComboMult: 1.2
   wallHyperHorizComboMult: 1.1
+  superBhopUpwardForce: 30
+  superBhopHorizontalForce: 3
+  superBhopWindowTime: 0.25
+  superBhopHorizontalThreshold: 0.3
+  superBhopUpwardThreshold: 0.7
   wallSlideFriction: 1
   wallSlideMaxFallSpeed: 3.5
   wallMomentumMultiplier: 0.8
@@ -420,6 +429,12 @@ MonoBehaviour:
   isDead: 0
   deathImmunityDuration: 0.1
   gunObject: {fileID: 7003045570502132115}
+  showHyperAngleGizmos: 1
+  gizmoHyperAngleThreshold: 0.3
+  showSuperBhopGizmo: 1
+  gizmoSuperBhopHorizontalThreshold: 0.3
+  gizmoSuperBhopUpwardThreshold: 0.7
+  gizmoLineLength: 4
   OnPlayerDeath:
     m_PersistentCalls:
       m_Calls: []
@@ -456,6 +471,21 @@ MonoBehaviour:
   afterImageColor: {r: 0.9647059, g: 0.1882353, b: 0.5647059, a: 0.4}
   flashAfterImageColor: {r: 1, g: 1, b: 1, a: 0.8}
   flashFadeOutDuration: 0.5
+--- !u!114 &122496350135326730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1473489899234942715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddb8613644c0cc24fa2bcbf7e682b3c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  breathingAmount: 0.01
+  breathingSpeed: 1.5
+  playerAnimator: {fileID: 6338949584525562850}
 --- !u!61 &240532935157104147
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -589,6 +619,107 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   powerUpIconUI: {fileID: 0}
   powerUpIconRoot: {fileID: 0}
+--- !u!1 &4863154826030988575
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7655339842811033712}
+  - component: {fileID: 210943324049533327}
+  - component: {fileID: 2786573411403722610}
+  m_Layer: 3
+  m_Name: HeadRenderer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7655339842811033712
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4863154826030988575}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.68499994, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8187290664471538371}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &210943324049533327
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4863154826030988575}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: -184349393
+  m_SortingLayer: 3
+  m_SortingOrder: 5
+  m_Sprite: {fileID: 21300000, guid: 20e5495f9ac000d4bb3334f68283ea2e, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 2, y: 2}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!114 &2786573411403722610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4863154826030988575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d739e6227ed7b10469aa447723883165, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  breathingAnimator: {fileID: 122496350135326730}
 --- !u!1 &5986547509777393741
 GameObject:
   m_ObjectHideFlags: 0
@@ -724,5 +855,6 @@ MonoBehaviour:
   gunRenderer: {fileID: 3320453796360923370}
   playerBody: {fileID: 1144769744216048035}
   playerRb: {fileID: 3102248566110250253}
+  breathingAnimator: {fileID: 122496350135326730}
   horizontalDeadzone: 0.2
   centerDeadzone: 0.5

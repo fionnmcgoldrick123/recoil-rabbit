@@ -6,21 +6,15 @@ public class GunView : MonoBehaviour
     [SerializeField] private SpriteRenderer gunRenderer;
     [SerializeField] private Transform playerBody;
     [SerializeField] private Rigidbody2D playerRb;
-    [SerializeField] private Animator playerAnimator;
+    [SerializeField] private BreathingAnimator breathingAnimator;
 
     [Header("Aiming")]
     [SerializeField] private float horizontalDeadzone = 0.2f;
     [SerializeField] private float centerDeadzone = 0.5f;
 
-    [Header("Idle Breathing Animation")]
-    [SerializeField] private float breathingAmount = 0.3f;
-    [SerializeField] private float breathingSpeed = 2f;
-
     private Camera mainCamera;
     private bool lastFacingLeft = false;
     private Vector3 restingLocalPosition;
-    private bool isBreathing = false;
-    private float breathingTimer = 0f;
 
     private void Awake()
     {
@@ -35,8 +29,8 @@ public class GunView : MonoBehaviour
         if (playerRb == null && playerBody != null)
             playerRb = playerBody.GetComponent<Rigidbody2D>();
 
-        if (playerAnimator == null && playerBody != null)
-            playerAnimator = playerBody.GetComponent<Animator>();
+        if (breathingAnimator == null && playerBody != null)
+            breathingAnimator = playerBody.GetComponent<BreathingAnimator>();
 
         // Store the resting local position (pointing up)
         restingLocalPosition = transform.localPosition;
@@ -81,52 +75,25 @@ public class GunView : MonoBehaviour
 
     private void UpdateIdleBreathing()
     {
-        // Check if player is in idle state (Speed = 0 and IsGrounded = true)
-        bool shouldBreathe = false;
-        if (playerAnimator != null)
+        if (breathingAnimator == null || !breathingAnimator.IsBreathing)
         {
-            float speed = playerAnimator.GetFloat("Speed");
-            bool isGrounded = playerAnimator.GetBool("IsGrounded");
-            shouldBreathe = speed < 0.1f && isGrounded;
+            // Not breathing - snap to resting position
+            transform.localPosition = restingLocalPosition;
+            return;
         }
 
-        if (shouldBreathe && !isBreathing)
-        {
-            // Just entered idle state
-            isBreathing = true;
-            breathingTimer = 0f;
-        }
-        else if (!shouldBreathe && isBreathing)
-        {
-            // Left idle state - snap back to resting position
-            isBreathing = false;
-            ResetGunPosition();
-        }
-
-        // Apply breathing animation if idle
-        if (isBreathing)
-        {
-            breathingTimer += Time.deltaTime * breathingSpeed;
-            
-            // Calculate breathing offset using sine wave
-            // This creates a smooth up and down motion
-            float breathingOffset = Mathf.Sin(breathingTimer * Mathf.PI) * breathingAmount;
-            
-            // Apply the offset to the local position (Y axis in world space)
-            // The breathing happens perpendicular to the current aim direction
-            Vector3 currentLocalPos = transform.localPosition;
-            Vector3 upDirection = Vector3.up;
-            
-            // Get the current rotation's up direction in local space
-            Vector3 rotatedUpDirection = transform.rotation * Vector3.up;
-            
-            transform.localPosition = restingLocalPosition + rotatedUpDirection * breathingOffset;
-        }
+        // Apply breathing animation
+        float breathingOffset = breathingAnimator.GetBreathingOffset();
+        
+        // Get the current rotation's up direction (perpendicular to aim direction)
+        Vector3 rotatedUpDirection = transform.rotation * Vector3.up;
+        
+        transform.localPosition = restingLocalPosition + rotatedUpDirection * breathingOffset;
     }
 
     public void ResetGunPosition()
     {
-        // Snap back to resting position
+        // Snap back to resting position immediately when shooting
         transform.localPosition = restingLocalPosition;
     }
 }

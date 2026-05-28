@@ -354,6 +354,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 122496350135326730, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
+      propertyPath: breathingAmount
+      value: 0.025
+      objectReference: {fileID: 0}
     - target: {fileID: 1144769744216048035, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4.057849
@@ -393,6 +397,10 @@ PrefabInstance:
     - target: {fileID: 1144769744216048035, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1268402329356702977, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
+      propertyPath: m_Name
+      value: BodyRenderer
       objectReference: {fileID: 0}
     - target: {fileID: 1473489899234942715, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
       propertyPath: m_Name

@@ -11,6 +11,7 @@ public class WeaponController : MonoBehaviour
     [SerializeField] private Rigidbody2D playerRb;
     [SerializeField] private GunView gunView;
     [SerializeField] private CameraShake cameraShake;
+    [SerializeField] private HeadBreathing headBreathing;
 
     [Header("Camera Shake")]
     [SerializeField] private float revolverShakeIntensity = 0.015f;
@@ -130,6 +131,9 @@ public class WeaponController : MonoBehaviour
             weaponScaleRoutine = StartCoroutine(AnimateWeaponScale(revolverScaleMultiplier, revolverScaleDuration));
         }
 
+        if (headBreathing != null)
+            headBreathing.ResetHeadPosition();
+
         if (AudioManager.Instance != null)
             AudioManager.Instance.PlayRevolverShot();
 
@@ -188,6 +192,9 @@ public class WeaponController : MonoBehaviour
                 StopCoroutine(weaponScaleRoutine);
             weaponScaleRoutine = StartCoroutine(AnimateWeaponScale(shotgunScaleMultiplier, shotgunScaleDuration));
         }
+
+        if (headBreathing != null)
+            headBreathing.ResetHeadPosition();
 
         if (playerAfterImage != null)
             playerAfterImage.SpawnWhiteAfterImage(shotgunAfterImageFadeDuration);
