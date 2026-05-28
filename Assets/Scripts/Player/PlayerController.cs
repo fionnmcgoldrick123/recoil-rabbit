@@ -102,8 +102,11 @@ public class PlayerController : MonoBehaviour
     private bool wasGrounded;
 
     public bool IsGrounded => isGrounded;
+    public bool WasGrounded => wasGrounded;
+    public bool IsWallSliding => isWallSliding;
     public bool IsDead => isDead;
     public float HorizontalSpeed => rb != null ? Mathf.Abs(rb.linearVelocity.x) : 0f;
+    public Vector2 Velocity => rb != null ? rb.linearVelocity : Vector2.zero;
     public float MaxOverSpeed => maxOverSpeed;
     private float coyoteTimer;
     private float jumpBufferTimer;

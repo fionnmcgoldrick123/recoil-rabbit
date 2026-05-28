@@ -50,6 +50,7 @@ public class WeaponController : MonoBehaviour
     private PlayerController playerController;
     private Vector3 originalGunScale;
     private PlayerAfterImage playerAfterImage;
+    private PlayerDust playerDust;
 
     private void OnEnable()
     {
@@ -79,7 +80,10 @@ public class WeaponController : MonoBehaviour
         if (gunView != null)
             originalGunScale = gunView.transform.localScale;
         if (playerController != null)
+        {
             playerAfterImage = playerController.GetComponent<PlayerAfterImage>();
+            playerDust = playerController.GetComponent<PlayerDust>();
+        }
         SetShotgunHudVisible(false);
     }
 
@@ -133,9 +137,6 @@ public class WeaponController : MonoBehaviour
 
         if (headBreathing != null)
             headBreathing.ResetHeadPosition();
-
-        if (AudioManager.Instance != null)
-            AudioManager.Instance.PlayRevolverShot();
 
         if (cameraShake != null)
             cameraShake.Shake(revolverShakeIntensity, revolverShakeDuration);
