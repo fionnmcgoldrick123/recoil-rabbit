@@ -5,7 +5,10 @@ using System.Collections.Generic;
 public class PlayerAfterImage : MonoBehaviour
 {
     [Header("After Image")]
+    [Tooltip("Used for color/fade calculations based on horizontal speed.")]
     [SerializeField] private float speedThreshold = 10f;
+    [Tooltip("Minimum HORIZONTAL speed required to start spawning afterimages. This prevents afterimages from spawning on jumps alone.")]
+    [SerializeField] private float minSpawnSpeed = 12f;
     [SerializeField] private float spawnInterval = 0.05f;
     [SerializeField] private float fadeDuration = 0.2f;
     [SerializeField] private float minFadeDurationMultiplier = 0.3f;
@@ -64,15 +67,17 @@ public class PlayerAfterImage : MonoBehaviour
         if (flashBlend > 0f)
             flashBlend = Mathf.MoveTowards(flashBlend, 0f, Time.deltaTime / flashFadeOutDuration);
 
-        float speed = rb.linearVelocity.magnitude;
+        // Use only horizontal speed - this prevents afterimages from spawning on jumps alone
+        float horizontalSpeed = Mathf.Abs(rb.linearVelocity.x);
 
-        if (speed <= speedThreshold)
+        // Only spawn afterimages if horizontal speed is well above the minimum spawn threshold
+        if (horizontalSpeed < minSpawnSpeed)
         {
             spawnTimer = 0f;
             return;
         }
 
-        float speedFactor = Mathf.InverseLerp(speedThreshold, playerController.MaxOverSpeed, speed);
+        float speedFactor = Mathf.InverseLerp(speedThreshold, playerController.MaxOverSpeed, horizontalSpeed);
         float interval = Mathf.Lerp(spawnInterval, spawnInterval * 0.2f, speedFactor);
 
         spawnTimer -= Time.deltaTime;
