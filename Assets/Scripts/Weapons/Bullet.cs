@@ -25,30 +25,30 @@ public class Bullet : MonoBehaviour
         this.origin = transform.position;
         this.hasHit = false;
 
-        // Stop any running coroutines from previous use
+        
         StopAllCoroutines();
 
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
 
-        // Reset animator state - exit Hit animation
+        
         if (animator != null)
         {
             animator.Rebind();
             animator.Update(0f);
         }
 
-        // Make sure sprite renderer is visible
+        
         if (spriteRenderer != null)
         {
             spriteRenderer.enabled = true;
         }
 
         rb.linearVelocity = direction.normalized * speed;
-        rb.angularVelocity = 0f; // Reset rotation velocity
+        rb.angularVelocity = 0f; 
 
-        // Re-enable collider
+        
         Collider2D collider = GetComponent<Collider2D>();
         if (collider != null)
         {
@@ -63,7 +63,6 @@ public class Bullet : MonoBehaviour
         }
     }
 
-
     private void Update()
     {
         if (Vector2.Distance(origin, transform.position) >= range)
@@ -76,7 +75,7 @@ public class Bullet : MonoBehaviour
     {
         if (hasHit) return;
 
-        // Check for ground/tileset collision first - destroy immediately
+        
         if (((1 << other.gameObject.layer) & groundLayer) != 0)
         {
             hasHit = true;
@@ -120,7 +119,6 @@ public class Bullet : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
 
     public void OnHitAnimationComplete()
     {

@@ -4,26 +4,23 @@ public class PaletteSwapperManager : MonoBehaviour
 {
 
     [Header("Shared Material (Unlit/PaletteSwapper)")]
-    [Tooltip("The material using PaletteSwapShader. Properties are updated at runtime.")]
     [SerializeField] private Material paletteMaterial;
 
     [Header("Palette ScriptableObjects — Press P to cycle through")]
-    [Tooltip("Array of PaletteData scriptable objects. Press P to cycle through them sequentially.")]
     [SerializeField] private PaletteData[] paletteScriptables;
 
     [Header("Default Palette (for startup and scene transitions)")]
-    [Tooltip("The default palette to apply on startup and when the scene ends.")]
     [SerializeField] private PaletteData defaultPalette;
 
     private int _currentIndex = 0;
     private Color _currentAfterImageColor;
     
-    // Static variable to persist palette index across scene reloads (respawns)
+    
     private static int _persistentPaletteIndex = -1;
 
     private void Start()
     {
-        // If a palette was previously selected (across respawns), restore it
+        
         if (_persistentPaletteIndex >= 0 && paletteScriptables != null && _persistentPaletteIndex < paletteScriptables.Length)
         {
             _currentIndex = _persistentPaletteIndex;
@@ -68,7 +65,7 @@ public class PaletteSwapperManager : MonoBehaviour
         }
 
         _currentIndex = (_currentIndex + 1) % paletteScriptables.Length;
-        _persistentPaletteIndex = _currentIndex;  // Persist across respawns
+        _persistentPaletteIndex = _currentIndex;  
         ApplyPaletteData(paletteScriptables[_currentIndex]);
         Debug.Log($"[PaletteSwapper] Switched to palette: {paletteScriptables[_currentIndex].paletteName}");
     }
@@ -110,7 +107,7 @@ public class PaletteSwapperManager : MonoBehaviour
         if (index >= 0 && index < paletteScriptables.Length)
         {
             _currentIndex = index;
-            _persistentPaletteIndex = index;  // Persist across respawns
+            _persistentPaletteIndex = index;  
             ApplyPaletteData(paletteScriptables[_currentIndex]);
         }
         else

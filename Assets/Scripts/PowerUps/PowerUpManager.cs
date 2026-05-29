@@ -1,9 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-/// <summary>
-/// Attach to the Player. Holds the player's current power-up and activates it on Q.
-/// </summary>
 public class PowerUpManager : MonoBehaviour
 {
     [Header("UI (Optional)")]

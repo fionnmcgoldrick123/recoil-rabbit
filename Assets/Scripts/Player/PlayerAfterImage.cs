@@ -5,9 +5,7 @@ using System.Collections.Generic;
 public class PlayerAfterImage : MonoBehaviour
 {
     [Header("After Image")]
-    [Tooltip("Used for color/fade calculations based on horizontal speed.")]
     [SerializeField] private float speedThreshold = 10f;
-    [Tooltip("Minimum HORIZONTAL speed required to start spawning afterimages. This prevents afterimages from spawning on jumps alone.")]
     [SerializeField] private float minSpawnSpeed = 12f;
     [SerializeField] private float spawnInterval = 0.05f;
     [SerializeField] private float fadeDuration = 0.2f;
@@ -38,7 +36,7 @@ public class PlayerAfterImage : MonoBehaviour
 
         spriteRenderers = new List<SpriteRenderer>();
 
-        // Auto-find renderers if not assigned
+        
         if (bodyRenderer == null)
             bodyRenderer = GetComponentInChildren<SpriteRenderer>();
 
@@ -67,10 +65,10 @@ public class PlayerAfterImage : MonoBehaviour
         if (flashBlend > 0f)
             flashBlend = Mathf.MoveTowards(flashBlend, 0f, Time.deltaTime / flashFadeOutDuration);
 
-        // Use total speed for afterimage spawning
+        
         float horizontalSpeed = rb.linearVelocity.magnitude;
 
-        // Only spawn afterimages if speed exceeds the minimum spawn threshold
+        
         if (horizontalSpeed < minSpawnSpeed)
         {
             spawnTimer = 0f;
@@ -88,7 +86,7 @@ public class PlayerAfterImage : MonoBehaviour
         }
     }
 
-    // Creates a ghost at the given sprite's transform with the silhouette material applied.
+    
     private SpriteRenderer CreateGhost(string name, SpriteRenderer sourceRenderer)
     {
         GameObject ghost = new GameObject(name);
@@ -111,7 +109,7 @@ public class PlayerAfterImage : MonoBehaviour
 
     private void SpawnAfterImage(float speedFactor)
     {
-        // Spawn afterimages for all sprite renderers (body and head)
+        
         foreach (SpriteRenderer renderer in spriteRenderers)
         {
             if (renderer == null) continue;
@@ -154,7 +152,7 @@ public class PlayerAfterImage : MonoBehaviour
 
     public void SpawnWhiteAfterImage(float fadeDuration = 0.3f)
     {
-        // Spawn white afterimages for all sprite renderers (body and head)
+        
         foreach (SpriteRenderer renderer in spriteRenderers)
         {
             if (renderer == null) continue;

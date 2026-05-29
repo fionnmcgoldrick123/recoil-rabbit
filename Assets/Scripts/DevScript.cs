@@ -7,7 +7,7 @@ public class DevScript : MonoBehaviour
     
     private WeaponController weaponController;
     
-    // Level management
+    
     private string[] levelNames = new string[]
     {
         "Assets/Scenes/Levels/World1/1-1.unity",
@@ -21,61 +21,61 @@ public class DevScript : MonoBehaviour
 
     void Start()
     {
-        // Don't destroy this object when loading new scenes
+        
         DontDestroyOnLoad(gameObject);
         
-        // Subscribe to scene load events
+        
         SceneManager.sceneLoaded += OnSceneLoaded;
         
-        // Find weapon controller in the scene
+        
         FindWeaponController();
         
-        // Set current level index based on active scene
+        
         UpdateCurrentLevelIndex();
     }
 
     private void OnDestroy()
     {
-        // Unsubscribe from scene load events
+        
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // Disable the dev menu canvas when a new scene loads
+        
         if (devMenuCanvas != null)
         {
             devMenuCanvas.SetActive(false);
         }
         
-        // Re-find weapon controller in the new scene
+        
         FindWeaponController();
         
-        // Update current level index
+        
         UpdateCurrentLevelIndex();
     }
 
     void Update()
     {
-        // R - Restart Current Level
+        
         if (Input.GetKeyDown(KeyCode.R))
         {
             RestartLevel();
         }
         
-        // N - Next Level (with looping)
+        
         if (Input.GetKeyDown(KeyCode.N))
         {
             NextLevel();
         }
         
-        // B - Previous Level (with looping)
+        
         if (Input.GetKeyDown(KeyCode.B))
         {
             PreviousLevel();
         }
         
-        // M - Open/Close Dev Menu
+        
         if (Input.GetKeyDown(KeyCode.M))
         {
             if (devMenuCanvas != null)
@@ -84,7 +84,7 @@ public class DevScript : MonoBehaviour
             }
         }
         
-        // I - Give 1000 Infinite Recoil Shots
+        
         if (Input.GetKeyDown(KeyCode.I))
         {
             GiveInfiniteShots();
@@ -93,7 +93,7 @@ public class DevScript : MonoBehaviour
 
     private void RestartLevel()
     {
-        Time.timeScale = 1f; // Ensure time is running
+        Time.timeScale = 1f; 
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
@@ -101,7 +101,7 @@ public class DevScript : MonoBehaviour
     {
         currentLevelIndex++;
         
-        // Loop back to first level if at the end
+        
         if (currentLevelIndex >= levelNames.Length)
         {
             currentLevelIndex = 0;
@@ -114,7 +114,7 @@ public class DevScript : MonoBehaviour
     {
         currentLevelIndex--;
         
-        // Loop to last level if at the beginning
+        
         if (currentLevelIndex < 0)
         {
             currentLevelIndex = levelNames.Length - 1;
@@ -125,14 +125,14 @@ public class DevScript : MonoBehaviour
 
     private void LoadLevelByIndex()
     {
-        Time.timeScale = 1f; // Ensure time is running
+        Time.timeScale = 1f; 
         string scenePath = levelNames[currentLevelIndex];
         SceneManager.LoadScene(scenePath);
     }
 
     private void GiveInfiniteShots()
     {
-        // Find weapon controller if not already cached
+        
         if (weaponController == null)
         {
             FindWeaponController();
@@ -158,7 +158,7 @@ public class DevScript : MonoBehaviour
     {
         string sceneName = SceneManager.GetActiveScene().name;
         
-        // Match scene name to our level array
+        
         for (int i = 0; i < levelNames.Length; i++)
         {
             if (levelNames[i].Contains(sceneName))

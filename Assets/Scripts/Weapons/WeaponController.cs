@@ -29,14 +29,12 @@ public class WeaponController : MonoBehaviour
     [SerializeField] private float shotgunAfterImageFadeDuration = 0.3f;
 
     [Header("Wall Hyper")]
-    [Tooltip("How diagonal the shot must be (both X and Y components of the normalised direction must exceed this). 0 = any angle, 0.5 = ~30° from axis, 0.7 = near-45°.")]
     [SerializeField] private float wallHyperAngleThreshold = 0.3f;
 
     [Header("UI (Optional)")]
     [SerializeField] private TMPro.TextMeshProUGUI shotgunAmmoText;
     [SerializeField] private Animator shotgunAmmoAnimator;
     [SerializeField] private float shotgunAmmoAnimationResetDelay = 0.12f;
-
 
     private float revolverCooldown;
     private float shotgunCooldown;
@@ -125,7 +123,7 @@ public class WeaponController : MonoBehaviour
 
         if (gunView != null)
         {
-            // Reset gun position to snap out of breathing animation
+            
             gunView.ResetGunPosition();
 
             if (weaponScaleRoutine != null)
@@ -152,23 +150,23 @@ public class WeaponController : MonoBehaviour
         Vector2 direction = GetMouseDirection();
         SpawnBullets(shotgunStats, direction, isRevolver: false);
 
-        // Hyper window detection: airborne + diagonal shot
+        
         if (playerController != null && !playerController.IsGrounded)
         {
-            // Super bhop: nearly vertical upward shot (|x| < threshold, y > threshold)
+            
             if (Mathf.Abs(direction.x) <= wallHyperAngleThreshold && direction.y > 0.7f)
             {
                 playerController.TriggerSuperBhopShot(direction.x);
             }
-            // Wall hyper: diagonal shot (both components exceed threshold)
+            
             else if (Mathf.Abs(direction.x) > wallHyperAngleThreshold && Mathf.Abs(direction.y) > wallHyperAngleThreshold)
             {
-                // Any diagonal shot opens the wall hyper window.
-                // Bottom angles (y < 0) → upward wall hyper; top angles (y > 0) → downward wall hyper.
+                
+                
                 float wallVertDir = -Mathf.Sign(direction.y);
                 playerController.TriggerWallHyperShot(wallVertDir);
 
-                // Upward diagonal also opens the ground hyper window (unchanged behaviour).
+                
                 if (direction.y > 0f)
                     playerController.TriggerHyperWindow(-direction.x);
             }
@@ -184,7 +182,7 @@ public class WeaponController : MonoBehaviour
 
         if (gunView != null)
         {
-            // Reset gun position to snap out of breathing animation
+            
             gunView.ResetGunPosition();
 
             if (weaponScaleRoutine != null)
@@ -270,7 +268,7 @@ public class WeaponController : MonoBehaviour
 
     private Vector3 GetRestingScale()
     {
-        // Calculate the resting scale based on original magnitude but preserve current flip direction
+        
         Vector3 current = gunView.transform.localScale;
         return new Vector3(
             Mathf.Abs(originalGunScale.x) * Mathf.Sign(current.x),
@@ -281,12 +279,12 @@ public class WeaponController : MonoBehaviour
 
     private System.Collections.IEnumerator AnimateWeaponScale(float scaleMultiplier, float duration)
     {
-        // Get the resting scale (what it should be when not scaling)
+        
         Vector3 restingScale = GetRestingScale();
-        // Capture the current scale (which may be intermediate if spamming)
+        
         Vector3 currentScale = gunView.transform.localScale;
 
-        // Calculate the scaled size based on resting scale to prevent drift
+        
         Vector3 scaledSize = new Vector3(
             Mathf.Abs(restingScale.x) * scaleMultiplier * Mathf.Sign(restingScale.x),
             Mathf.Abs(restingScale.y) * scaleMultiplier * Mathf.Sign(restingScale.y),
@@ -296,7 +294,7 @@ public class WeaponController : MonoBehaviour
         float elapsed = 0f;
         float halfDuration = duration * 0.5f;
 
-        // Scale up from current to scaled
+        
         while (elapsed < halfDuration)
         {
             elapsed += Time.deltaTime;
@@ -308,7 +306,7 @@ public class WeaponController : MonoBehaviour
         gunView.transform.localScale = scaledSize;
         elapsed = 0f;
 
-        // Scale down from scaled back to resting (always returns to correct size)
+        
         while (elapsed < halfDuration)
         {
             elapsed += Time.deltaTime;
@@ -394,17 +392,11 @@ public class WeaponController : MonoBehaviour
 
     public int ShotgunAmmo => shotgunAmmo;
 
-    /// <summary>
-    /// Called by PowerRecoilEffect — the multiplier is consumed on the next shotgun shot.
-    /// </summary>
     public void SetNextShotRecoilMultiplier(float multiplier)
     {
         nextShotRecoilMultiplier = multiplier;
     }
 
-    /// <summary>
-    /// Called by InfiniteAmmoEffect — disables ammo cost on shotgun for the given duration.
-    /// </summary>
     public void StartInfiniteAmmoOverride(float duration)
     {
         StartCoroutine(InfiniteAmmoCoroutine(duration));

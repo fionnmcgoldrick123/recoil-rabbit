@@ -38,26 +38,26 @@ public class CameraFollow : MonoBehaviour
 
         Vector3 desiredPosition = target.position + offset;
 
-        // Apply directional offset based on player movement
+        
         if (useDirectionalOffset && targetRb != null)
         {
             Vector2 velocity = targetRb.linearVelocity;
 
             Vector2 targetDirectionalOffset = Vector2.zero;
 
-            // Only apply offset if moving above threshold
+            
             if (velocity.magnitude > velocityThreshold)
             {
                 Vector2 direction = velocity.normalized;
 
-                // Set target offset in direction of movement
+                
                 targetDirectionalOffset = new Vector2(direction.x * directionOffsetX, direction.y * directionOffsetY);
             }
 
-            // Smoothly interpolate to target offset
+            
             currentDirectionalOffset = Vector2.Lerp(currentDirectionalOffset, targetDirectionalOffset, directionOffsetSmoothSpeed * Time.deltaTime);
 
-            // Apply smoothed offset
+            
             desiredPosition.x += currentDirectionalOffset.x;
             desiredPosition.y += currentDirectionalOffset.y;
         }

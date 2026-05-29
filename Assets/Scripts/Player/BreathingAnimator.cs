@@ -1,9 +1,5 @@
 using UnityEngine;
 
-/// <summary>
-/// Manages idle breathing animation for player body parts.
-/// Both gun and head reference this to stay in sync.
-/// </summary>
 public class BreathingAnimator : MonoBehaviour
 {
     [Header("Idle Breathing Animation")]
@@ -28,7 +24,7 @@ public class BreathingAnimator : MonoBehaviour
 
     private void UpdateBreathingState()
     {
-        // Check if player is in idle state (Speed = 0 and IsGrounded = true)
+        
         bool shouldBreathe = false;
         if (playerAnimator != null)
         {
@@ -39,34 +35,30 @@ public class BreathingAnimator : MonoBehaviour
 
         if (shouldBreathe && !isBreathing)
         {
-            // Just entered idle state
+            
             isBreathing = true;
             breathingTimer = 0f;
         }
         else if (!shouldBreathe && isBreathing)
         {
-            // Left idle state
+            
             isBreathing = false;
         }
 
-        // Update breathing timer
+        
         if (isBreathing)
         {
             breathingTimer += Time.deltaTime * breathingSpeed;
         }
     }
 
-    /// <summary>
-    /// Gets the current breathing offset. Use this to animate body parts.
-    /// Returns 0 if not breathing.
-    /// </summary>
     public float GetBreathingOffset()
     {
         if (!isBreathing)
             return 0f;
 
-        // Calculate breathing offset using sine wave (0 to 1 to 0)
-        // This creates a smooth up and down motion
+        
+        
         return Mathf.Sin(breathingTimer * Mathf.PI) * breathingAmount;
     }
 

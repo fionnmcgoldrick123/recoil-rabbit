@@ -32,7 +32,7 @@ public class GunView : MonoBehaviour
         if (breathingAnimator == null && playerBody != null)
             breathingAnimator = playerBody.GetComponent<BreathingAnimator>();
 
-        // Store the resting local position (pointing up)
+        
         restingLocalPosition = transform.localPosition;
     }
 
@@ -44,7 +44,7 @@ public class GunView : MonoBehaviour
         Vector2 gunPivot = transform.position;
         Vector2 rawDir = mouseWorld - gunPivot;
 
-        // Skip update if mouse is too close to the pivot to avoid erratic flipping
+        
         if (rawDir.magnitude < centerDeadzone)
             return;
 
@@ -69,7 +69,7 @@ public class GunView : MonoBehaviour
 
         gunRenderer.flipY = facingLeft;
 
-        // Update idle breathing animation
+        
         UpdateIdleBreathing();
     }
 
@@ -77,15 +77,15 @@ public class GunView : MonoBehaviour
     {
         if (breathingAnimator == null || !breathingAnimator.IsBreathing)
         {
-            // Not breathing - snap to resting position
+            
             transform.localPosition = restingLocalPosition;
             return;
         }
 
-        // Apply breathing animation
+        
         float breathingOffset = breathingAnimator.GetBreathingOffset();
         
-        // Get the current rotation's up direction (perpendicular to aim direction)
+        
         Vector3 rotatedUpDirection = transform.rotation * Vector3.up;
         
         transform.localPosition = restingLocalPosition + rotatedUpDirection * breathingOffset;
@@ -93,7 +93,7 @@ public class GunView : MonoBehaviour
 
     public void ResetGunPosition()
     {
-        // Snap back to resting position immediately when shooting
+        
         transform.localPosition = restingLocalPosition;
     }
 }

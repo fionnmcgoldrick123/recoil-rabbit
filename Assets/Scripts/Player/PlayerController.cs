@@ -23,7 +23,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float hyperComboMultiplier = 1.3f;
     [SerializeField] private float hyperHorizontalMultiplier = 1.1f;
     [SerializeField] private float hyperComboLandGraceTime = 0.08f;
-    [Tooltip("Maximum combo level (1 = no stacking). At level 3 the multiplier is applied twice and stays there.")]
     [SerializeField] private int maxHyperComboLevel = 3;
 
     [Header("Jump")]
@@ -45,18 +44,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float wallHyperDownSpeed = 25f;
     [SerializeField] private float wallHyperSideSpeed = 10f;
     [SerializeField] private float wallHyperWindowTime = 0.25f;
-    [Tooltip("Vertical speed multiplier per combo level for wall hyper dash.")]
     [SerializeField] private float wallHyperVertComboMult = 1.3f;
-    [Tooltip("Horizontal kick multiplier per combo level for wall hyper dash.")]
     [SerializeField] private float wallHyperHorizComboMult = 1.1f;
 
     [Header("Super Bhop")]
     [SerializeField] private float superBhopUpwardForce = 30f;
     [SerializeField] private float superBhopHorizontalForce = 3f;
     [SerializeField] private float superBhopWindowTime = 0.25f;
-    [Tooltip("Max horizontal component of normalised direction to trigger super bhop (nearly vertical shots only).")]
     [SerializeField] private float superBhopHorizontalThreshold = 0.3f;
-    [Tooltip("Min vertical component of normalised direction to trigger super bhop.")]
     [SerializeField] private float superBhopUpwardThreshold = 0.7f;
 
     [Header("Wall Slide")]
@@ -85,12 +80,9 @@ public class PlayerController : MonoBehaviour
 
     [Header("Debug Gizmos")]
     [SerializeField] private bool showHyperAngleGizmos = true;
-    [Tooltip("Must match 'Wall Hyper Angle Threshold' on WeaponController.")]
     [SerializeField] private float gizmoHyperAngleThreshold = 0.3f;
     [SerializeField] private bool showSuperBhopGizmo = true;
-    [Tooltip("Must match 'Super Bhop Horizontal Threshold' on PlayerController.")]
     [SerializeField] private float gizmoSuperBhopHorizontalThreshold = 0.3f;
-    [Tooltip("Must match 'Super Bhop Upward Threshold' on PlayerController.")]
     [SerializeField] private float gizmoSuperBhopUpwardThreshold = 0.7f;
     [SerializeField] private float gizmoLineLength = 4f;
 
@@ -189,14 +181,14 @@ public class PlayerController : MonoBehaviour
                 gunObject = weaponController.gameObject;
         }
 
-        // Ensure head is enabled on startup (for respawns)
+        
         if (headObject != null)
             headObject.SetActive(true);
     }
 
     private void Update()
     {
-        if (isDead) return;
+        if (isDead || isInCannon) return;
 
         if (deathImmunityTimer > 0f)
             deathImmunityTimer -= Time.deltaTime;
@@ -217,7 +209,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (isDead) return;
+        if (isDead || isInCannon) return;
 
         if (wallJumpLockTimer > 0f)
             wallJumpLockTimer -= Time.fixedDeltaTime;
@@ -294,11 +286,11 @@ public class PlayerController : MonoBehaviour
             bufferedWallDirection = wallDirection;
             wallJumpBufferTimer = wallJumpBufferTime;
 
-            // Track continuous wall contact for hyper dash window
+            
             wallContactWindowTimer += Time.deltaTime;
             if (wallContactWindowTimer > wallContactHyperWindow)
             {
-                // Stayed too long on wall: disable hyper dash and reset combo
+                
                 wallHyperDisabledThisContact = true;
                 hyperComboCount = 0;
             }
@@ -312,13 +304,13 @@ public class PlayerController : MonoBehaviour
             wallSlideMomentum = 0f;
         }
 
-        // Check if player is pressing towards the wall
+        
         float moveX = Input.GetAxisRaw("Horizontal");
         if (wallDirection != 0 && moveX != 0 && Mathf.Sign(moveX) == wallDirection)
         {
             isWallSliding = true;
             
-            // Capture momentum on first wall contact
+            
             if (!wasWallSlidingLastFrame && rb.linearVelocity.y > 0)
             {
                 wallSlideMomentum = rb.linearVelocity.y * wallMomentumMultiplier;
@@ -427,7 +419,7 @@ public class PlayerController : MonoBehaviour
 
     private void ApplyWallSlide()
     {
-        // Don't apply wall slide friction during wall jump lock period
+        
         if (wallJumpLockTimer > 0f)
         {
             wallSlideMomentum = 0f;
@@ -440,10 +432,10 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        // Decay wall momentum over time
+        
         wallSlideMomentum = Mathf.Max(0f, wallSlideMomentum - wallMomentumDecay * Time.fixedDeltaTime);
 
-        // If we still have momentum, apply momentum force (direction flips with gravity)
+        
         if (wallSlideMomentum > 0f)
         {
             float momentumDir = gravityMultiplier > 0 ? wallSlideMomentum : -wallSlideMomentum;
@@ -451,7 +443,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            // When momentum is depleted, apply friction for fall
+            
             float velocityCheck = rb.linearVelocity.y * gravityMultiplier;
             if (velocityCheck < 0)
             {
@@ -469,7 +461,7 @@ public class PlayerController : MonoBehaviour
         if (jumpBufferTimer <= 0 || coyoteTimer <= 0)
             return;
 
-        // Yield to TryWallJump when a wall hyper shot window is active and the player is near a wall
+        
         int nearWallDir = wallDirection != 0 ? wallDirection : (wallJumpBufferTimer > 0f ? bufferedWallDirection : 0);
         if (wallHyperShotWindowTimer > 0f && nearWallDir != 0)
             return;
@@ -482,16 +474,16 @@ public class PlayerController : MonoBehaviour
 
         if (superBhopShotWindowTimer > 0f)
         {
-            // Super bhop: huge upward velocity + preserve horizontal momentum
+            
             superBhopShotWindowTimer = 0f;
             float hVel = Mathf.Clamp(rb.linearVelocity.x, -superBhopHorizontalForce, superBhopHorizontalForce);
             rb.linearVelocity = new Vector2(hVel, superBhopUpwardForce * gravityMultiplier);
-            jumpCutSuppressedUntilGrounded = true; // Don't let jump cut reduce this fixed upward force
+            jumpCutSuppressedUntilGrounded = true; 
             hyperComboCount = Mathf.Min(hyperComboCount + 1, maxHyperComboLevel - 1);
         }
         else if (hyperWindowTimer > 0f)
         {
-            // Platform hyper: massive horizontal speed + slightly lower jump
+            
             hyperWindowTimer = 0f;
             int clampedCombo = Mathf.Min(hyperComboCount, maxHyperComboLevel - 1);
             float comboMult = Mathf.Pow(hyperComboMultiplier, clampedCombo);
@@ -519,7 +511,7 @@ public class PlayerController : MonoBehaviour
         if (jumpBufferTimer <= 0 || jumpWallDirection == 0 || isGrounded)
             return;
 
-        // Wall Hyper: shot window active + not disabled by staying too long on wall
+        
         if (wallHyperShotWindowTimer > 0f && !wallHyperDisabledThisContact)
         {
             wallHyperShotWindowTimer = 0f;
@@ -539,7 +531,7 @@ public class PlayerController : MonoBehaviour
             float hSpeed = -jumpWallDirection * wallHyperSideSpeed * hComboMult;
             float vSpeed = wallHyperVerticalDir * vertMagnitude * comboMult * gravityMultiplier;
             rb.linearVelocity = new Vector2(hSpeed, vSpeed);
-            skipFallClampThisFrame = true; // don't let the fall-speed cap cancel the downward launch
+            skipFallClampThisFrame = true; 
             hyperComboCount = Mathf.Min(hyperComboCount + 1, maxHyperComboLevel - 1);
 
             if (AudioManager.Instance != null)
@@ -577,11 +569,73 @@ public class PlayerController : MonoBehaviour
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, springForce);
     }
 
+    private bool isInCannon = false;
+
+    public bool IsInCannon => isInCannon;
+
+    public void EnterCannon()
+    {
+        if (isDead) return;
+
+        isInCannon = true;
+
+        
+        rb.linearVelocity = Vector2.zero;
+        rb.bodyType = RigidbodyType2D.Kinematic;
+
+        
+        foreach (SpriteRenderer sr in GetComponentsInChildren<SpriteRenderer>())
+        {
+            
+            if (gunObject != null && sr.transform.IsChildOf(gunObject.transform))
+                continue;
+            sr.enabled = false;
+        }
+
+        
+        if (gunObject != null)
+            gunObject.SetActive(false);
+    }
+
+    public void LaunchFromCannon(Vector2 direction, float power)
+    {
+        if (!isInCannon) return;
+
+        isInCannon = false;
+
+        
+        rb.bodyType = RigidbodyType2D.Dynamic;
+        rb.gravityScale = baseGravityScale * gravityMultiplier;
+
+        
+        foreach (SpriteRenderer sr in GetComponentsInChildren<SpriteRenderer>())
+        {
+            
+            if (gunObject != null && sr.transform.IsChildOf(gunObject.transform))
+                continue;
+            sr.enabled = true;
+        }
+
+        
+        if (gunObject != null)
+            gunObject.SetActive(true);
+
+        
+        isJumping = false;
+        jumpCut = false;
+        jumpCutSuppressedUntilGrounded = false;
+        jumpBufferTimer = 0f;
+        coyoteTimer = 0f;
+        skipFallClampThisFrame = true;
+
+        rb.linearVelocity = direction.normalized * power;
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (isDead) return;
 
-        // Don't die if we have death immunity (just killed an enemy)
+        
         if (deathImmunityTimer > 0f) return;
 
         if (other.GetComponent<Enemy>() != null || other.GetComponent<FlyingEnemy>() != null)
@@ -655,15 +709,15 @@ public class PlayerController : MonoBehaviour
     private System.Collections.IEnumerator GravityFlipCoroutine(float duration)
     {
         gravityMultiplier = -1f;
-        // Apply upward impulse to lift player away from ground
+        
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, 5f);
 
-        // Flip player sprite upside down
+        
         SpriteRenderer playerSprite = GetComponentInChildren<SpriteRenderer>();
         if (playerSprite != null)
             playerSprite.flipY = true;
 
-        // Flip head upside down
+        
         if (headObject != null)
         {
             SpriteRenderer headSprite = headObject.GetComponentInChildren<SpriteRenderer>();
@@ -671,14 +725,14 @@ public class PlayerController : MonoBehaviour
                 headSprite.flipY = true;
         }
 
-        // Flip gun and adjust its position to stay aligned
+        
         if (gunObject != null)
         {
             SpriteRenderer gunSprite = gunObject.GetComponentInChildren<SpriteRenderer>();
             if (gunSprite != null)
                 gunSprite.flipY = true;
 
-            // Flip gun's Y position relative to player to keep alignment
+            
             Vector3 gunLocalPos = gunObject.transform.localPosition;
             gunObject.transform.localPosition = new Vector3(gunLocalPos.x, -gunLocalPos.y, gunLocalPos.z);
         }
@@ -687,11 +741,11 @@ public class PlayerController : MonoBehaviour
 
         gravityMultiplier = 1f;
 
-        // Flip player sprite back to normal
+        
         if (playerSprite != null)
             playerSprite.flipY = false;
 
-        // Flip head sprite back to normal
+        
         if (headObject != null)
         {
             SpriteRenderer headSprite = headObject.GetComponentInChildren<SpriteRenderer>();
@@ -699,14 +753,14 @@ public class PlayerController : MonoBehaviour
                 headSprite.flipY = false;
         }
 
-        // Flip gun sprite and position back to normal
+        
         if (gunObject != null)
         {
             SpriteRenderer gunSprite = gunObject.GetComponentInChildren<SpriteRenderer>();
             if (gunSprite != null)
                 gunSprite.flipY = false;
 
-            // Flip gun's Y position back
+            
             Vector3 gunLocalPos = gunObject.transform.localPosition;
             gunObject.transform.localPosition = new Vector3(gunLocalPos.x, -gunLocalPos.y, gunLocalPos.z);
         }
@@ -725,11 +779,11 @@ public class PlayerController : MonoBehaviour
             float thr = gizmoHyperAngleThreshold;
             if (thr > 0f && thr < 1f)
             {
-                // The valid hyper-dash zone in each quadrant is where BOTH |x| and |y| of the
-                // normalised shot direction exceed the threshold.
-                // On the unit circle that gives an arc from asin(thr) to acos(thr) per quadrant.
-                float lo = Mathf.Asin(thr); // lower boundary angle from +X (≈17.5° at 0.3)
-                float hi = Mathf.Acos(thr); // upper boundary angle from +X (≈72.5° at 0.3)
+                
+                
+                
+                float lo = Mathf.Asin(thr); 
+                float hi = Mathf.Acos(thr); 
 
                 float[] starts = { lo,                  Mathf.PI - hi, Mathf.PI + lo, -hi  };
                 float[] ends   = { hi, Mathf.PI - lo,   Mathf.PI + hi, -lo           };
@@ -742,12 +796,12 @@ public class PlayerController : MonoBehaviour
                     float startAngle = starts[z];
                     float endAngle   = ends[z];
 
-                    // Boundary rays — orange
+                    
                     Gizmos.color = new Color(1f, 0.45f, 0f, 1f);
                     Gizmos.DrawLine(origin, origin + new Vector3(Mathf.Cos(startAngle), Mathf.Sin(startAngle), 0f) * gizmoLineLength);
                     Gizmos.DrawLine(origin, origin + new Vector3(Mathf.Cos(endAngle),   Mathf.Sin(endAngle),   0f) * gizmoLineLength);
 
-                    // Arc connecting the two boundaries — green
+                    
                     Gizmos.color = new Color(0.1f, 1f, 0.35f, 0.8f);
                     Vector3 prev = origin + new Vector3(Mathf.Cos(startAngle), Mathf.Sin(startAngle), 0f) * gizmoLineLength;
                     for (int s = 1; s <= arcSegments; s++)
@@ -767,21 +821,21 @@ public class PlayerController : MonoBehaviour
             float vThr = gizmoSuperBhopUpwardThreshold;
             if (hThr > 0f && hThr < 1f && vThr > 0f && vThr < 1f)
             {
-                // Super bhop zone: nearly vertical upward shots
-                // Valid where |cos(angle)| <= hThr and sin(angle) >= vThr
-                // Boundaries are at cos(angle) = ±hThr
-                float rightBoundary = Mathf.Acos(hThr);  // angle where cos = +hThr
-                float leftBoundary = Mathf.Acos(-hThr);  // angle where cos = -hThr
+                
+                
+                
+                float rightBoundary = Mathf.Acos(hThr);  
+                float leftBoundary = Mathf.Acos(-hThr);  
 
                 Vector3 origin = transform.position;
                 const int arcSegments = 20;
 
-                // Draw boundary rays — cyan
+                
                 Gizmos.color = new Color(0f, 1f, 1f, 1f);
                 Gizmos.DrawLine(origin, origin + new Vector3(Mathf.Cos(rightBoundary), Mathf.Sin(rightBoundary), 0f) * gizmoLineLength);
                 Gizmos.DrawLine(origin, origin + new Vector3(Mathf.Cos(leftBoundary), Mathf.Sin(leftBoundary), 0f) * gizmoLineLength);
 
-                // Draw arc connecting boundaries — bright yellow
+                
                 Gizmos.color = new Color(1f, 1f, 0f, 0.9f);
                 Vector3 prev = origin + new Vector3(Mathf.Cos(rightBoundary), Mathf.Sin(rightBoundary), 0f) * gizmoLineLength;
                 for (int s = 1; s <= arcSegments; s++)
@@ -792,7 +846,7 @@ public class PlayerController : MonoBehaviour
                     prev = next;
                 }
 
-                // Draw center line (straight up) — yellow dashed effect
+                
                 Gizmos.color = new Color(1f, 1f, 0f, 0.6f);
                 Gizmos.DrawLine(origin, origin + Vector3.up * gizmoLineLength);
             }
