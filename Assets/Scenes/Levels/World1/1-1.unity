@@ -30513,6 +30513,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 210943324049533327, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: bc0b7f6d9f88b8244b4e2cba79852761, type: 2}
     - target: {fileID: 1144769744216048035, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -31633,6 +31637,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1251408628}
   - component: {fileID: 1251408627}
+  - component: {fileID: 1251408629}
   m_Layer: 0
   m_Name: DevSettings
   m_TagString: Untagged
@@ -31669,6 +31674,32 @@ Transform:
   - {fileID: 1443207207}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1251408629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1251408626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b27596af1be11684fb9cace35b119e02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  paletteMaterial: {fileID: 2100000, guid: bc0b7f6d9f88b8244b4e2cba79852761, type: 2}
+  paletteScriptables:
+  - {fileID: 11400000, guid: deef1463d77840345a03bc8364f943a7, type: 2}
+  - {fileID: 11400000, guid: 69b9b5e259afb24409e08a79470dff6c, type: 2}
+  - {fileID: 11400000, guid: 1a8cbd9353533ca4aa21e0c3915b240b, type: 2}
+  - {fileID: 11400000, guid: f8227863c6242f34aa79731fbb699183, type: 2}
+  - {fileID: 11400000, guid: a79dc54375f994648a8022253197322b, type: 2}
+  - {fileID: 11400000, guid: 147c54da6ae51ef47a9e44811ea487e6, type: 2}
+  - {fileID: 11400000, guid: 32980882207da0649966ecc3903d5a58, type: 2}
+  - {fileID: 11400000, guid: 2157c05194753ef4592a4ed7c25157cb, type: 2}
+  - {fileID: 11400000, guid: 5e769d577ddaabb45990646811853c35, type: 2}
+  - {fileID: 11400000, guid: 8505cc108f652954aaf118dfe450bf26, type: 2}
+  - {fileID: 11400000, guid: 43f912d3326009e46aafbfce17309305, type: 2}
+  defaultPalette: {fileID: 11400000, guid: deef1463d77840345a03bc8364f943a7, type: 2}
 --- !u!1 &1265832857
 GameObject:
   m_ObjectHideFlags: 0
@@ -31743,6 +31774,10 @@ MonoBehaviour:
 
 
     I - Infinite Recoil Shots
+
+
+    Q
+    - Swap Color Palette
 
 '
   m_isRightToLeft: 0
