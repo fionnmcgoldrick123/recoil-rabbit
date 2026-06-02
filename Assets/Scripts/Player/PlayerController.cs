@@ -595,6 +595,11 @@ public class PlayerController : MonoBehaviour
         
         if (gunObject != null)
             gunObject.SetActive(false);
+
+        // Zoom out camera
+        CameraZoom cameraZoom = FindFirstObjectByType<CameraZoom>();
+        if (cameraZoom != null)
+            cameraZoom.ZoomOutForCannon();
     }
 
     public void LaunchFromCannon(Vector2 direction, float power)
@@ -630,6 +635,11 @@ public class PlayerController : MonoBehaviour
         skipFallClampThisFrame = true;
 
         rb.linearVelocity = direction.normalized * power;
+
+        // Zoom in camera
+        CameraZoom cameraZoom = FindFirstObjectByType<CameraZoom>();
+        if (cameraZoom != null)
+            cameraZoom.ZoomInFromCannon();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
