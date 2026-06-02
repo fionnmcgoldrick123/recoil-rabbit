@@ -767,6 +767,47 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    [Header("Shell Pickup Pop")]
+    [SerializeField] private float pickupPopScale = 1.2f;
+    [SerializeField] private float pickupPopDuration = 0.12f;
+
+    private Coroutine pickupPopRoutine;
+
+    public void TriggerPickupPop()
+    {
+        if (pickupPopRoutine != null)
+            StopCoroutine(pickupPopRoutine);
+        pickupPopRoutine = StartCoroutine(PickupPopCoroutine());
+    }
+
+    private System.Collections.IEnumerator PickupPopCoroutine()
+    {
+        Vector3 baseScale = Vector3.one;
+        Vector3 popScale = Vector3.one * pickupPopScale;
+        float half = pickupPopDuration * 0.5f;
+        float elapsed = 0f;
+
+        while (elapsed < half)
+        {
+            elapsed += Time.deltaTime;
+            transform.localScale = Vector3.Lerp(baseScale, popScale, elapsed / half);
+            yield return null;
+        }
+
+        transform.localScale = popScale;
+        elapsed = 0f;
+
+        while (elapsed < half)
+        {
+            elapsed += Time.deltaTime;
+            transform.localScale = Vector3.Lerp(popScale, baseScale, elapsed / half);
+            yield return null;
+        }
+
+        transform.localScale = baseScale;
+        pickupPopRoutine = null;
+    }
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
