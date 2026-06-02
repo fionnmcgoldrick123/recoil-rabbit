@@ -64,18 +64,20 @@ public class Crate : MonoBehaviour
             StartCoroutine(FadeOutAndDestroy(piece.gameObject, pieceDestroyDelay, pieceFadeDuration));
         }
 
-        // Spawn shotgun shells
+        // Spawn shotgun shells in circular pattern
         if (shotgunShellPrefab != null)
         {
             for (int i = 0; i < shellCount; i++)
             {
-                Vector2 spawnPos = (Vector2)transform.position + Random.insideUnitCircle * 0.15f;
+                // Distribute shells evenly around a circle
+                float angle = (360f / shellCount) * i * Mathf.Deg2Rad;
+                Vector2 dir = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
+                
+                Vector2 spawnPos = (Vector2)transform.position + dir * 0.15f;
                 GameObject shell = Instantiate(shotgunShellPrefab, spawnPos, Quaternion.identity);
                 ShotgunShellPickup pickup = shell.GetComponent<ShotgunShellPickup>();
                 if (pickup != null)
                 {
-                    Vector2 dir = Random.insideUnitCircle.normalized;
-                    dir.y = Mathf.Lerp(dir.y, 1f, shellLaunchUpwardBias);
                     pickup.Launch(dir.normalized, shellLaunchSpeed);
                 }
             }

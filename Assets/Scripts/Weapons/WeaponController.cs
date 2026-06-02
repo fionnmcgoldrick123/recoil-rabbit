@@ -114,6 +114,7 @@ public class WeaponController : MonoBehaviour
 
     private void TryFireRevolver()
     {
+        if (playerController != null && playerController.IsInCannon) return;
         if (revolverCooldown > 0 || revolverStats == null) return;
         if (firePoint == null) return;
 
@@ -140,6 +141,7 @@ public class WeaponController : MonoBehaviour
 
     private void TryFireShotgun()
     {
+        if (playerController != null && playerController.IsInCannon) return;
         if (shotgunCooldown > 0 || shotgunStats == null) return;
         if (firePoint == null) return;
         if (shotgunAmmo <= 0 && !infiniteAmmoOverride) return;

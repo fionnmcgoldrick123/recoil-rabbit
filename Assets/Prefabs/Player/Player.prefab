@@ -439,6 +439,8 @@ MonoBehaviour:
   OnPlayerDeath:
     m_PersistentCalls:
       m_Calls: []
+  pickupPopScale: 1.2
+  pickupPopDuration: 0.12
 --- !u!114 &3526585793338227938
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -465,7 +467,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cae6d8d1b66c2b42830da240c4ea5c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedThreshold: 10
+  speedThreshold: 50
   minSpawnSpeed: 12
   spawnInterval: 0.07
   fadeDuration: 0.5
