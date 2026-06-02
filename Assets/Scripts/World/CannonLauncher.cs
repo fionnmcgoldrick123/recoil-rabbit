@@ -5,6 +5,7 @@ public class CannonLauncher : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private Transform canonObject;
+    [SerializeField] private Transform launchPosition;
 
     [Header("Angle Clamp (degrees, 0 = right, 90 = up, 180 = left)")]
     [SerializeField] private float minAngle = 5f;
@@ -143,12 +144,11 @@ public class CannonLauncher : MonoBehaviour
 
         if (playerInCannon != null)
         {
-            
-            playerInCannon.transform.position = canonObject != null
-                ? canonObject.position
-                : transform.position;
+            Vector3 shootPos = launchPosition != null
+                ? launchPosition.position
+                : (canonObject != null ? canonObject.position : transform.position);
 
-            playerInCannon.LaunchFromCannon(launchDir, launchPower);
+            playerInCannon.LaunchFromCannon(launchDir, launchPower, shootPos);
             playerInCannon = null;
         }
 

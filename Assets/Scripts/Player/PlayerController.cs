@@ -599,28 +599,29 @@ public class PlayerController : MonoBehaviour
 
     public void LaunchFromCannon(Vector2 direction, float power)
     {
+        LaunchFromCannon(direction, power, transform.position);
+    }
+
+    public void LaunchFromCannon(Vector2 direction, float power, Vector3 launchPosition)
+    {
         if (!isInCannon) return;
 
+        transform.position = launchPosition;
         isInCannon = false;
 
-        
         rb.bodyType = RigidbodyType2D.Dynamic;
         rb.gravityScale = baseGravityScale * gravityMultiplier;
 
-        
         foreach (SpriteRenderer sr in GetComponentsInChildren<SpriteRenderer>())
         {
-            
             if (gunObject != null && sr.transform.IsChildOf(gunObject.transform))
                 continue;
             sr.enabled = true;
         }
 
-        
         if (gunObject != null)
             gunObject.SetActive(true);
 
-        
         isJumping = false;
         jumpCut = false;
         jumpCutSuppressedUntilGrounded = false;

@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b9f411cf6ff03e408ab21edd294465c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bounceForce: 16.5
+  bounceForce: 18
   animationResetDelay: 0.12
 --- !u!212 &6564774083028228103
 SpriteRenderer:
