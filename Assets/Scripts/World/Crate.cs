@@ -9,9 +9,18 @@ public class Crate : MonoBehaviour
 
     [Header("Piece Physics")]
     [SerializeField] private float pieceExplosionForce = 6f;
+    [Tooltip("Max spin speed of a broken piece in degrees per second. Higher = more chaotic tumbling.")]
     [SerializeField] private float pieceTorqueRange = 250f;
     [SerializeField] private float pieceGravityScale = 4f;
     [SerializeField] private float pieceDestroyDelay = 4f;
+    [SerializeField] private float pieceFadeDuration = 0.5f;
+
+    [Header("Shell Launch")]
+    [Tooltip("How fast shells fly out of the crate on break.")]
+    [SerializeField] private float shellLaunchSpeed = 7f;
+    [Tooltip("0 = fully random direction, 1 = straight up. Prevents shells launching into the ground.")]
+    [Range(0f, 1f)]
+    [SerializeField] private float shellLaunchUpwardBias = 0.4f;
 
     private bool broken = false;
 
@@ -40,6 +49,7 @@ public class Crate : MonoBehaviour
             if (rb == null)
                 rb = piece.gameObject.AddComponent<Rigidbody2D>();
 
+            // Gravity is applied immediately — no delay
             rb.gravityScale = pieceGravityScale;
 
             Vector2 dir = (Vector2)(piece.position - transform.position);
@@ -51,7 +61,7 @@ public class Crate : MonoBehaviour
             rb.linearVelocity = dir * force;
             rb.angularVelocity = Random.Range(-pieceTorqueRange, pieceTorqueRange);
 
-            Destroy(piece.gameObject, pieceDestroyDelay);
+            StartCoroutine(FadeOutAndDestroy(piece.gameObject, pieceDestroyDelay, pieceFadeDuration));
         }
 
         // Spawn shotgun shells
@@ -63,10 +73,37 @@ public class Crate : MonoBehaviour
                 GameObject shell = Instantiate(shotgunShellPrefab, spawnPos, Quaternion.identity);
                 ShotgunShellPickup pickup = shell.GetComponent<ShotgunShellPickup>();
                 if (pickup != null)
-                    pickup.Launch(Random.insideUnitCircle.normalized);
+                {
+                    Vector2 dir = Random.insideUnitCircle.normalized;
+                    dir.y = Mathf.Lerp(dir.y, 1f, shellLaunchUpwardBias);
+                    pickup.Launch(dir.normalized, shellLaunchSpeed);
+                }
             }
         }
 
-        Destroy(gameObject);
+        // Destroy the crate parent after all fades complete
+        Destroy(gameObject, pieceDestroyDelay + pieceFadeDuration + 0.1f);
+    }
+
+    private System.Collections.IEnumerator FadeOutAndDestroy(GameObject obj, float waitTime, float fadeDuration)
+    {
+        yield return new WaitForSeconds(waitTime);
+
+        SpriteRenderer sr = obj.GetComponent<SpriteRenderer>();
+        if (sr != null)
+        {
+            float elapsed = 0f;
+            Color originalColor = sr.color;
+            while (elapsed < fadeDuration)
+            {
+                elapsed += Time.deltaTime;
+                float alpha = Mathf.Lerp(originalColor.a, 0f, elapsed / fadeDuration);
+                sr.color = new Color(originalColor.r, originalColor.g, originalColor.b, alpha);
+                yield return null;
+            }
+            sr.color = new Color(originalColor.r, originalColor.g, originalColor.b, 0f);
+        }
+
+        Destroy(obj);
     }
 }

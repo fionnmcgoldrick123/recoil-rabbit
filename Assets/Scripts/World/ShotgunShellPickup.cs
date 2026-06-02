@@ -40,11 +40,12 @@ public class ShotgunShellPickup : MonoBehaviour
         }
     }
 
-    public void Launch(Vector2 direction)
+    public void Launch(Vector2 direction, float speedOverride = -1f)
     {
         noAttractionTimer = noAttractionDuration;
         rb.gravityScale = launchGravityScale;
-        rb.linearVelocity = direction.normalized * launchSpeed;
+        float speed = speedOverride > 0f ? speedOverride : launchSpeed;
+        rb.linearVelocity = direction.normalized * speed;
     }
 
     private void Update()

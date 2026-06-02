@@ -275,8 +275,11 @@ MonoBehaviour:
   shellCount: 10
   pieceExplosionForce: 6
   pieceTorqueRange: 250
-  pieceGravityScale: 0.1
-  pieceDestroyDelay: 0.1
+  pieceGravityScale: 1
+  pieceDestroyDelay: 2
+  pieceFadeDuration: 0.5
+  shellLaunchSpeed: 12
+  shellLaunchUpwardBias: 1
 --- !u!1001 &390749902
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -413,6 +416,7 @@ GameObject:
   m_Component:
   - component: {fileID: 472219866}
   - component: {fileID: 472219867}
+  - component: {fileID: 472219868}
   m_Layer: 0
   m_Name: CratePiece3
   m_TagString: Untagged
@@ -490,6 +494,62 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!60 &472219868
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 472219865}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.75, y: 0.75}
+    newSize: {x: 0.75, y: 0.75}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -0.0625, y: 0.375}
+      - {x: 0.059156418, y: 0.34860206}
+      - {x: 0.060141563, y: 0.18793559}
+      - {x: -0.00039482117, y: 0.18891215}
+      - {x: -0.0005083084, y: -0.0013985634}
+      - {x: 0.12658882, y: -0.0017514229}
+      - {x: 0.12360096, y: -0.06300759}
+      - {x: 0.375, y: -0.0658052}
+      - {x: 0.375, y: 0.375}
+  m_UseDelaunayMesh: 0
 --- !u!1001 &614941291
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -740,6 +800,7 @@ GameObject:
   m_Component:
   - component: {fileID: 996861233}
   - component: {fileID: 996861234}
+  - component: {fileID: 996861235}
   m_Layer: 0
   m_Name: CratePiece1
   m_TagString: Untagged
@@ -817,6 +878,62 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!60 &996861235
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 996861232}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.75, y: 0.75}
+    newSize: {x: 0.75, y: 0.75}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.060593605, y: -0.0027976036}
+      - {x: 0.060816765, y: -0.24635005}
+      - {x: -0.005543709, y: -0.24701715}
+      - {x: -0.0033054352, y: -0.375}
+      - {x: 0.375, y: -0.375}
+      - {x: 0.37360096, y: -0.060593605}
+      - {x: 0.124378204, y: -0.059661865}
+      - {x: 0.12331486, y: 0.0030708313}
+      - {x: 0.06110096, y: 0.001906395}
+  m_UseDelaunayMesh: 0
 --- !u!1001 &1009349699
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1021,6 +1138,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1089732581}
   - component: {fileID: 1089732582}
+  - component: {fileID: 1089732583}
   m_Layer: 0
   m_Name: CratePiece2
   m_TagString: Untagged
@@ -1098,6 +1216,63 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!60 &1089732583
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1089732580}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.75, y: 0.75}
+    newSize: {x: 0.75, y: 0.75}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -0.12595367, y: 0.00006198883}
+      - {x: -0.37360096, y: 0.0033049583}
+      - {x: -0.375, y: -0.375}
+      - {x: 0.0028600693, y: -0.375}
+      - {x: 0.0008125305, y: -0.25335336}
+      - {x: 0.06430435, y: -0.25191045}
+      - {x: 0.061127663, y: 0.0011382103}
+      - {x: 0.0037651062, y: 0.0024297237}
+      - {x: -0.0013370514, y: 0.060655594}
+      - {x: -0.12818146, y: 0.0658052}
+  m_UseDelaunayMesh: 0
 --- !u!1001 &1245539111
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -32316,6 +32491,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1535147704}
   - component: {fileID: 1535147705}
+  - component: {fileID: 1535147706}
   m_Layer: 0
   m_Name: CratePiece4
   m_TagString: Untagged
@@ -32393,6 +32569,62 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!60 &1535147706
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1535147703}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.75, y: 0.75}
+    newSize: {x: 0.75, y: 0.75}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -0.375, y: 0.375}
+      - {x: -0.37416172, y: -0.00093126297}
+      - {x: -0.23008442, y: -0.0026402473}
+      - {x: -0.123680115, y: -0.0011832714}
+      - {x: -0.11894035, y: 0.059806347}
+      - {x: 0.0001449585, y: 0.06036687}
+      - {x: 0.0013971329, y: 0.18368101}
+      - {x: 0.06086731, y: 0.18462539}
+      - {x: 0.06427002, y: 0.37667656}
+  m_UseDelaunayMesh: 0
 --- !u!1001 &1606701477
 PrefabInstance:
   m_ObjectHideFlags: 0
