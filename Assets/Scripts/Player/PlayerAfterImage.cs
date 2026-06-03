@@ -6,7 +6,6 @@ public class PlayerAfterImage : MonoBehaviour
 {
     [Header("After Image")]
     [SerializeField] private float speedThreshold = 10f;
-    [SerializeField] private float minSpawnSpeed = 12f;
     [SerializeField] private float spawnInterval = 0.05f;
     [SerializeField] private float fadeDuration = 0.2f;
     [SerializeField] private float minFadeDurationMultiplier = 0.3f;
@@ -69,7 +68,7 @@ public class PlayerAfterImage : MonoBehaviour
         float horizontalSpeed = rb.linearVelocity.magnitude;
 
         
-        if (horizontalSpeed < minSpawnSpeed)
+        if (horizontalSpeed < speedThreshold)
         {
             spawnTimer = 0f;
             return;

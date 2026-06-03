@@ -467,7 +467,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cae6d8d1b66c2b42830da240c4ea5c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedThreshold: 50
+  speedThreshold: 17
   minSpawnSpeed: 12
   spawnInterval: 0.07
   fadeDuration: 0.5

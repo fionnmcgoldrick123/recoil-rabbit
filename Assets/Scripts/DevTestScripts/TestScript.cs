@@ -22,7 +22,7 @@ public class TestScript : MonoBehaviour
     
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Q)){
+        if(Input.GetKeyDown(KeyCode.P)){
             
             isPaused = !isPaused;
             Time.timeScale = isPaused ? 0f : 1f;
