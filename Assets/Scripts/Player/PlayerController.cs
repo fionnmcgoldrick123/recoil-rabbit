@@ -77,7 +77,6 @@ public class PlayerController : MonoBehaviour
     [Header("References")]
     [SerializeField] private GameObject gunObject;
     [SerializeField] private GameObject headObject;
-
     [Header("Debug Gizmos")]
     [SerializeField] private bool showHyperAngleGizmos = true;
     [SerializeField] private float gizmoHyperAngleThreshold = 0.3f;
@@ -87,6 +86,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float gizmoLineLength = 4f;
 
     public UnityEvent OnPlayerDeath = new UnityEvent();
+
+    // Particle events — consumed by PlayerClouds
+    public event System.Action OnLand;
+    public event System.Action OnJump;
+    public event System.Action<int> OnWallJump;   // wallDir: which wall was pushed off
+    public event System.Action OnSuperBhop;
+    public event System.Action<int> OnHyperDash;  // dir: hyper direction (1 or -1)
+    public event System.Action<int> OnWallHyper;  // wallDir: which wall was pushed off
 
     private Rigidbody2D rb;
     private Animator animator;
@@ -129,6 +136,8 @@ public class PlayerController : MonoBehaviour
     private bool skipFallClampThisFrame;
 
     public int WallDirection => wallDirection;
+    public bool CanPerformSuperBhop => superBhopShotWindowTimer > 0f;
+    public bool CanPerformWallHyper => wallHyperShotWindowTimer > 0f;
 
     public void SetBhopProtected() { bhopProtected = true; }
 
@@ -245,6 +254,7 @@ public class PlayerController : MonoBehaviour
                 jumpCutSuppressedUntilGrounded = false;
                 hyperComboLandTimer = hyperComboLandGraceTime;
                 wallHyperShotWindowTimer = 0f;
+                OnLand?.Invoke();
             }
             else
             {
@@ -480,6 +490,7 @@ public class PlayerController : MonoBehaviour
             rb.linearVelocity = new Vector2(hVel, superBhopUpwardForce * gravityMultiplier);
             jumpCutSuppressedUntilGrounded = true; 
             hyperComboCount = Mathf.Min(hyperComboCount + 1, maxHyperComboLevel - 1);
+            OnSuperBhop?.Invoke();
         }
         else if (hyperWindowTimer > 0f)
         {
@@ -490,6 +501,7 @@ public class PlayerController : MonoBehaviour
             float hComboMult = Mathf.Pow(hyperHorizontalMultiplier, clampedCombo);
             rb.linearVelocity = new Vector2(hyperDirection * hyperSpeed * hComboMult, hyperJumpForce * comboMult * gravityMultiplier);
             hyperComboCount = Mathf.Min(hyperComboCount + 1, maxHyperComboLevel - 1);
+            OnHyperDash?.Invoke((int)hyperDirection);
         }
         else
         {
@@ -498,6 +510,7 @@ public class PlayerController : MonoBehaviour
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce * gravityMultiplier);
             if (hyperComboLandTimer <= 0f)
                 hyperComboCount = 0;
+            OnJump?.Invoke();
         }
 
         if (AudioManager.Instance != null)
@@ -533,6 +546,7 @@ public class PlayerController : MonoBehaviour
             rb.linearVelocity = new Vector2(hSpeed, vSpeed);
             skipFallClampThisFrame = true; 
             hyperComboCount = Mathf.Min(hyperComboCount + 1, maxHyperComboLevel - 1);
+            OnWallHyper?.Invoke(jumpWallDirection);
 
             if (AudioManager.Instance != null)
                 AudioManager.Instance.PlayJump();
@@ -550,6 +564,7 @@ public class PlayerController : MonoBehaviour
 
         float sideVelocity = -jumpWallDirection * wallJumpSideForce;
         rb.linearVelocity = new Vector2(sideVelocity, wallJumpUpForce * gravityMultiplier);
+        OnWallJump?.Invoke(jumpWallDirection);
 
         if (AudioManager.Instance != null)
             AudioManager.Instance.PlayJump();

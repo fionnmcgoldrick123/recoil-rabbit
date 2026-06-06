@@ -11391,11 +11391,58 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 8050381305028736681, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
+      propertyPath: landParticles
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8050381305028736681, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
+      propertyPath: playerParticles
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8050381305028736681, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
+      propertyPath: landJumpParticles
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1473489899234942715, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1766193289}
   m_SourcePrefab: {fileID: 100100000, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
+--- !u!1 &1766193279 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1473489899234942715, guid: 649eaf51079f5a343bf096ec82bef5d7, type: 3}
+  m_PrefabInstance: {fileID: 1688238473}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1766193289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1766193279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4a52f8e1ec355b47a8d6a94228d6498, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  landPrefab: {fileID: 8411515465235895373, guid: 43b824c2deff80d48b14d5c03232628f, type: 3}
+  landFloorOffset: {x: 0, y: -0.4}
+  jumpPrefab: {fileID: 8411515465235895373, guid: 43b824c2deff80d48b14d5c03232628f, type: 3}
+  jumpFloorOffset: {x: 0, y: -0.4}
+  wallJumpPrefab: {fileID: 8411515465235895373, guid: 43b824c2deff80d48b14d5c03232628f, type: 3}
+  wallJumpWallOffset: {x: 0.3, y: 0}
+  wallSlidePrefab: {fileID: 8411515465235895373, guid: 43b824c2deff80d48b14d5c03232628f, type: 3}
+  wallSlideWallOffset: {x: 0.3, y: 0.4}
+  wallSlideSpawnInterval: 0.08
+  superBhopPrefab: {fileID: 8411515465235895373, guid: 43b824c2deff80d48b14d5c03232628f, type: 3}
+  superBhopFloorOffset: {x: 0, y: -0.4}
+  hyperDashPrefab: {fileID: 8411515465235895373, guid: 43b824c2deff80d48b14d5c03232628f, type: 3}
+  hyperDashFloorOffset: {x: 0, y: -0.4}
+  wallHyperPrefab: {fileID: 8411515465235895373, guid: 43b824c2deff80d48b14d5c03232628f, type: 3}
+  wallHyperWallOffset: {x: 0.3, y: 0}
 --- !u!1001 &1788422251
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11504,6 +11551,10 @@ PrefabInstance:
     - target: {fileID: 3988833703786622940, guid: 1c20310b6925c9d4ba1c51bddc060215, type: 3}
       propertyPath: m_Name
       value: AudioManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 4698072109146537988, guid: 1c20310b6925c9d4ba1c51bddc060215, type: 3}
+      propertyPath: masterVolume
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

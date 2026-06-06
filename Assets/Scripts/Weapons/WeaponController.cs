@@ -12,6 +12,8 @@ public class WeaponController : MonoBehaviour
     [SerializeField] private GunView gunView;
     [SerializeField] private CameraShake cameraShake;
     [SerializeField] private HeadBreathing headBreathing;
+    
+    private bool wasAvailableLastFrame = false;
 
     [Header("Camera Shake")]
     [SerializeField] private float revolverShakeIntensity = 0.015f;
@@ -98,6 +100,19 @@ public class WeaponController : MonoBehaviour
 
         revolverCooldown -= Time.deltaTime;
         shotgunCooldown -= Time.deltaTime;
+        
+        // Check if a special move (super bhop or wall hyper) is now available
+        bool isAvailableNow = (playerController != null && playerController.IsGrounded) && 
+                               (playerController.CanPerformSuperBhop || playerController.CanPerformWallHyper);
+        
+        // Trigger head bob when availability changes from unavailable to available
+        if (isAvailableNow && !wasAvailableLastFrame)
+        {
+            if (headBreathing != null)
+                headBreathing.TriggerAvailabilityBob();
+        }
+        
+        wasAvailableLastFrame = isAvailableNow;
 
         if (Input.GetMouseButtonDown(0))
         {
